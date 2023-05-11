@@ -1,0 +1,11 @@
+:root{
+    --main-dark-green: #4C8538;
+    --main-light-green: #D0F6B8;
+    --background-white: #FFFFFF;
+}
+html,
+img.background {
+    position: absolute;
+    min-height: 100%;
+    min-width: 100%;
+}

@@ -1,19 +1,5 @@
 @import "./main.css";
-html,
 
-body {
-    display: flex;
-    flex-direction: column;
-    position:fixed;
-    align-items:center;
-    height: 100%;
-    width: 100%;
-    justify-content: space-around;
-}
-
-h1{
-    font-size: 3rem;
-}
 form.login-signup{
     display: flex;
     flex-direction: column;
@@ -29,20 +15,25 @@ input.login-signup-input{
     background-color: var(--main-light-green);
     border: none;
     border-radius: 0.2rem;
-    width: 17rem;
+    width: 20rem;
     font-size: 1.3rem;
-    color: #4C8538;
+    color: var(--main-light-green);
+}
+input::placeholder{
+    color: var(--main-dark-green);
+    opacity: 50%;
 }
 
 input.login-signup-input:focus {
     background-color: var(--background-white);
     outline-color: var(--main-dark-green);
+    color: var(--main-dark-green);
 }
 
 button.login-signup-button {
     border: none;
     font-size: 1.3rem;
-    font-family: 'Times New Roman', Times, serif;
+    font-family:var(--main-font);
     background-color: var(--main-dark-green);
     color: var(--background-white);
     margin-bottom: 0.8rem;
@@ -52,7 +43,7 @@ button.login-signup-button {
 }
 
 img.login-signup-logo{
-    max-height: 3rem;
+    max-height: 5rem;
 }
 
 footer {

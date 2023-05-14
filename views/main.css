@@ -1,8 +1,20 @@
+@import url('https://fonts.googleapis.com/css?family=Tangerine');
 :root{
-    --main-dark-green: #4C8538;
-    --main-light-green: #D0F6B8;
-    --background-white: #FFFFFF;
+    --primary-color: #4C8538;
+    --secondary-color: #D0F6B8;
+    --shadow-color: #aaa;
+    --font-color: #000000;
+    --background-color: #FFFFFF;
     --main-font: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    --accent-font: 'Tangerine', serif;
+}
+
+[dark-mode="dark"]{
+    --primary-color: #D0F6B8;
+    --secondary-color: #4C8538;
+    --shadow-color: #575757;
+    --font-color: #FFFFFF;
+    --background-color: #000000;    
 }
 html,
 
@@ -15,81 +27,144 @@ body {
     width: 100%;
     justify-content: space-around;
     font-family: var(--main-font);
-    wrap
+    color: var(--font-color);
 }
-
-h1{
-    font-size: 3rem;
-}
-h1.header-h1{
-    color: var(--main-dark-green);
-    margin-left: 2rem;
-    margin-right: 2rem;
-}
-
 img.background {
     position: absolute;
     min-height: 100%;
     min-width: 100%;
-    z-index: 0;
-}
-
-header.header-navbar {
-    display: flex;
-    flex-direction: row;
-    width: 100%;
-    background-color: var(--background-white);
-    z-index: 1;
-    position: absolute;
-    top: 0;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.play-button {
-    border: none;
-    font-size: 2.8rem;
-    background-color: var(--main-dark-green);
-    color: var(--background-white);
-    width: 10rem;
-    min-width: 10rem;
-    border-radius: 0.2rem;
-}
-.play-button:hover{
-    background-color: var(--main-light-green);
-    cursor:pointer;
-    color: var(--main-dark-green)
-}
-.play-button:active{
-    background-color: var(--main-dark-green);
-    cursor:pointer;
-    color: var(--background-white)
+    z-index: -1;
 }
 
 a:hover{
     cursor: pointer;
 }
-nav.desktop-nav {
+
+header{
+    position: fixed;
+    display: block;
+    top: 0;
+    background-color: var(--background-color);
+    width: 100%;
+    box-sizing: border-box;
+    box-shadow: 0 0 40px 5px #000000;
+}
+
+header .menu-toggle{
+    color: var(--primary-color);
+    float: right;
+    height: 3rem;
+    padding: 0.5rem 0 0.5rem 0;
+    cursor: pointer;
+    display: none;
+}
+
+header figure{
+    height: 4rem;
     display: flex;
-    justify-self:right;
-    flex-direction: row;
-    margin-left: 2rem;
-    margin-right: 2rem;
-    justify-content: space-between;
-    width: 30rem;
+    float: left;
+    margin: 0;
 }
-a.nav-items{
-    font-size: 2rem;
-    color: var(--main-dark-green);
-    text-decoration: none;  
+
+header figure a img{
+    display: block;
+    height: 90%;
+    padding: 10%;
+    cursor: pointer;
+    filter: drop-shadow(0px 0px 2px var(--shadow-color));
 }
-a.nav-item-active {
-    font-size: 2rem;
-    color: var(--main-dark-green);
-    text-decoration: none;
+
+header figure h1{
+    color: var(--primary-color);
     font-weight: bold;
+    font-family: var(--accent-font);
+    text-shadow: 3px 3px 3px var(--shadow-color);
+    text-decoration: none;
+    letter-spacing: 0.25rem;
+    transform: scale(1, 1.5);
+    flex: none;
+    padding: 0 0 0 5%;
 }
-a.nav-items:hover {
-    text-decoration: underline;
+
+header figure h1 a{
+    text-decoration: none;
+    color: var(--primary-color);
 }
+
+header nav{
+    float: right;
+}
+header nav ul{
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+header nav ul li{
+    list-style: none;
+}
+header nav ul li a, header nav ul li a:visited{
+    padding: 1rem;
+    text-align: center;
+    color: var(--primary-color);
+    text-decoration: none;
+    display: block;
+    font-size: 2rem;
+}
+header nav ul li a:hover,
+header nav ul li a.active{
+    font-weight: bold;
+    background-color: var(--secondary-color);
+}
+
+
+
+
+@media (max-width: 900px){
+    header{
+        padding: 0 20px;
+    }
+
+    header h1{
+        font-size: calc(20px + 0.6vw);
+        margin: auto;
+    }
+
+    header nav{
+        display: none;
+        position: absolute;
+        width: 40%;
+        background-color: var(--background-color);
+        top: 4rem;
+    }
+    header nav.active{
+        right: 0;
+        display: block;
+    }
+    header nav ul{
+        display: block;
+    }
+    header nav ul li a{
+        border-bottom: 1px solid var(--primary-color);
+        border-top: 1px solid var(--primary-color);
+        width: 100%;
+        font-size: calc(20px + 0.6vw);
+        text-align: left;
+    }
+    header .menu-toggle{
+        display: flex;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 

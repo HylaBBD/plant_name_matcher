@@ -1,1 +1,48 @@
 @import "./main.css";
+
+article{
+    background-color: var(--background-color);
+    display: flex;
+    width: 90vw;
+    height: 80vh;
+    margin-top: 4rem;
+    border-radius: 1rem;
+    box-shadow: 0 0 40px 10px #000000;
+}
+
+section{
+    display: block;
+}
+
+article section img{
+    width: 5rem;
+}
+
+article section ul li{
+    list-style: none;
+}
+.play-button {
+    border: none;
+    font-size: 2.8rem;
+    background-color: var(--primary-color);
+    color: var(--background-white);
+    width: 10rem;
+    min-width: 10rem;
+    border-radius: 0.2rem;
+}
+.play-button:hover{
+    background-color: var(--secondary-color);
+    cursor:pointer;
+    color: var(--main-dark-green)
+}
+.play-button:active{
+    background-color: var(--primary-color);
+    cursor:pointer;
+    color: var(--background-color)
+}
+
+@media (max-width: 900px){
+    article{
+        height: 90vh;
+    }
+}

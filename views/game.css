@@ -39,7 +39,6 @@ article{
 }
 .tile{
     border-radius: 1rem;
-
 }
 .tile:hover{
     box-shadow: 0 0 20px 5px #000000;
@@ -54,13 +53,20 @@ article{
     width: 100%;
     height: 100%;
     object-fit: cover;
-    object-position: right top;
+    object-position: middle top;
 }
 
+.tile p{
+    font-size: 2rem;
+    text-align: center;
+    font-weight: bold;
+
+}
 /*-----------------MODE 1-----------------*/
 .mode1 .tile{
-    background-color: aqua;
-    width: 30%;
+    background-color: var(--primary-color);
+    width: calc(250px + 2vw);
+    height: calc(250px + 2vh);
 }
 
 /*-----------------MODE 2-----------------*/

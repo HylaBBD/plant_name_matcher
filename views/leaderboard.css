@@ -7,7 +7,7 @@ caption {
     font-size: 3rem;
     font-weight: bold;
     background-color: var(--background-white);
-    width: 90vw;
+    width: 94%;
     padding: 2rem;
     border-top-left-radius: 0.5rem;
     border-top-right-radius: 0.5rem;
@@ -33,7 +33,7 @@ table.leaderboard {
     border-radius: 0.5rem;
     border-top-left-radius: 0;
     border-top-right-radius: 0;
-    width: 90vw;
+    width: 100%;
     font-family: var(--main-font);
 }
 

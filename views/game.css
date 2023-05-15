@@ -1,16 +1,6 @@
 @import "./main.css";
 
-article{
-    background-color: var(--background-color);
-    display: flex;
-    justify-content: space-between;
-    width: 90vw;
-    max-width: calc(1000px + 10vw);
-    height: 80vh;
-    margin-top: 4rem;
-    border-radius: 1rem;
-    box-shadow: 0 0 40px 10px #000000;
-}
+
 
 
 /* LIVES */

@@ -25,6 +25,8 @@ h1.header-h1{
     color: var(--main-dark-green);
     margin-left: 2rem;
     margin-right: 2rem;
+    margin-bottom: 0.2rem;
+    margin-top: 0.2rem;
 }
 
 img.background {

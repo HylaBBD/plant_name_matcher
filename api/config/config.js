@@ -7,14 +7,21 @@ module.exports.config = {
       {
         url: "/user",
         method: "GET",
-        function: (db) => {
-          const response = new Promise((resolve, reject) => {
-            resolve(userController.getAllUsers(db));
+        function: (data) => {
+          return new Promise((resolve, reject) => {
+            userController
+              .getAllUsers(data.connection)
+              .then((response) => {
+                resolve(response);
+              })
+              .catch((err) => {
+                reject(err);
+              });
           }).then((res) => {
+            console.log(4);
+            console.log(res);
             return res;
           });
-
-          return response;
         },
       },
     ],

@@ -123,6 +123,8 @@ header nav ul li a.active{
 @media (max-width: 900px){
     header{
         padding: 0 20px;
+        z-index: 0;
+        box-shadow: none;
     }
 
     header h1{

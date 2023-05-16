@@ -2,15 +2,28 @@ const http = require("http");
 const { config } = require("./config/config");
 const path = "./db/plants.db";
 const { dbHelper } = require("./db/helper/database.helper");
+const { parse } = require('querystring');
+
+const getBodyData = (req) => {
+  return new Promise((resolve, reject) => {
+    let body = "";
+    req.on('data', chunk => {
+      body += chunk.toString();
+    });
+    req.on('end', () => {
+        resolve(parse(body))
+    });
+  })
+}
+
 
 const requestListener = async (req, res) => {
-  const routeConfig = config.server.routes.find(
-    (route) => req.url === route.url && req.method === route.method
-  );
+  const data = getBodyData(req)
+  const routeConfig = config.server.getRouteFunction(req.url, req.method)
 
   if (routeConfig) {
     const db = dbHelper.connect(path); //this will create a connection to our db, easier to do this here and pass as parameters to the service with our sql
-    const response = await routeConfig.function({ connection: db }); //the function should be an object of no specification other than the connection parameter as we will not know for certain what we are getting from the fe, thsi way we can handle the object input everywhere and the obj can vary easily
+    const response = await routeConfig.function({ connection: db, requestContext: await data }); //the function should be an object of no specification other than the connection parameter as we will not know for certain what we are getting from the fe, thsi way we can handle the object input everywhere and the obj can vary easily
     console.log(5);
     res.writeHead(200, { "Content-Type": "application/json" });
     res.write(JSON.stringify(response));

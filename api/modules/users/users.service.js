@@ -1,6 +1,6 @@
 module.exports.usersService = {
-  createUser: (username) => {
-    let sql = `INSERT INTO users[(user_name)] values(${username})`;
+  createUser: (db, username) => {
+    let sql = `INSERT INTO users(user_name) values('${username}')`;
     db.run(sql);
   },
   getAllUsers: (db) => {

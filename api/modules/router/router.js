@@ -3,7 +3,7 @@ module.exports.router = function () {
     return {
         register: (path, method, cb) => {
             routes.push({
-                path: path.substr(1).split("/").map(element => new RegExp(element)),
+                path: path.substr(1).split("/").map(element => new RegExp(`^${element}$`)),
                 method: method,
                 function: cb
             })

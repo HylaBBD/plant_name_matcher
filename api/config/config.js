@@ -3,6 +3,15 @@ const { router} = require("../modules/router/router");
 
 routes = router();
 
+routes.register("/user/.*[A-Za-z].*", "GET", (data) => {
+  return new Promise((resolve, reject) => {
+    const {connection, url} = data
+    const username = url.substr(1).split("/")[1]
+    console.log(username)
+    resolve({username: username})
+  })
+})
+
 routes.register("/user", "GET", (data) => {
   return new Promise((resolve, reject) => {
     userController

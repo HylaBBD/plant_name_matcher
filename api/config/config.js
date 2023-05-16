@@ -12,7 +12,6 @@ module.exports.config = {
             queryParams: [],
             method: "GET",
             function: (data) => {
-              console.log("up here worked neh");
               return new Promise((resolve, reject) => {
                 userController
                   .getAllUsers(data.connection)
@@ -23,8 +22,6 @@ module.exports.config = {
                     reject(err);
                   });
               }).then((res) => {
-                console.log(4);
-                console.log(res);
                 return res;
               });
             },
@@ -35,8 +32,6 @@ module.exports.config = {
             method: "POST",
             function: (data) => {
               return new Promise((resolve, reject) => {
-                console.log(data);
-                console.log("data^");
                 userController
                   .createUser(data.connection, data.username)
                   .then((res) => {
@@ -59,12 +54,10 @@ module.exports.config = {
             queryParams: ["username"],
             method: "GET",
             function: (data) => {
-              console.log("It worked");
               return new Promise((resolve, reject) => {
                 userController
                   .getUserDetails(data.connection, data.username)
                   .then((response) => {
-                    console.log("config", response);
                     resolve(response);
                   })
                   .catch((error) => {
@@ -72,7 +65,6 @@ module.exports.config = {
                   });
               })
                 .then((res) => {
-                  console.log("config 2", res);
                   return res;
                 })
                 .catch((err) => {
@@ -89,7 +81,7 @@ module.exports.config = {
                 userController
                   .getLeaderBoards(
                     data.connection,
-                    data.body.limit ? data.body.limit : 0
+                    data.body && data.body.limit ? data.body.limit : 0
                   )
                   .then((response) => {
                     resolve(response);

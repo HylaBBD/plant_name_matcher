@@ -16,7 +16,7 @@ const db = dbHelper.connect(filePath);
 // db.run(sql);
 
 // sql =
-//   "CREATE TABLE user_difficulty_setting(user_difficulty_setting INTEGER PRIMARY KEY AUTOINCREMENT, plant_id INTEGER, user_id INTEGER, difficulty_setting_id INTEGER,FOREIGN KEY (user_id) REFERENCES users(user_id), FOREIGN KEY (difficulty_setting_id) REFERENCES difficulty_setting(difficulty_setting_id))";
+//   "CREATE TABLE user_difficulty_setting(user_difficulty_setting INTEGER PRIMARY KEY AUTOINCREMENT, user_id INTEGER, difficulty_setting_id INTEGER DEFAULT 1,FOREIGN KEY (user_id) REFERENCES users(user_id), FOREIGN KEY (difficulty_setting_id) REFERENCES difficulty_setting(difficulty_setting_id))";
 // db.run(sql);
 
 // sql =
@@ -24,16 +24,24 @@ const db = dbHelper.connect(filePath);
 // db.run(sql);
 
 // sql =
-//   "CREATE TABLE game_layout(game_layout_id INTEGER PRIMARY KEY AUTOINCREMENT, root_size INTEGER)";
+//   "CREATE TABLE game_layout(game_layout_id INTEGER PRIMARY KEY AUTOINCREMENT, size INTEGER)";
 // db.run(sql);
 
 // sql =
 //   "CREATE TABLE user_game_result(user_game_result_id INTEGER PRIMARY KEY AUTOINCREMENT, user_id INTEGER, game_option_id INTEGER, game_layout_id INTEGER, win INTEGER, FOREIGN KEY (user_id) REFERENCES users(user_id), FOREIGN KEY (game_option_id) REFERENCES game_option(game_option_id), FOREIGN KEY (game_layout_id) REFERENCES game_layout(game_layout_id))";
 // db.run(sql);
 
-sql =
-  "CREATE TABLE user_highscore(user_highscore_id INTEGER PRIMARY KEY AUTOINCREMENT, user_id INTEGER, highscore INTEGER, FOREIGN KEY (user_id) REFERENCES users(user_id))";
-db.run(sql);
+// sql =
+//   "CREATE TABLE user_highscore(user_highscore_id INTEGER PRIMARY KEY AUTOINCREMENT, user_id INTEGER, highscore INTEGER DEFAULT 0, FOREIGN KEY (user_id) REFERENCES users(user_id))";
+// db.run(sql);
+
+//insert default values
+// sql =
+//   "insert into game_options(type) values('image-english'),('latin-english'),('latin-image')";
+// db.run(sql);
+
+// sql = "insert into game_layout(size) values(4),(6),(8)";
+// db.run(sql);
 
 // const tables = [
 //   "user_plants",
@@ -42,6 +50,7 @@ db.run(sql);
 //   "game_layout",
 //   "game_options",
 //   "difficulty_setting",
+//   "user_highscore",
 //   "users",
 // ];
 
@@ -49,7 +58,3 @@ db.run(sql);
 //   sql = `DROP TABLE ${table}`;
 //   db.run(sql);
 // });
-
-//insert eg below
-// sql = "insert into users(user_name) values('john_hamm', 'young money')";
-// db.run(sql);

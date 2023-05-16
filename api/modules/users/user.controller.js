@@ -2,21 +2,17 @@ const { usersService } = require("./users.service");
 
 module.exports.userController = {
   getAllUsers: (db) => {
-    console.log("lookie");
     // example of controller which is called by the config function
     return new Promise((resolve, reject) => {
       usersService
         .getAllUsers(db)
         .then((response) => {
-          console.log("controller", response);
           resolve(response);
         })
         .catch((err) => {
           reject(err);
         });
     }).then((res) => {
-      console.log("3");
-      console.log(res);
       return res;
     });
   },
@@ -35,7 +31,6 @@ module.exports.userController = {
     });
   },
   getUserDetails: (connection, username) => {
-    console.log("this worked then");
     return new Promise((resolve, reject) => {
       usersService
         .getUserDetails(connection, username)
@@ -56,7 +51,7 @@ module.exports.userController = {
   getLeaderBoards: (db, limit) => {
     return new Promise((resolve, reject) => {
       usersService
-        .getLeaderBoards(db, limit)
+        .getLeaderBoards(db, limit ? limit : 10)
         .then((response) => {
           resolve(response);
         })

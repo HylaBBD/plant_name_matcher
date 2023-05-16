@@ -8,7 +8,6 @@ const { serverHelper } = require("./db/helper/server-response.helper");
 const requestListener = async (req, res) => {
   requestDataBuilder(req)
     .then((data) => {
-      console.log("skipped neh");
       const selectedRoute =
         data.urlData && data.urlData.filePath
           ? config.server.routes.find(
@@ -17,7 +16,6 @@ const requestListener = async (req, res) => {
           : undefined;
 
       if (selectedRoute) {
-        console.log(Object.keys(data));
         const routeConfig = selectedRoute.childRoutes.find(
           (route) =>
             JSON.stringify(route.queryParams) ===
@@ -26,21 +24,6 @@ const requestListener = async (req, res) => {
             JSON.stringify(route.url) === JSON.stringify(data.urlData.filePath)
         );
 
-        // routeConfig = selectedRoute.childRoutes.find((route) => {
-        //   if (data.queryParams && data.urlData.filePath.length > 1) {
-        //     //space holder if we include more paths
-        //   } else if (data.queryParams) {
-        //     return (
-        //       JSON.stringify(route.queryParams) ===
-        //         JSON.stringify(Object.keys(data.queryParams)) && route.method
-        //     );
-        //   } else if (data.urlData.filePath.length > 1) {
-        //     // else if for more paths
-        //   }else{
-
-        //   }
-        //   return;
-        // });
         console.log("routeConfig_____________");
         console.log(routeConfig);
         console.log("routeConfig-------------");
@@ -68,17 +51,16 @@ const requestListener = async (req, res) => {
 
           // serverHelper.responses.success(response, res);
         } else {
+          res.writeHead(404, { "Content-Type": "application/json" });
           res.write("this will hapen if no params found");
           res.end();
         }
       } else {
-        console.log("abc hit herer");
         res.write("failed");
         res.end();
       }
     })
     .catch((err) => {
-      console.log(err);
       res.write(JSON.stringify(err));
       res.end();
     });
@@ -88,44 +70,34 @@ const requestDataBuilder = async (req) => {
   //should return a body with any data that we need
 
   const body = [];
-  let x;
+  let requestObject;
   return new Promise((resolve, reject) => {
-    console.log("waiting");
-
     req.on("data", async (chunk) => {
-      console.log("check chunks");
       body.push(chunk);
     });
     req.on("end", () => {
-      console.log("waiting still");
       try {
-        console.log(body);
         let baseURI = url.parse(req.url, true);
         let filePath = baseURI.pathname.split("/");
         filePath.splice(0, 1);
 
         let queryParam = baseURI.query;
         let parsedBody = Buffer.concat(body).toString();
-        console.log(!!parsedBody);
         let requestBody = parsedBody ? JSON.parse(parsedBody) : undefined;
         const queryObj = queryParam ? buildJSONObject(queryParam) : undefined;
-        x = {
+        requestObject = {
           queryParams: queryObj,
           body: requestBody,
           urlData: { filePath: filePath, method: req.method },
         };
-        resolve(x);
+        resolve(requestObject);
       } catch (error) {
-        console.log(error);
-        x = {};
-        reject(x);
+        requestObject = {};
+        reject(requestObject);
       }
     });
   }).then(() => {
-    console.log("not");
-    console.log(x);
-    console.log("x-----------------");
-    return x;
+    return requestObject;
   });
 };
 

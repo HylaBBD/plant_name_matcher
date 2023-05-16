@@ -1,45 +1,65 @@
 const { usersService } = require("./users.service");
-
+const { buildResponse } = require("../response/responseUtils")
 const validUsername = new RegExp(".*[A-Za-z].*")
+const validId = new RegExp("\\d+")
+
 
 module.exports.userController = {
+  getHighScore: (db, id) => {
+    return new Promise((resolve, reject) => {
+      resolve(buildResponse(200, {
+        message: "success",
+        id: id
+      }))
+    })
+  },
+
+  addPlant: (db, data, id) => {
+    return new Promise((resolve, reject) => {
+        const plantId = data.plantId;
+
+        if (!plantId) {
+          resolve(buildResponse(400, {
+            message: "No PlantId",
+            reason: "No PlantId"
+          }))
+        } else if (!validId.test(plantId)) {
+          resolve(buildResponse(400, {
+            message: "Invalid PlantId",
+            reason: "Invalid PlantId"
+          }))
+        } else {
+          resolve(buildResponse(200, {
+            message: "success"
+          }))
+        }
+    })
+  },
 
   createUser: (db, data) => {
     return new Promise((resolve, reject) => {
       const username = data.username;
       if (!username) {
-        resolve({
-          responseCode: 400,
-          response: {
-            message: "Failed to create user",
-            reason: "Empty username"
-          }
-        })
+        resolve(buildResponse(400, {
+          message: "Failed to create user",
+          reason: "Empty username"
+        }))
       } else if (validUsername.test(username)) {
         usersService.createUser(db, username)
         .then((res) => {
-          resolve({
-            responseCode: 200,
-            response: res
-          })
+          resolve(buildResponse(200, res))
         }).catch(err => {
-          resolve({
-            responseCode: 409,
-            response: {
-              message: "Failed to create user",
-              error: err,
-              reason: err.code === "SQLITE_CONSTRAINT" ? "user exists" : undefined,
-            }
-          })
+          resolve(buildResponse(409, {
+            message: "Failed to create user",
+            error: err,
+            reason: err.code === "SQLITE_CONSTRAINT" ? "user exists" : undefined,
+          }))
         })
       } else {
-        resolve({
-          responseCode: 400,
-          response: {
-            message: "Failed to create user",
-            reason: "Invalid username"
-          }
-        })
+        resolve(buildResponse(400,{
+          message: "Failed to create user",
+          reason: "Invalid username"
+        }))
       }
     })
   },
@@ -60,10 +80,7 @@ module.exports.userController = {
     }).then((res) => {
       console.log("3");
       console.log(res);
-      return {
-        responseCode: 200,
-        response: res
-      }
+      return buildResponse(200, res)
     });
   },
   getUserDetails: (connection, username) => {
@@ -79,14 +96,8 @@ module.exports.userController = {
         });
     })
       .then((response) => {
-        return {
-          responseCode: 200,
-          response: response
-        }
+        return buildResponse(200, response)
       })
-      .catch((err) => {
-        return err;
-      });
   },
   getLeaderBoards: (db, limit) => {
     return new Promise((resolve, reject) => {
@@ -100,13 +111,7 @@ module.exports.userController = {
         });
     })
       .then((response) => {
-        return {
-          responseCode: 200,
-          response: response
-        }
+        return buildResponse(200, response)
       })
-      .catch((error) => {
-        return error;
-      });
   },
 };

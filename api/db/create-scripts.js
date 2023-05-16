@@ -4,7 +4,7 @@ const filePath = "./plants.db";
 const db = dbHelper.connect(filePath);
 
 // sql =
-//   "CREATE TABLE users(user_id INTEGER PRIMARY KEY AUTOINCREMENT, user_name)";
+//   "CREATE TABLE users(user_id INTEGER PRIMARY KEY AUTOINCREMENT, user_name UNIQUE)";
 // db.run(sql);
 
 // sql =
@@ -30,6 +30,10 @@ const db = dbHelper.connect(filePath);
 // sql =
 //   "CREATE TABLE user_game_result(user_game_result_id INTEGER PRIMARY KEY AUTOINCREMENT, user_id INTEGER, game_option_id INTEGER, game_layout_id INTEGER, win INTEGER, FOREIGN KEY (user_id) REFERENCES users(user_id), FOREIGN KEY (game_option_id) REFERENCES game_option(game_option_id), FOREIGN KEY (game_layout_id) REFERENCES game_layout(game_layout_id))";
 // db.run(sql);
+
+sql =
+  "CREATE TABLE user_highscore(user_highscore_id INTEGER PRIMARY KEY AUTOINCREMENT, user_id INTEGER, highscore INTEGER, FOREIGN KEY (user_id) REFERENCES users(user_id))";
+db.run(sql);
 
 // const tables = [
 //   "user_plants",

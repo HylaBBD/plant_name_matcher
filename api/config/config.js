@@ -1,5 +1,5 @@
 const { userController } = require("../modules/users/user.controller");
-const { router} = require("../modules/router/router");
+const { router } = require("../modules/router/router");
 
 routes = router();
 
@@ -27,14 +27,14 @@ routes.register("/user", "GET", (data) => {
     console.log(res);
     return res;
   });
-})
+});
 
 routes.register("/user", "POST", (data) => {
   return new Promise((resolve, reject) => {
-    const {connection, requestContext} = data;
-    resolve(userController.registerUser(connection, requestContext))
-  })
-})
+    const { connection, requestContext } = data;
+    resolve(userController.registerUser(connection, requestContext));
+  });
+});
 
 module.exports.config = {
   server: {

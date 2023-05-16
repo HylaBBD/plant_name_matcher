@@ -16,24 +16,10 @@ module.exports.usersService = {
           .then((response) => {
             return this.usersService
               .openLeaderBoardForNewUser(db, response.userId, 0)
-              .then(() => {
-                return { message: "success" };
+              .then(() => { 
+                return { message: "success" }
               })
-              .catch((error) => {
-                return error;
-              });
           })
-          .catch((err) => {
-            return err;
-          });
-        // return { message: "Success" };
-      })
-      .catch((err) => {
-        return {
-          message: "Failed to create user",
-          error: err,
-          reason: err.code === "SQLITE_CONSTRAINT" ? "user exists" : undefined,
-        };
       });
   },
   getUserId: (db, username) => {

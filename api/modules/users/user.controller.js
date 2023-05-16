@@ -1,17 +1,47 @@
 const { usersService } = require("./users.service");
 
+const validUsername = new RegExp(".*[A-Za-z].*")
+
 module.exports.userController = {
 
-  registerUser: (db, data) => {
-    const username = data.username;
-    console.log(db)
-    if (username) {
-      usersService.createUser(db, username)
-      return "";
-    } else {
-      return "";
-    }
-
+  createUser: (db, data) => {
+    return new Promise((resolve, reject) => {
+      const username = data.username;
+      if (!username) {
+        resolve({
+          responseCode: 400,
+          response: {
+            message: "Failed to create user",
+            reason: "Empty username"
+          }
+        })
+      } else if (validUsername.test(username)) {
+        usersService.createUser(db, username)
+        .then((res) => {
+          resolve({
+            responseCode: 200,
+            response: res
+          })
+        }).catch(err => {
+          resolve({
+            responseCode: 409,
+            response: {
+              message: "Failed to create user",
+              error: err,
+              reason: err.code === "SQLITE_CONSTRAINT" ? "user exists" : undefined,
+            }
+          })
+        })
+      } else {
+        resolve({
+          responseCode: 400,
+          response: {
+            message: "Failed to create user",
+            reason: "Invalid username"
+          }
+        })
+      }
+    })
   },
 
   getAllUsers: (db) => {
@@ -30,21 +60,10 @@ module.exports.userController = {
     }).then((res) => {
       console.log("3");
       console.log(res);
-      return res;
-    });
-  },
-  createUser: (connection, username) => {
-    return new Promise((resolve, reject) => {
-      usersService
-        .createUser(connection, username)
-        .then((res) => {
-          resolve(res);
-        })
-        .catch((err) => {
-          reject(err);
-        });
-    }).then((res) => {
-      return res;
+      return {
+        responseCode: 200,
+        response: res
+      }
     });
   },
   getUserDetails: (connection, username) => {
@@ -60,7 +79,10 @@ module.exports.userController = {
         });
     })
       .then((response) => {
-        return response;
+        return {
+          responseCode: 200,
+          response: response
+        }
       })
       .catch((err) => {
         return err;
@@ -78,7 +100,10 @@ module.exports.userController = {
         });
     })
       .then((response) => {
-        return response;
+        return {
+          responseCode: 200,
+          response: response
+        }
       })
       .catch((error) => {
         return error;

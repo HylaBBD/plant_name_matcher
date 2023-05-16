@@ -2,7 +2,7 @@ const http = require("http");
 const { config } = require("./config/config");
 const path = "./db/plants.db";
 const { dbHelper } = require("./db/helper/database.helper");
-const { parse } = require("querystring");
+const querystring = require("querystring");
 const url = require("url");
 
 const getBodyData = (req) => {
@@ -12,7 +12,12 @@ const getBodyData = (req) => {
       body += chunk.toString();
     });
     req.on("end", () => {
-      resolve(parse(body));
+      const contentType = req.headers["content-type"]
+      if (contentType === "application/json") {
+        resolve(JSON.parse(body))
+      } else {
+        resolve(querystring.parse(body));
+      }
     });
   });
 };
@@ -29,7 +34,7 @@ const requestListener = async (req, res) => {
         connection: db,
         requestContext: await data,
         url: urlInformation.pathname,
-        queryParameters: parse(urlInformation.query)
+        queryParameters: querystring.parse(urlInformation.query)
       }); //the function should be an object of no specification other than the connection parameter as we will not know for certain what we are getting from the fe, thsi way we can handle the object input everywhere and the obj can vary easily
       console.log(5);
       res.writeHead(responseCode, { "Content-Type": "application/json" });

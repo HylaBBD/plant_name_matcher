@@ -1,7 +1,7 @@
 // TILE SELECTED - - - - - - - - - - - - - - - -
 let gameTiles = document.getElementsByClassName("tile");
 if (gameTiles != null) {
-    for(var tile of gameTiles){
+    for(let tile of gameTiles){
         (function(tile){
             tile.addEventListener("click", function () {
                 tile.classList.toggle("selected");  
@@ -10,7 +10,20 @@ if (gameTiles != null) {
         })(tile);
     }
 }
-// END OF TILE SELECTED - - - - - - - - - - - - 
+
+// LOADING ICON - - - - - - - - - - - - 
+const loadingSection = document.getElementById("loading-screen");
+const loadingSectionImage = document.getElementById("loading-screen-image")
+
+function displayLoadingScreen() {
+    loadingSection.classList.add("display");
+}
+function hideLoadingScreen() {
+    loadingSection.classList.remove("display");
+}
+
+
+// PICTURE AND LATIN NAMES - - - - - - - - - - - - 
 const key = "sk-Eeg16458985ba86b9801"; // I KNOW THIS IS BAD WE WILL TAKE IT OUT LOL
 let numberPlants = 2
 const min = 1;
@@ -18,19 +31,21 @@ const max = 3000; // There are 3000 plants in the API available to the free vers
 let tileImages = document.getElementsByClassName("plantPic");
 let tileScientificNames = document.getElementsByClassName("plantScientificName");
 
-for(let i = 0; i < numberPlants; i++){
+displayLoadingScreen()
+
+for(let i = 0; i < numberPlants; i++){  
     let plantID = Math.floor(Math.random() * (max - min + 1)) + min;
     let link = "https://perenual.com/api/species/details/" + plantID + "?key=" + key
-    
+       
     const plantData = JSON.parse(JSON.stringify(await (await fetch(link)).json()))
+
     let plantCommonName = plantData.common_name
     let plantScientificName = plantData.scientific_name
     let plantPhotoURL = plantData.default_image.original_url
     tileImages[i].src = plantPhotoURL
     tileScientificNames[i].textContent = plantScientificName
-    
 }
-
+hideLoadingScreen()
 
 /*
 <!-- Example JSON Output -->  

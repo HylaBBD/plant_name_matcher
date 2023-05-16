@@ -7,6 +7,7 @@
     --background-color: #FFFFFF;
     --main-font: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     --accent-font: 'Tangerine', serif;
+    --background-color-transparent: rgba(255, 255, 255, 0.75);
 }
 
 [dark-mode="dark"]{
@@ -15,6 +16,7 @@
     --shadow-color: #575757;
     --font-color: #FFFFFF;
     --background-color: #000000;    
+    --background-color-transparent: rgba(0, 0, 0, 0.75);
 }
 html,
 
@@ -48,7 +50,7 @@ header{
     width: 100%;
     box-sizing: border-box;
     box-shadow: 0 0 40px 5px #000000;
-    z-index: -1;
+    z-index: 10;
 }
 
 header .menu-toggle{

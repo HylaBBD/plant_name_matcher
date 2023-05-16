@@ -1,3 +1,104 @@
 @import "./main.css";
 
+/* GLOSSARY LEFT IMAGE */
+.glossary-image-container{
+    width: 50%;
+    display: flex;
+    justify-content: center;
+}
+.glossary-image-container img{
+    align-self: center;
+    border-radius: 1rem;
+    width: 80%;
+    height: 80%;
+    object-fit: cover;
+    object-position: middle top;
+}
 
+/* GLOSSARY RIGHT INFORMATION */
+.glossary-info{
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    justify-content: space-between;
+}
+.glossary-info h1{
+    text-align: center;
+    font-size: 3rem;
+    padding-right: 10%;
+}
+.glossary-info h2{
+    text-align: center;
+    padding-right: 10%;
+}
+.glossary-info p{
+    padding-right: 10%;
+    text-align: justify;
+}
+
+.navigation-control{
+    padding-right: 10%;
+}
+.navigation-control td:nth-child(1){
+    text-align: right;
+}
+.navigation-control td:nth-child(2){
+    text-align: right;
+}
+.navigation-control td:nth-child(3){
+    text-align: center;
+}
+.navigation-control td:nth-child(4){
+    text-align: left;
+}
+.navigation-control td:nth-child(5){
+    text-align: left;
+}
+.navigation-control td img{
+    width: 10vw;    
+    cursor: pointer;
+}
+
+@media (max-width: 900px){
+    article{
+        flex-direction: column;
+        justify-content: space-between;
+    }
+    .glossary-image-container{
+        width: 100%;
+        height: 40%;
+    }
+    .glossary-image-container img{
+        align-self: center;
+        border-radius: 1rem;
+        object-fit: cover;
+        object-position: middle top;
+    }
+
+    .glossary-info{
+        width: 100%;
+        height: 60%;
+        justify-content: space-between;
+    }   
+    .glossary-info h1{
+        padding: 0 5% 0 5%;
+        margin: 0;
+    }
+    .glossary-info h2{
+        padding: 0 5% 0 5%;
+    }
+    .glossary-info p{
+        padding: 0 5% 0 5%;
+    }
+
+    .navigation-control{
+        padding-right: 0;
+    }
+}
+
+@media (max-width: 370px){
+    .glossary-info p{
+        display: none;
+        padding: 0 5% 0 5%;
+    }
+}

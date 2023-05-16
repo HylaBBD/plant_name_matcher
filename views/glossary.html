@@ -5,8 +5,9 @@
     <title>Profile</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="profile.css">
+    <link rel="stylesheet" href="glossary.css">
     <script type="module" src="../main.js"></script>
+    <script type="module" src="../glossary.js"></script>
 
 </head>
     <body>
@@ -29,6 +30,29 @@
         </header>
         <img class="background" src="../static/fern-background.jpg" alt="furled ferns bright green with sun">
 
-        
+        <article>
+            <section id="loading-screen">
+                <img src="../static/loading-icon-dark.png" alt="loading icon of a green fern">
+            </section>
+
+            <section class="glossary-image-container">
+                <img id="glossary-image" src="">
+            </section>
+            <section class="glossary-info">
+                <section>
+                    <h1 id="common-name"></h1>
+                    <h2 id="scientific-name"></h2>
+                    <p id="description"></p>
+                </section>
+                
+                <table class="navigation-control">
+                    <td><img id="leftSelector" src="../static/point-left-dark.png"></td>
+                    <td id="navigation-control-index">1</td>
+                    <td>of</td>
+                    <td id="navigation-control-max">40</td>
+                    <td><img id="rightSelector" src="../static/point-right-dark.png"></td>
+                </table>
+            </section>
+        </article>        
     </body>
 </html>

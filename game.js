@@ -4,12 +4,58 @@ if (gameTiles != null) {
     for(let tile of gameTiles){
         (function(tile){
             tile.addEventListener("click", function () {
+                for(let t of gameTiles){
+                    if(t != tile){
+                        t.classList.remove("selected");
+                    }
+                }
                 tile.classList.toggle("selected");  
                 console.log("TILE"); // need to deselect other tiles
             });
         })(tile);
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+    const loadImage = src => 
+        new Promise((resolve, reject) =>{
+            const img = tileImages[i].image;
+            img.onload = () => resolve(img);
+            img.src = src   
+        });
+
+    loadImage(plantPhotoURL).then(image => counter++ );
+    // tileImages[i].src = plantPhotoURL
+    // tileImages[i].onload
+}
+
+if(counter == 2){
+    hideLoadingScreen()
+}
+*/
+
+
+
+
+
+
+
+
+
 
 // LOADING ICON - - - - - - - - - - - - 
 const loadingSection = document.getElementById("loading-screen");
@@ -22,9 +68,8 @@ function hideLoadingScreen() {
     loadingSection.classList.remove("display");
 }
 
-
 // PICTURE AND LATIN NAMES - - - - - - - - - - - - 
-const key = "sk-Eeg16458985ba86b9801"; // I KNOW THIS IS BAD WE WILL TAKE IT OUT LOL
+const key = "sk-B9J764637ff1f1114952"; // I KNOW THIS IS BAD WE WILL TAKE IT OUT LOL
 let numberPlants = 2
 const min = 1;
 const max = 3000; // There are 3000 plants in the API available to the free version
@@ -42,10 +87,19 @@ for(let i = 0; i < numberPlants; i++){
     let plantCommonName = plantData.common_name
     let plantScientificName = plantData.scientific_name
     let plantPhotoURL = plantData.default_image.original_url
-    tileImages[i].src = plantPhotoURL
     tileScientificNames[i].textContent = plantScientificName
+    tileImages[i].src = plantPhotoURL
+
 }
 hideLoadingScreen()
+
+
+
+
+
+
+
+
 
 /*
 <!-- Example JSON Output -->  

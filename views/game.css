@@ -1,5 +1,6 @@
 @import "./main.css";
 
+/* LOADING SCREEN */
 #loading-screen{
     display: none;
     max-width: calc(1000px + 10vw);
@@ -70,12 +71,12 @@
     border-radius: 1rem;
 }
 .tile:hover{
-    box-shadow: 0 0 20px 5px var(--font-color);
+    box-shadow: 0 0 20px 5px var(--shadow-color);
     cursor: pointer;
 }
 
-.tile .selected{
-    box-shadow: 0 0 20px 5px pink;
+.game_tiles .selected{
+    box-shadow: 0 0 20px 5px var(--primary-color);
 }
 .tile img{
     border-radius: 1rem;

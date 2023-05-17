@@ -11,6 +11,7 @@ const requestListener = async (req, res) => {
     const selectedRoute = config.server.getRouteFunction(data.urlData.filePath, data.urlData.method);
     if (selectedRoute) {
       const db = dbHelper.connect(path);
+    
       selectedRoute.function({
         ...data.body,
         ...data.queryParams,
@@ -67,7 +68,7 @@ const requestDataBuilder = async (req) => {
     });
   }).then(() => {
     return requestObject;
-  })
+  });
 };
 
 const buildJSONObject = (data) => {

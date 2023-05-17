@@ -1,6 +1,14 @@
+const { responseHelper } = require("../../helper/responses.helper");
+const { gameResultsService } = require("../game-results/game-results.service");
+const {
+  gameSettingsService,
+} = require("../game-settings/game-settings.service");
+const { leaderBoardsService } = require("../leaderboards/leaderboards.service");
+const { buildResponse } = require("../response/responseUtils");
+
 module.exports.usersService = {
   createUser: (db, username) => {
-    let sql = "INSERT INTO users(user_name) values(?)"; // add to leaderboards,
+    let sql = "INSERT INTO users(user_name) values(?)";
     return new Promise((resolve, reject) => {
       db.run(sql, [username], (err, res) => {
         if (err) {
@@ -11,23 +19,31 @@ module.exports.usersService = {
       });
     })
       .then(() => {
-        return this.usersService
-          .getUserId(db, username)
-          .then((response) => {
-            return this.usersService
-              .openLeaderBoardForNewUser(db, response.userId, 0)
-              .then(() => { 
-                return { message: "success" }
-              })
-          })
+        return this.usersService.getUser(db, username).then((data) => {
+          const userId = data.userId;
+          return Promise.all([
+            leaderBoardsService.createUserHighScoreEntry(db, userId),
+            gameSettingsService.createUserDifficultDefault(db, userId),
+          ])
+            .then(([leaderBoardResponse, gameSettingResponse]) => {
+              return { leaderBoardResponse, gameSettingResponse };
+            })
+            .catch(([highScoreError, userDifficultyError]) => {
+              console.log(highScoreError);
+              console.log(userDifficultyError);
+              return {
+                highScoreError: highScoreError,
+                userDifficultyError: userDifficultyError,
+              };
+            });
+        });
       });
   },
-  getUserId: (db, username) => {
+  getUser: (db, username) => {
     return new Promise((resolve, reject) => {
-      let sql = "select user_id from users u where u.user_name = ?";
+      let sql = "select user_id, user_name from users u where u.user_name = ?";
       db.all(sql, [username], (err, res) => {
         if (err) {
-          console.log(err);
           reject(err);
         } else {
           resolve(res);
@@ -35,28 +51,7 @@ module.exports.usersService = {
       });
     })
       .then((response) => {
-        console.log("--{}{}{}{}{}{}{}{}{");
-        console.log(response);
-        console.log("--{}{}{}{}{}{}{}{}{");
-        return { userId: response[0].user_id };
-      })
-      .catch((err) => {
-        return err;
-      });
-  },
-  openLeaderBoardForNewUser: (db, userId, score) => {
-    let sql = "INSERT INTO user_highscore(user_id, highscore) values(?,?)"; // add to leaderboards,
-    return new Promise((resolve, reject) => {
-      db.run(sql, [userId, score], (err, res) => {
-        if (err) {
-          reject(err);
-        } else {
-          resolve(res);
-        }
-      });
-    })
-      .then(() => {
-        return;
+        return responseHelper.responseMapper(response[0]);
       })
       .catch((err) => {
         return err;
@@ -69,63 +64,43 @@ module.exports.usersService = {
         if (err) {
           reject({ message: "Failed retieving all users", error: err });
         } else {
-          console.log(res);
           resolve(res);
         }
       });
     })
       .then((res) => {
-        console.log("service", res);
-        return res;
+        return responseHelper.responseMapper(res);
       })
       .catch((err) => {
         return err;
       });
   },
   getUserDetails: (db, username) => {
-    // inner join user_plants up on u.user_id = up.user_id
-    console.log(username);
-    return new Promise((resolve, reject) => {
-      let sql = "select * from users u where u.user_name = ?";
-      db.all(sql, [username], (err, res) => {
-        if (err) {
-          console.log(err);
-          reject(err);
-        } else {
-          resolve(res);
-        }
-      });
-    })
-      .then((response) => {
-        return response;
-      })
-      .catch((err) => {
-        return err;
-      });
-  },
-  updateUserScore: (db, userId, score) => {}, //needs end point
-  getLeaderBoards: (db, limit) => {
-    //needs endpoint
-    let sql =
-      "select u.user_id, u.user_name, uh.highscore from users u inner join user_highscore uh on uh.user_id = u.user_id limit ?";
-    return new Promise((resolve, reject) => {
-      db.all(sql, [limit], (err, res) => {
-        if (err) {
-          reject(err);
-        } else {
-          resolve(res);
-        }
-      });
-    })
-      .then((response) => {
-        console.log(response);
-        console.log(response);
-        console.log("console.log(response)");
-        return response;
+    return this.usersService
+      .getUser(db, username)
+      .then((userData) => {
+        return Promise.all([
+          leaderBoardsService.getUserScore(db, userData.userId),
+          gameSettingsService.getUserDifficultySetting(db, userData.userId),
+          gameResultsService.getUserGameResults(db, userData.userId),
+        ])
+          .then(([userScoreData, userSettings, userGameResults]) => {
+            //, userSettings, userResults
+            const data = {
+              user: userData,
+              score: userScoreData,
+              settings: userSettings,
+              results: userGameResults,
+            };
+            console.log(data);
+            return data;
+          })
+          .catch(() => {
+            return { messgae: "fail" };
+          });
       })
       .catch((error) => {
-        console.log(error);
-        return error;
+        return { message: "fail", error: error };
       });
   },
 };

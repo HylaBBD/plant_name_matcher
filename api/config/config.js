@@ -1,3 +1,6 @@
+const {
+  leaderBoardsController,
+} = require("../modules/leaderboards/leaderboards.controller");
 const { userController } = require("../modules/users/user.controller");
 const { router} = require("../modules/router/router");
 
@@ -25,9 +28,9 @@ routes.register("/user", "POST", (data) => {
 })
 
 routes.register("/leaderboard", "GET", (data) => {
-  const {connection, queryParameters} = data;
-  const limit = queryParameters.limit ? queryParameters.limit : 100;
-  return userController.getLeaderBoards(connection, limit);
+  const {connection} = data;
+  const limit = data.limit ? data.limit : 100;
+  return leaderBoardsController.getLeaderBoards(connection, limit);
 })
 
 

@@ -3,6 +3,7 @@ const {
 } = require("../modules/leaderboards/leaderboards.controller");
 const { userController } = require("../modules/users/user.controller");
 const { router} = require("../modules/router/router");
+const { gameResultsController } = require("../modules/game-results/game-results.controller");
 
 routes = router();
 
@@ -10,12 +11,6 @@ routes.register("/user/.*[A-Za-z].*", "GET", (data) => {
   const {connection, url} = data
   const username = url.substr(1).split("/")[1]
   return userController.getUserDetails(connection, username)
-})
-
-routes.register("/user/\\d+", "POST", (data) => {
-  const {connection, url, requestContext} = data
-  const id = url.substr(1).split("/")[1]
-  return userController.addPlant(connection, requestContext, id)
 })
 
 routes.register("/user", "GET", (data) => {
@@ -31,6 +26,18 @@ routes.register("/leaderboard", "GET", (data) => {
   const {connection} = data;
   const limit = data.limit ? data.limit : 100;
   return leaderBoardsController.getLeaderBoards(connection, limit);
+})
+
+routes.register("/user/\\d+/results", "GET", (data) => {
+  const { connection, url } = data;
+  const id = url.substr(1).split("/")[1];
+  return gameResultsController.getUserGameResults(connection, id);
+})
+
+routes.register("/user/\\d+/results", "POST", (data) => {
+  const { connection, url, win, layout, optionId } = data;
+  const id = url.substr(1).split("/")[1];
+  return gameResultsController.createGameResult(connection, id, optionId, layout, win);
 })
 
 

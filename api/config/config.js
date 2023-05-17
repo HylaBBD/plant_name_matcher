@@ -3,12 +3,6 @@ const { router} = require("../modules/router/router");
 
 routes = router();
 
-routes.register("/user/\\d+/high-score", "GET", (data) => {
-  const {connection, url} = data
-  const id = url.substr(1).split("/")[1]
-  return userController.getHighScore(connection, id)
-})
-
 routes.register("/user/.*[A-Za-z].*", "GET", (data) => {
   const {connection, url} = data
   const username = url.substr(1).split("/")[1]
@@ -26,8 +20,8 @@ routes.register("/user", "GET", (data) => {
 })
 
 routes.register("/user", "POST", (data) => {
-  const {connection, requestContext} = data;
-  return userController.createUser(connection, requestContext)
+  const {connection, username} = data;
+  return userController.createUser(connection, username)
 })
 
 routes.register("/leaderboard", "GET", (data) => {

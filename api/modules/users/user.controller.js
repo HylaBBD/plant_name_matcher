@@ -36,9 +36,8 @@ module.exports.userController = {
     })
   },
 
-  createUser: (db, data) => {
+  createUser: (db, username) => {
     return new Promise((resolve, reject) => {
-      const username = data.username;
       if (!username) {
         resolve(buildResponse(400, {
           message: "Failed to create user",

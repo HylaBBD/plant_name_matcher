@@ -2,54 +2,79 @@ const http = require("http");
 const { config } = require("./config/config");
 const path = "./db/plants.db";
 const { dbHelper } = require("./db/helper/database.helper");
-const querystring = require("querystring");
 const url = require("url");
 
-const getBodyData = (req) => {
-  return new Promise((resolve, reject) => {
-    let body = "";
-    req.on("data", (chunk) => {
-      body += chunk.toString();
-    });
-    req.on("end", () => {
-      const contentType = req.headers["content-type"]
-      if (contentType === "application/json") {
-        resolve(JSON.parse(body))
-      } else {
-        resolve(querystring.parse(body));
-      }
-    });
-  });
+const requestListener = async (req, res) => {
+  requestDataBuilder(req)
+  .then((data) => {
+    console.log(data.urlData.filePath)
+    const selectedRoute = config.server.getRouteFunction(data.urlData.filePath, data.urlData.method);
+    if (selectedRoute) {
+      const db = dbHelper.connect(path);
+      selectedRoute.function({
+        ...data.body,
+        ...data.queryParams,
+        url: data.urlData.filePath,
+        connection: db
+      }).then(({responseCode, response}) => {
+        console.log("RESPONSE")
+        console.log(JSON.stringify(response))
+        console.log(responseCode)
+        res.writeHead(responseCode, { "Content-Type": "application/json" });
+        res.write(JSON.stringify(response))
+        res.end();
+      })
+    } else {
+      res.writeHead(404, { "Content-Type": "application/json" });
+      res.write("this will hapen if no params found");
+      res.end();
+    }
+  }).catch((err) => {
+    console.log(err)
+    res.writeHead(500, { "Content-Type": "application/json" });
+    res.write(JSON.stringify(err))
+    res.end();
+  })
 };
 
-const requestListener = async (req, res) => {
-  const data = getBodyData(req);
-  const urlInformation = url.parse(req.url)
-  const routeConfig = config.server.getRouteFunction(urlInformation.pathname, req.method);
 
-  if (routeConfig) {
-    const db = dbHelper.connect(path); //this will create a connection to our db, easier to do this here and pass as parameters to the service with our sql
-    try {
-      const { response, responseCode } = await routeConfig.function({
-        connection: db,
-        requestContext: await data,
-        url: urlInformation.pathname,
-        queryParameters: querystring.parse(urlInformation.query)
-      }); //the function should be an object of no specification other than the connection parameter as we will not know for certain what we are getting from the fe, thsi way we can handle the object input everywhere and the obj can vary easily
-      console.log(5);
-      res.writeHead(responseCode, { "Content-Type": "application/json" });
-      res.write(JSON.stringify(response));
-      console.log(response);
-    } catch (err) {
-      console.log(err)
-      res.writeHead(500, { "Content-Type": "application/json" });
-    }
-    console.log(6);
-  } else {
-    res.writeHead(404, { "Content-Type": "application/json" });
-  }
-  // sends the response at the end of all the above code
-  res.end();
+const requestDataBuilder = async (req) => {
+  //should return a body with any data that we need
+
+  const body = [];
+  let requestObject;
+  return new Promise((resolve, reject) => {
+    req.on("data", async (chunk) => {
+      body.push(chunk);
+    });
+    req.on("end", () => {
+      try {
+        let baseURI = url.parse(req.url, true);
+        let queryParam = baseURI.query;
+        let parsedBody = Buffer.concat(body).toString();
+        let requestBody = parsedBody ? JSON.parse(parsedBody) : undefined;
+        const queryObj = queryParam ? buildJSONObject(queryParam) : undefined;
+        requestObject = {
+          queryParams: queryObj,
+          body: requestBody,
+          urlData: { filePath: baseURI.pathname, method: req.method },
+        };
+        resolve(requestObject);
+      } catch (error) {
+        requestObject = {};
+        reject(requestObject);
+      }
+    });
+  }).then(() => {
+    return requestObject;
+  })
+};
+
+const buildJSONObject = (data) => {
+  return Object.keys(data).reduce((queryObj, paramKey) => {
+    queryObj = { ...queryObj, [paramKey]: data[paramKey] };
+    return queryObj;
+  }, {});
 };
 
 const server = http.createServer(requestListener);

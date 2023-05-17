@@ -1,3 +1,6 @@
+const {
+  leaderBoardsController,
+} = require("../modules/leaderboards/leaderboards.controller");
 const { userController } = require("../modules/users/user.controller");
 module.exports.config = {
   server: {
@@ -85,6 +88,63 @@ module.exports.config = {
                   )
                   .then((response) => {
                     resolve(response);
+                  })
+                  .catch((error) => {
+                    reject(error);
+                  });
+              })
+                .then((response) => {
+                  return response;
+                })
+                .catch((error) => {
+                  return error;
+                });
+            },
+          },
+        ],
+      },
+      {
+        url: "leaderboard",
+        childRoutes: [
+          {
+            url: ["leaderboard"],
+            queryParams: [],
+            method: "GET",
+            function: (data) => {
+              return new Promise((resolve, reject) => {
+                const limit =
+                  data.queryParams && data.queryParams.limit
+                    ? data.queryParams.limit
+                    : 10;
+                leaderBoardsController
+                  .getLeaderBoards(data.connection, limit)
+                  .then((leaderboard) => {
+                    resolve(leaderboard);
+                  })
+                  .catch((error) => {
+                    reject(error);
+                  });
+              })
+                .then((response) => {
+                  return response;
+                })
+                .catch((error) => {
+                  return error;
+                });
+            },
+          },
+          {
+            url: ["leaderboard"],
+            queryParams: ["limit"],
+            method: "GET",
+            function: (data) => {
+              console.log(data);
+              return new Promise((resolve, reject) => {
+                const limit = data.limit ? data.limit : 10;
+                leaderBoardsController
+                  .getLeaderBoards(data.connection, limit)
+                  .then((leaderboard) => {
+                    resolve(leaderboard);
                   })
                   .catch((error) => {
                     reject(error);

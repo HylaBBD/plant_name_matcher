@@ -1,4 +1,9 @@
-const { dbHelper } = require("../../db/helper/database.helper");
+const { responseHelper } = require("../../helper/responses.helper");
+const { gameResultsService } = require("../game-results/game-results.service");
+const {
+  gameSettingsService,
+} = require("../game-settings/game-settings.service");
+const { leaderBoardsService } = require("../leaderboards/leaderboards.service");
 
 module.exports.usersService = {
   createUser: (db, username) => {
@@ -13,36 +18,24 @@ module.exports.usersService = {
       });
     })
       .then(() => {
-        return this.usersService
-          .getUserId(db, username)
-          .then((response) => {
-            const userId = response.userId;
-            return this.usersService
-              .openLeaderBoardForNewUser(db, userId)
-              .then(() => {
-                return this.usersService
-                  .createUserDifficultySetting(db, userId)
-                  .then((res) => {
-                    return this.usersService
-                      .getUserDetails(db, username)
-                      .then((userDetails) => {
-                        return userDetails;
-                      })
-                      .catch((err) => {
-                        return err;
-                      });
-                  })
-                  .catch((err) => {
-                    return { message: "error", error: err };
-                  });
-              })
-              .catch((error) => {
-                return error;
-              });
-          })
-          .catch((err) => {
-            return err;
-          });
+        return this.usersService.getUser(db, username).then((data) => {
+          const userId = data.userId;
+          return Promise.all([
+            leaderBoardsService.createUserHighScoreEntry(db, userId),
+            gameSettingsService.createUserDifficultDefault(db, userId),
+          ])
+            .then(([leaderBoardResponse, gameSettingResponse]) => {
+              return { leaderBoardResponse, gameSettingResponse };
+            })
+            .catch(([highScoreError, userDifficultyError]) => {
+              console.log(highScoreError);
+              console.log(userDifficultyError);
+              return {
+                highScoreError: highScoreError,
+                userDifficultyError: userDifficultyError,
+              };
+            });
+        });
       })
       .catch((err) => {
         return {
@@ -52,9 +45,9 @@ module.exports.usersService = {
         };
       });
   },
-  getUserId: (db, username) => {
+  getUser: (db, username) => {
     return new Promise((resolve, reject) => {
-      let sql = "select user_id from users u where u.user_name = ?";
+      let sql = "select user_id, user_name from users u where u.user_name = ?";
       db.all(sql, [username], (err, res) => {
         if (err) {
           reject(err);
@@ -64,25 +57,7 @@ module.exports.usersService = {
       });
     })
       .then((response) => {
-        return dbHelper.dataCompiler(response[0]);
-      })
-      .catch((err) => {
-        return err;
-      });
-  },
-  openLeaderBoardForNewUser: (db, userId, score) => {
-    let sql = "INSERT INTO user_highscore(user_id, highscore) values(?,?)"; // add to leaderboards,
-    return new Promise((resolve, reject) => {
-      db.run(sql, [userId, score], (err, res) => {
-        if (err) {
-          reject(err);
-        } else {
-          resolve(res);
-        }
-      });
-    })
-      .then(() => {
-        return;
+        return responseHelper.responseMapper(response[0]);
       })
       .catch((err) => {
         return err;
@@ -100,77 +75,38 @@ module.exports.usersService = {
       });
     })
       .then((res) => {
-        return dbHelper.dataCompiler(res);
+        return responseHelper.responseMapper(res);
       })
       .catch((err) => {
         return err;
       });
   },
   getUserDetails: (db, username) => {
-    return new Promise((resolve, reject) => {
-      let sql =
-        "select * from users u inner join user_difficulty_setting uds on uds.user_id = u.user_id inner join user_highscore uh on u.user_id = uh.user_id where u.user_name = ?";
-      db.all(sql, [username], (err, res) => {
-        if (err) {
-          reject(err);
-        } else {
-          resolve(res);
-        }
-      });
-    })
-      .then((response) => {
-        return dbHelper.dataCompiler(response[0]);
-      })
-      .catch((err) => {
-        return { err };
-      });
-  },
-  updateUserScore: (db, userId, score) => {}, //needs end point
-  getLeaderBoards: (db, limit) => {
-    let sql =
-      "select uh.user_highscore_id, uh.user_id, uh.highscore, u.user_name from users u inner join user_highscore uh on u.user_id=uh.user_id limit ?";
-    return new Promise((resolve, reject) => {
-      db.all(sql, [limit], (err, res) => {
-        if (err) {
-          console.log(err);
-          reject(err);
-        } else {
-          resolve(res);
-        }
-      });
-    })
-      .then((response) => {
-        return dbHelper.dataCompiler(response);
+    return this.usersService
+      .getUser(db, username)
+      .then((userData) => {
+        return Promise.all([
+          leaderBoardsService.getUserScore(db, userData.userId),
+          gameSettingsService.getUserDifficultySetting(db, userData.userId),
+          gameResultsService.getUserGameResults(db, userData.userId),
+        ])
+          .then(([userScoreData, userSettings, userGameResults]) => {
+            //, userSettings, userResults
+            const data = {
+              user: userData,
+              score: userScoreData,
+              settings: userSettings,
+              results: userGameResults,
+            };
+            console.log(data);
+            return data;
+          })
+          .catch(() => {
+            return { messgae: "fail" };
+          });
       })
       .catch((error) => {
-        return { error };
-      });
-  },
-  getUserDifficultySetting: (db, userId) => {
-    return new Promise((resolve, reject) => {
-      let sql = "";
-    });
-  },
-  setUserDifficultySettign: (sb) => {},
-  createUserDifficultySetting: (db, userId) => {
-    let sql = "insert into user_difficulty_setting(user_id) values(?)";
-    return new Promise((resolve, reject) => {
-      db.run(sql, [userId], (err, res) => {
-        if (err) {
-          reject(err);
-        } else {
-          resolve(res);
-        }
-      });
-    })
-      .then(() => {
-        return { message: "success" };
-      })
-      .catch((err) => {
-        return {
-          message: "Failed creating user default difficulty",
-          error: err,
-        };
+        return { message: "fail", error: error };
       });
   },
 };

@@ -24,7 +24,7 @@ const db = dbHelper.connect(filePath);
 // db.run(sql);
 
 // sql =
-//   "CREATE TABLE game_layout(game_layout_id INTEGER PRIMARY KEY AUTOINCREMENT, size INTEGER)";
+//   "CREATE TABLE game_layout(game_layout_id INTEGER PRIMARY KEY AUTOINCREMENT, root_size INTEGER)";
 // db.run(sql);
 
 // sql =
@@ -40,7 +40,11 @@ const db = dbHelper.connect(filePath);
 //   "insert into game_options(type) values('image-english'),('latin-english'),('latin-image')";
 // db.run(sql);
 
-// sql = "insert into game_layout(size) values(4),(6),(8)";
+// sql = "insert into game_layout(size) values(2),(3)";
+// db.run(sql);
+
+// sql =
+//   "insert into difficulty_setting(difficulty_display_value) values('easy'),('normal'),('hard')";
 // db.run(sql);
 
 // const tables = [

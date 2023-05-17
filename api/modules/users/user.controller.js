@@ -26,9 +26,13 @@ module.exports.userController = {
         .catch((err) => {
           reject(err);
         });
-    }).then((res) => {
-      return res;
-    });
+    })
+      .then((response) => {
+        return response;
+      })
+      .catch((error) => {
+        return error;
+      });
   },
   getUserDetails: (connection, username) => {
     return new Promise((resolve, reject) => {

@@ -3,7 +3,6 @@ const { config } = require("./config/config");
 const path = "./db/plants.db";
 const { dbHelper } = require("./db/helper/database.helper");
 const url = require("url");
-const { serverHelper } = require("./db/helper/server-response.helper");
 
 const requestListener = async (req, res) => {
   requestDataBuilder(req)

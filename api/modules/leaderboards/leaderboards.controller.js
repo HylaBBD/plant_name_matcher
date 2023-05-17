@@ -3,27 +3,29 @@ const { leaderBoardsService } = require("./leaderboards.service");
 
 module.exports.leaderBoardsController = {
   getLeaderBoards: (db, limit) => {
-    return new Promise((resolve, reject) => {
-      leaderBoardsService
-        .getLeaderBoards(db, limit)
-        .then((leaderboard) => {
-          resolve(leaderboard);
-        })
-        .catch((error) => {
-          reject(error);
-        });
-    })
+      return leaderBoardsService
+      .getLeaderBoards(db, limit)
       .then((leaderboardsResponse) => {
         return buildResponse(200, leaderboardsResponse);
       })
-      .catch((error) => {
-        return error;
-      });
   },
   getUserRank: (db, userId) => {
-    return new Promise((resolve, reject) => {});
+    return leaderBoardsService.getUserRank(db, userId)
+      .then((response) => {
+          return buildResponse(200, response)
+      })
+  },
+  getUserScore: (db, userId) => {
+    return leaderBoardsService.getUserScore(db, userId)
+      .then((response) => {
+          return buildResponse(200, response)
+      })
   },
   updateUserScore: (db, userId, score) => {
-    return new Promise((resolve, reject) => {});
+    // TODO add to router when service layer is done
+    return leaderBoardsService.updateUserScore(db, userId, score)
+          .then((response) => {
+            return buildResponse(200, response)
+          })
   },
 };

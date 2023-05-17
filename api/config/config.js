@@ -4,6 +4,7 @@ const {
 const { userController } = require("../modules/users/user.controller");
 const { router} = require("../modules/router/router");
 const { gameResultsController } = require("../modules/game-results/game-results.controller");
+const { gameSettingsController } = require("../modules/game-settings/game-settings.controller");
 
 routes = router();
 
@@ -40,6 +41,23 @@ routes.register("/user/\\d+/results", "POST", (data) => {
   return gameResultsController.createGameResult(connection, id, optionId, layout, win);
 })
 
+routes.register("/user/\\d+/rank", "GET", (data) => {
+  const { connection, url } = data;
+  const id = url.substr(1).split("/")[1];
+  return leaderBoardsController.getUserRank(connection, id);
+})
+
+routes.register("/user/\\d+/score", "GET", (data) => {
+  const { connection, url } = data;
+  const id = url.substr(1).split("/")[1];
+  return leaderBoardsController.getUserScore(connection, id);
+})
+
+routes.register("/user/\\d+/difficulty", "GET", (data) => {
+  const { connection, url } = data;
+  const id = url.substr(1).split("/")[1];
+  return gameSettingsController.getUserDifficultySetting(connection, id)
+})
 
 module.exports.config = {
   server: {

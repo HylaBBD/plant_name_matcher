@@ -1,0 +1,211 @@
+@import url('https://fonts.googleapis.com/css?family=Tangerine');
+:root{
+    --primary-color: #4C8538;
+    --secondary-color: #D0F6B8;
+    --shadow-color: #aaa;
+    --font-color: #000000;
+    --background-color: #FFFFFF;
+    --main-font: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    --accent-font: 'Tangerine', serif;
+    --background-color-transparent: rgba(255, 255, 255, 0.75);
+}
+
+[dark-mode="dark"]{
+    --primary-color: #D0F6B8;
+    --secondary-color: #4C8538;
+    --shadow-color: #575757;
+    --font-color: #FFFFFF;
+    --background-color: #000000;    
+    --background-color-transparent: rgba(0, 0, 0, 0.75);
+}
+html,
+
+body {
+    display: flex;
+    flex-direction: column;
+    position:fixed;
+    align-items:center;
+    height: 100%;
+    width: 100%;
+    justify-content: space-around;
+    font-family: var(--main-font);
+    color: var(--font-color);
+}
+img.background {
+    position: absolute;
+    min-height: 100%;
+    min-width: 100%;
+    z-index: -2;
+}
+
+a:hover{
+    cursor: pointer;
+}
+
+header{
+    position: fixed;
+    display: block;
+    top: 0;
+    background-color: var(--background-color);
+    width: 100%;
+    box-sizing: border-box;
+    box-shadow: 0 0 40px 5px #000000;
+    z-index: 10;
+}
+
+header .menu-toggle{
+    color: var(--primary-color);
+    float: right;
+    height: 3rem;
+    padding: 0.5rem 0 0.5rem 0;
+    cursor: pointer;
+    display: none;
+}
+
+header figure{
+    height: 4rem;
+    display: flex;
+    float: left;
+    margin: 0;
+}
+
+header figure a img{
+    display: block;
+    height: 90%;
+    padding: 10%;
+    cursor: pointer;
+    filter: drop-shadow(0px 0px 2px var(--shadow-color));
+}
+
+header figure h1{
+    color: var(--primary-color);
+    font-weight: bold;
+    font-family: var(--accent-font);
+    text-shadow: 3px 3px 3px var(--shadow-color);
+    text-decoration: none;
+    letter-spacing: 0.25rem;
+    transform: scale(1, 1.5);
+    flex: none;
+    padding: 0 0 0 5%;
+}
+
+header figure h1 a{
+    text-decoration: none;
+    color: var(--primary-color);
+}
+
+header nav{
+    float: right;
+}
+header nav ul{
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+header nav ul li{
+    list-style: none;
+}
+header nav ul li a, header nav ul li a:visited{
+    padding: 1rem;
+    text-align: center;
+    color: var(--primary-color);
+    text-decoration: none;
+    display: block;
+    font-size: 2rem;
+}
+header nav ul li a:hover,
+header nav ul li a.active{
+    font-weight: bold;
+    background-color: var(--secondary-color);
+}
+
+article{
+    background-color: var(--background-color);
+    display: flex;
+    justify-content: space-between;
+    width: 90vw;
+    max-width: calc(1000px + 10vw);
+    height: 80vh;
+    margin-top: 4rem;
+    border-radius: 1rem;
+    box-shadow: 0 0 40px 10px #000000;
+}
+
+
+/* LOADING SCREEN */
+#loading-screen{
+    display: none;
+    max-width: calc(1000px + 10vw);
+    height: 80vh;
+    width: 90vw;
+    background: var(--background-color-transparent);
+    position: absolute;
+    z-index: 1;
+    border-radius: 1rem;
+    box-shadow: 0 0 40px 10px #000000;
+}
+#loading-screen.display{
+    display:block;
+}
+
+#loading-screen img{
+    width: 20%;
+    display: block;
+    margin: auto;
+    animation: spin 1s infinite linear;
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+
+
+@media (max-width: 900px){
+    header{
+        padding: 0 20px;
+        z-index: 0;
+        box-shadow: none;
+    }
+
+    header h1{
+        font-size: calc(20px + 0.6vw);
+        margin: auto;
+    }
+
+    header nav{
+        display: none;
+        position: absolute;
+        width: 40%;
+        background-color: var(--background-color);
+        top: 4rem;
+    }
+
+    header nav.active{
+        right: 0;
+        display: block;
+    }
+    header nav ul{
+        display: block;
+    }
+    header nav ul li a{
+        border-bottom: 1px solid var(--primary-color);
+        border-top: 1px solid var(--primary-color);
+        width: 100%;
+        font-size: calc(20px + 0.6vw);
+        text-align: left;
+    }
+    header .menu-toggle{
+        display: flex;
+    }
+
+    article{
+        height: 90vh;
+        box-shadow: 0 0 10px 1px #000000;
+    }
+}

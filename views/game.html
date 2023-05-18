@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- https://github.com/public-apis/public-apis -->
+<head>
+    <title>Play</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="game.css">
+    <script type="module" src="../main.js"></script>
+    <script type="module" src="../game.js"></script>
+    
+</head>
+
+    <body>
+        <header>
+            <figure>
+                <a href="game.html"><img src="../static/plant-logo.png" alt="simple green fern logo with two fern leaves"></a>
+                <h1><a href="game.html" id="bb-title">Botanical Buzzwords</a></h1>
+            </figure>            
+            <nav class="header-nav">
+                <ul>
+                    <li><a class="active" href="game.html">Play</a></li>
+                    <li><a href="glossary.html">Glossary</a></li>
+                    <li><a href="leaderboard.html">Leaderboard</a></li>
+                    <li><a href="profile.html">Profile</a></li>
+                </ul>
+            </nav>
+            <figure class="menu-toggle" >
+                <img src="../static/hamburger-menu-dark.png" alt="hamburger menu icon for mobile nav view">
+            </figure>
+        </header>
+        <img class="background" src="../static/fern-background.jpg" alt="furled ferns bright green with sun">
+        <!-- <button class="play-button" href="#">Play</button> -->
+        
+
+
+        <article class="game">
+            <section id="loading-screen">
+                <img src="../static/loading-icon-dark.png" alt="loading icon of a green fern">
+            </section>
+            
+            <section class="game_lives">
+                <ul>
+                    <li><h1>Lives:</h1></li>
+                    <li><img src="../static/leaf-heart.png"></li>
+                    <li><img src="../static/leaf-heart.png"></li>
+                    <li><img src="../static/leaf-heart.png"></li>
+                </ul>
+            </section>
+
+
+            <!-- GAME TILES -->
+            <section class="game_tiles mode1">
+                <figure class="tile selectable">
+                    <p class = "plantTile">Temp</p>
+                    <!-- <img class = "plantPic" src=""> -->
+                </figure>                
+                <figure class="tile selectable">
+                    <p class = "plantTile">Temp</p>
+                    <!-- <img class = "plantPic" src=""> -->
+                </figure>                
+                <figure class="tile selectable">
+                    <p class = "plantTile">Temp</p>
+                    <!-- <img class = "plantPic" src=""> -->
+                </figure>                
+                <figure class="tile selectable">
+                    <p class = "plantTile">Temp</p>
+                    <!-- <img class = "plantPic" src=""> -->
+                </figure>     
+            </section>
+            <section class="game_tiles mode2">
+                <figure class="tile">
+                    <p class = "plantScientificName">Temp</p>
+                    <img class = "plantPic" src="">
+                </figure>                
+                <figure class="tile">
+                    <p class = "plantScientificName"></p>
+                    <img class = "plantPic" src="">
+                </figure>                
+                <figure class="tile">
+                    <p class = "plantScientificName">Temp</p>
+                    <img class = "plantPic" src="">
+                </figure>                
+                <figure class="tile">
+                    <p class = "plantScientificName"></p>
+                    <img class = "plantPic" src="">
+                </figure>                 
+                <figure class="tile">
+                    <p class = "plantScientificName">Temp</p>
+                    <img class = "plantPic" src="">
+                </figure>                
+                <figure class="tile">
+                    <p class = "plantScientificName"></p>
+                    <img class = "plantPic" src="">
+                </figure>             
+                <figure class="tile">
+                    <p class = "plantScientificName">Temp</p>
+                    <img class = "plantPic" src="">
+                </figure>                
+                <figure class="tile">
+                    <p class = "plantScientificName"></p>
+                    <img class = "plantPic" src="">
+                </figure>                            
+                <figure class="tile">
+                    <p class = "plantScientificName"></p>
+                    <img class = "plantPic" src="">
+                </figure> 
+            </section>
+            
+            <section class="game_score">
+                <ul>
+                    <li><h1>Score:</h1></li>
+                    <li id="score">0</li>
+                </ul>
+            </section>
+        </article>
+    </body>
+</html>

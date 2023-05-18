@@ -169,7 +169,6 @@ function checkSelected(tile){
             console.log(liveState);
             renderLives(liveState);
         }       
-
     }
 }
 

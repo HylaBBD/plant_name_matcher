@@ -65,9 +65,9 @@
 .mode1 .tile{
     background-color: var(--secondary-color);
     width: calc(5rem + 20vw);
-    max-width: 20rem;
+    max-width: 17rem;
     height: calc(5rem + 20vw);
-    max-height: 20rem;
+    max-height: 17rem;
     font-size: calc(1rem + 0.2em);
     padding: 0;
     margin: 0;

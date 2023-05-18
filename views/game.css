@@ -29,16 +29,18 @@
 }
 .tile:hover{
     box-shadow: 0 0 20px 5px var(--shadow-color);
-    cursor: pointer;
 }
 
 .game_tiles .selected{
     box-shadow: 0 0 20px 5px var(--primary-color);
 }
 
+.game_tiles .selectable:hover{
+    cursor: pointer;
+}
+
 .game_tiles .selectedCorrect{
     box-shadow: none;
-    background-color: blue;
 }
 .tile img{
     border-radius: 1rem;

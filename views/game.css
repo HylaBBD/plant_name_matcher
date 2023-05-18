@@ -127,4 +127,20 @@
 
 
 
+/* LOADING SCREEN */
+#game-end-screen{
+    display: none;
+    max-width: calc(1000px + 10vw);
+    height: 80vh;
+    width: 90vw;
+    background: var(--background-color);
+    position: absolute;
+    z-index: 1;
+    border-radius: 1rem;
+    box-shadow: 0 0 40px 10px #000000;
+}
+#game-end-screen.display{
+    display:block;
+}
+
 

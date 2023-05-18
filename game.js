@@ -1,5 +1,6 @@
 // PICTURE AND LATIN NAMES - - - - - - - - - - - - 
-const key = "sk-CtSG645bb2c924947866"; // I KNOW THIS IS BAD WE WILL TAKE IT OUT LOL
+// const key = "sk-CtSG645bb2c924947866"; // JESSE BBD EMAIL
+const key = "sk-q8UK6466165b60d98975"; // JESSE jess44go EMAIL
 const level = 1;
 let numberPlants;
 
@@ -14,48 +15,7 @@ switch(level){
         numberPlants = 2;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*
-    const loadImage = src => 
-        new Promise((resolve, reject) =>{
-            const img = tileImages[i].image;
-            img.onload = () => resolve(img);
-            img.src = src   
-        });
-
-    loadImage(plantPhotoURL).then(image => counter++ );
-    // tileImages[i].src = plantPhotoURL
-    // tileImages[i].onload
-}
-
-if(counter == 2){
-    hideLoadingScreen()
-}
-*/
-
-
-
-
-
-
-
-
-
-
-// LOADING ICON - - - - - - - - - - - - 
+// LOADING SCREEN - - - - - - - - - - - - 
 const loadingSection = document.getElementById("loading-screen");
 const loadingSectionImage = document.getElementById("loading-screen-image")
 
@@ -66,52 +26,71 @@ function hideLoadingScreen() {
     loadingSection.classList.remove("display");
 }
 
+// GAME END SCREEN - - - - - - - - - - - - 
+const gameEndSection = document.getElementById("game-end-screen");
+const gameEndScore = document.getElementById("game-end-score");
 
+function displayGameEndScreen() {
+    gameEndSection.classList.add("display");
+    gameEndScore.innerText = "Score: " + scoreState;
+
+}
+function hideGameEndScreen() {
+    gameEndSection.classList.remove("display");
+}
 
 const min = 1;
 const max = 3000; // There are 3000 plants in the API available to the free version
 let tileImages = document.getElementsByClassName("plantPic");
 let tile = document.getElementsByClassName("plantTile");
 
-displayLoadingScreen()
+hideGameEndScreen(); 
+displayLoadingScreen();
 
-const plantPicURLArray = new Array(numberPlants); 
-const plantScientificNameArray = new Array(numberPlants); 
-const plantCommonNameArray = new Array(numberPlants); 
-const plantIDArray = new Array(numberPlants);
-const positionArray = new Array(numberPlants*2);
+let plantScientificNameArray = new Array(numberPlants); 
+let plantCommonNameArray = new Array(numberPlants); 
+let plantIDArray = new Array(numberPlants);
+let positionArray = new Array(numberPlants*2);
 
 let scoreState = 0;
 let liveState = 3;
+let numberCompleted = 0;
 
-for(let i = 0; i < numberPlants*2; i++){
-    positionArray[i] = i;
+async function generateLevel(){
+    plantScientificNameArray = new Array(numberPlants); 
+    plantCommonNameArray = new Array(numberPlants); 
+    plantIDArray = new Array(numberPlants);
+    positionArray = new Array(numberPlants*2);
+
+    for(let i = 0; i < numberPlants*2; i++){
+        positionArray[i] = i;
+    }
+
+    positionArray.sort(() => (Math.random() > .5) ? 1 : -1);
+
+    for(let i = 0; i < numberPlants; i++){  
+        plantIDArray[i] = Math.floor(Math.random() * (max - min + 1)) + min;
+
+        let link = "https://perenual.com/api/species/details/" + plantIDArray[i] + "?key=" + key
+        const plantData = JSON.parse(JSON.stringify(await (await fetch(link)).json()))
+
+        plantScientificNameArray[i] = plantData.scientific_name
+        plantCommonNameArray[i] = plantData.common_name
+
+        console.log(i + " SCIENTIFIC NAME: " + plantScientificNameArray[i]);
+        console.log(i + " COMMON NAME: " + plantCommonNameArray[i]);
+    }
+
+    let counter = 0;
+    for(let i = 0; i < numberPlants; i++){  
+        tile[positionArray[counter]].textContent = plantScientificNameArray[i];
+        counter++;
+        tile[positionArray[counter]].textContent = plantCommonNameArray[i];
+        counter++;
+    }
 }
 
-positionArray.sort(() => (Math.random() > .5) ? 1 : -1);
-
-for(let i = 0; i < numberPlants; i++){  
-    plantIDArray[i] = Math.floor(Math.random() * (max - min + 1)) + min;
-
-    let link = "https://perenual.com/api/species/details/" + plantIDArray[i] + "?key=" + key
-    const plantData = JSON.parse(JSON.stringify(await (await fetch(link)).json()))
-
-    plantScientificNameArray[i] = plantData.scientific_name
-    plantCommonNameArray[i] = plantData.common_name
-
-    console.log(i + " SCIENTIFIC NAME: " + plantScientificNameArray[i]);
-    console.log(i + " COMMON NAME: " + plantCommonNameArray[i]);
-}
-
-let counter = 0;
-for(let i = 0; i < numberPlants; i++){  
-    tile[positionArray[counter]].textContent = plantScientificNameArray[i];
-    counter++;
-    tile[positionArray[counter]].textContent = plantCommonNameArray[i];
-    counter++;
-}
-hideLoadingScreen()
-
+generateLevel().then(() => hideLoadingScreen());
 
 
 
@@ -127,9 +106,27 @@ if (gameTiles != null) {
 
 function renderLives(lives) {
     let currentLivesList = document.getElementById("lives-list");
-    for(let i=0; i<lives;i++){
-    currentLivesList.innerHTML += "<li><img src='../static/leaf-heart.png'></li>";
+    currentLivesList.innerHTML = "";
+    for(let i=0; i<lives; i++){
+        currentLivesList.innerHTML += "<li><img src='../static/leaf-heart.png'></li>";
     }
+}
+
+function checkGameEnd(){
+    if(liveState <= 0){
+        displayGameEndScreen();
+    }else{
+        renderLives(liveState);
+    }
+
+    if(numberCompleted == numberPlants){
+        nextLevel();
+    }
+}
+
+function nextLevel(){
+    displayLoadingScreen()
+    generateLevel().then(() => hideLoadingScreen());
 }
 
 function checkSelected(tile){
@@ -151,6 +148,8 @@ function checkSelected(tile){
                         selectedTiles[1].classList.remove("selectable");
                         selectedTiles[0].classList.remove("selectable");
                         trueCheck = true;
+                        numberCompleted++;
+                        checkGameEnd();
                         break;
                 } 
         }
@@ -159,8 +158,7 @@ function checkSelected(tile){
             selectedTiles[1].classList.remove("selected");
             selectedTiles[0].classList.remove("selected");
             liveState-=1;
-            console.log(liveState);
-            renderLives(liveState);
+            checkGameEnd();
         }       
     }
 }

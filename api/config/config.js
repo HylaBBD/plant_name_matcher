@@ -25,7 +25,7 @@ routes.register("/user", "POST", (data) => {
 
 routes.register("/leaderboard", "GET", (data) => {
   const {connection} = data;
-  const limit = data.limit ? data.limit : 100;
+  const limit = data.limit ? data.limit : 10;
   return leaderBoardsController.getLeaderBoards(connection, limit);
 })
 
@@ -57,6 +57,12 @@ routes.register("/user/\\d+/difficulty", "GET", (data) => {
   const { connection, url } = data;
   const id = url.substr(1).split("/")[1];
   return gameSettingsController.getUserDifficultySetting(connection, id)
+})
+
+routes.register("/user/\\d+/plant", "PATCH", (data) => {
+  const { connection, url, plantId } = data;
+  const id = url.substr(1).split("/")[1];
+  return userController.updateUserPlants(connection, id, plantId)
 })
 
 module.exports.config = {

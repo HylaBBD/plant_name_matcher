@@ -4,7 +4,6 @@ const validUsername = new RegExp(".*[A-Za-z].*")
 
 
 module.exports.userController = {
-
   createUser: (db, username) => {
     return new Promise((resolve, reject) => {
       if (!username) {
@@ -45,4 +44,18 @@ module.exports.userController = {
             return buildResponse(200, response)
           })
   },
+  updateUserPlants: (connection, id, plantId) => {
+    // TODO check this when the service layer is written
+    return usersService.updateUserPlants(connection, id, plantId)
+        .then((response) => {
+          return buildResponse(200, response)
+        })
+  },
+  updateUserDifficulty: (connection, id, difficultyId) => {
+    // TODO check this when the service layer is written
+    return usersService.updateUserDifficulty(connection, id, difficultyId)
+        .then((response) => {
+          return buildResponse(200, response);
+        })
+  }
 };

@@ -57,11 +57,12 @@ let liveState = 3;
 let numberCompleted = 0;
 
 async function generateLevel(){
+    numberCompleted = 0;
     plantScientificNameArray = new Array(numberPlants); 
     plantCommonNameArray = new Array(numberPlants); 
     plantIDArray = new Array(numberPlants);
     positionArray = new Array(numberPlants*2);
-
+    
     for(let i = 0; i < numberPlants*2; i++){
         positionArray[i] = i;
     }
@@ -80,14 +81,16 @@ async function generateLevel(){
         console.log(i + " SCIENTIFIC NAME: " + plantScientificNameArray[i]);
         console.log(i + " COMMON NAME: " + plantCommonNameArray[i]);
     }
-
+    tile = document.getElementsByClassName("plantTile");
     let counter = 0;
+
     for(let i = 0; i < numberPlants; i++){  
         tile[positionArray[counter]].textContent = plantScientificNameArray[i];
         counter++;
         tile[positionArray[counter]].textContent = plantCommonNameArray[i];
         counter++;
     }
+    resetSelectable();
 }
 
 generateLevel().then(() => hideLoadingScreen());
@@ -129,6 +132,15 @@ function nextLevel(){
     generateLevel().then(() => hideLoadingScreen());
 }
 
+function resetSelectable(){
+    gameTiles = document.getElementsByClassName("tile");
+    for(let tile of gameTiles){
+        tile.classList.add("selectable");
+        tile.classList.remove("selected");
+        tile.classList.remove("selectedCorrect");
+    } 
+}
+
 function checkSelected(tile){
     tile.classList.toggle("selected");  
     let selectedTiles = document.getElementsByClassName("selected selectable");
@@ -139,7 +151,7 @@ function checkSelected(tile){
                 && selectedTiles[1].textContent.trim() == plantCommonNameArray[i])
                 ||(selectedTiles[1].textContent.trim() == plantScientificNameArray[i]
                     && selectedTiles[0].textContent.trim() == plantCommonNameArray[i])){
-                        scoreState = scoreState+2;
+                        scoreState++;
                         gameScore.textContent = scoreState;
                         selectedTiles[1].textContent = "";
                         selectedTiles[0].textContent = "";

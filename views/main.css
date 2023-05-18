@@ -148,12 +148,14 @@ article{
     box-shadow: 0 0 40px 10px #000000;
 }
 #loading-screen.display{
-    display:block;
+    display:flex;
+    align-self: center;
 }
 
 #loading-screen img{
     width: 20%;
-    display: block;
+    display: flex;
+    align-self: center;
     margin: auto;
     animation: spin 1s infinite linear;
 }

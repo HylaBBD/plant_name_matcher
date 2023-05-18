@@ -1,16 +1,35 @@
 // TILE SELECTED - - - - - - - - - - - - - - - -
 let gameTiles = document.getElementsByClassName("tile");
+
 if (gameTiles != null) {
     for(let tile of gameTiles){
         (function(tile){
             tile.addEventListener("click", function () {
-                for(let t of gameTiles){
-                    if(t != tile){
-                        t.classList.remove("selected");
-                    }
+                tile.classList.add("selected");  
+
+                let selectedTiles = document.getElementsByClassName("selected");
+                if(selectedTiles.length > 2){
+                    console.log(selectedTiles);
+                    console.log(selectedTiles[0]);
+                    selectedTiles[0].classList.remove("selected");
+
+                    console.log(selectedTiles[1]);
+                    selectedTiles[1].classList.remove("selected");
+                    
+                    console.log(selectedTiles[2]);
+                    selectedTiles[2].classList.remove("selected");
+//                    selectedTiles[0].classList.remove("selected");
+  //                  selectedTiles[1].classList.remove("selected");
+                    // if MATCH - deselect both - make grey - add to score
+                    // if not match - deselect both - lose a life
                 }
-                tile.classList.toggle("selected");  
-                console.log("TILE"); // need to deselect other tiles
+
+                // for(let t of gameTiles){
+                //     if(t.hasclass)
+                //     if(t != tile){
+                //         t.classList.remove("selected");
+                //     }
+                // }
             });
         })(tile);
     }
@@ -70,26 +89,65 @@ function hideLoadingScreen() {
 
 // PICTURE AND LATIN NAMES - - - - - - - - - - - - 
 const key = "sk-B9J764637ff1f1114952"; // I KNOW THIS IS BAD WE WILL TAKE IT OUT LOL
-let numberPlants = 2
+const level = 1;
+let numberPlants;
+
+switch(level){
+    case 1: 
+        numberPlants = 2;
+        break;
+    case 2:
+        numberPlants = 4;
+        break;
+    default: 
+        numberPlants = 2;
+}
+
 const min = 1;
 const max = 3000; // There are 3000 plants in the API available to the free version
 let tileImages = document.getElementsByClassName("plantPic");
-let tileScientificNames = document.getElementsByClassName("plantScientificName");
+let tile = document.getElementsByClassName("plantTile");
+// let tileCommonNames = document.getElementsByClassName("plantCommonName");
 
 displayLoadingScreen()
 
+const plantPicURLArray = new Array(numberPlants); 
+const plantScientificNameArray = new Array(numberPlants); 
+const plantCommonNameArray = new Array(numberPlants); 
+const plantIDArray = new Array(numberPlants);
+const positionArray = new Array(numberPlants*2);
+
+let scoreState = 0;
+let liveState = 3;
+
+for(let i = 0; i < numberPlants*2; i++){
+    positionArray[i] = i;
+}
+
+positionArray.sort(() => (Math.random() > .5) ? 1 : -1);
+
+
+for(let i = 0; i < numberPlants*2; i++){
+    console.log(positionArray[i]);
+}
+
 for(let i = 0; i < numberPlants; i++){  
-    let plantID = Math.floor(Math.random() * (max - min + 1)) + min;
-    let link = "https://perenual.com/api/species/details/" + plantID + "?key=" + key
-       
+    plantIDArray[i] = Math.floor(Math.random() * (max - min + 1)) + min;
+
+    let link = "https://perenual.com/api/species/details/" + plantIDArray[i] + "?key=" + key
     const plantData = JSON.parse(JSON.stringify(await (await fetch(link)).json()))
 
-    let plantCommonName = plantData.common_name
-    let plantScientificName = plantData.scientific_name
-    let plantPhotoURL = plantData.default_image.original_url
-    tileScientificNames[i].textContent = plantScientificName
-    tileImages[i].src = plantPhotoURL
+    plantScientificNameArray[i] = plantData.scientific_name
+    plantCommonNameArray[i] = plantData.common_name
+    console.log(plantCommonNameArray[i]);
+}
 
+let counter = 0;
+for(let i = 0; i < numberPlants; i++){  
+    tile[positionArray[counter]].textContent = plantScientificNameArray[i];
+    counter++;
+    tile[positionArray[counter]].textContent = plantCommonNameArray[i];
+    counter++;
 }
 hideLoadingScreen()
 

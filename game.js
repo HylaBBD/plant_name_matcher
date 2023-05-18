@@ -69,7 +69,7 @@ function hideLoadingScreen() {
 }
 
 // PICTURE AND LATIN NAMES - - - - - - - - - - - - 
-const key = "sk-B9J764637ff1f1114952"; // I KNOW THIS IS BAD WE WILL TAKE IT OUT LOL
+const key = "sk-sc6h646616fbac420976"; // I KNOW THIS IS BAD WE WILL TAKE IT OUT LOL
 let numberPlants = 2
 const min = 1;
 const max = 3000; // There are 3000 plants in the API available to the free version

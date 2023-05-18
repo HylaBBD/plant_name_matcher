@@ -115,6 +115,9 @@ function renderLives(lives) {
     }
 }
 
+let gameEndPlayAgain = document.getElementById("game-end-play-again");
+gameEndPlayAgain.addEventListener("click", () => newGame());
+
 function checkGameEnd(){
     if(liveState <= 0){
         displayGameEndScreen();
@@ -127,6 +130,18 @@ function checkGameEnd(){
     }
 }
 
+function newGame(){
+    scoreState = 0;
+    gameScore.textContent = scoreState;
+
+    liveState = 3;
+    numberCompleted = 0;
+    renderLives(liveState);
+
+    hideGameEndScreen();
+    displayLoadingScreen()
+    generateLevel().then(() => hideLoadingScreen());
+}
 function nextLevel(){
     displayLoadingScreen()
     generateLevel().then(() => hideLoadingScreen());

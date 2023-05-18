@@ -1,6 +1,7 @@
 // PICTURE AND LATIN NAMES - - - - - - - - - - - - 
 // const key = "sk-CtSG645bb2c924947866"; // JESSE BBD EMAIL
-const key = "sk-q8UK6466165b60d98975"; // JESSE jess44go EMAIL
+// const key = "sk-q8UK6466165b60d98975"; // JESSE jess44go EMAIL
+const key = "sk-Ir4T64662d40d85b0978";
 const level = 1;
 let numberPlants;
 

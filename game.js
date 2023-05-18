@@ -90,11 +90,6 @@ for(let i = 0; i < numberPlants*2; i++){
 
 positionArray.sort(() => (Math.random() > .5) ? 1 : -1);
 
-
-for(let i = 0; i < numberPlants*2; i++){
-    console.log(positionArray[i]);
-}
-
 for(let i = 0; i < numberPlants; i++){  
     plantIDArray[i] = Math.floor(Math.random() * (max - min + 1)) + min;
 
@@ -139,8 +134,7 @@ function renderLives(lives) {
 
 function checkSelected(tile){
     tile.classList.toggle("selected");  
-
-    let selectedTiles = document.getElementsByClassName("selected");
+    let selectedTiles = document.getElementsByClassName("selected selectable");
     let trueCheck = false;
     if(selectedTiles.length == 2){
         for(let i = 0; i < numberPlants; i++){
@@ -153,16 +147,15 @@ function checkSelected(tile){
                         selectedTiles[1].textContent = "";
                         selectedTiles[0].textContent = "";
                         selectedTiles[1].classList.add("selectedCorrect");
-                        selectedTiles[0].classList.add("selectedCorrect");
-                        selectedTiles[1].classList.remove("selected");
-                        selectedTiles[0].classList.remove("selected");
+                        selectedTiles[0].classList.add("selectedCorrect");                    
+                        selectedTiles[1].classList.remove("selectable");
+                        selectedTiles[0].classList.remove("selectable");
                         trueCheck = true;
                         break;
                 } 
         }
 
         if(!trueCheck){
-            console.log("YOU DO NOT WIN");
             selectedTiles[1].classList.remove("selected");
             selectedTiles[0].classList.remove("selected");
             liveState-=1;

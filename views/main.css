@@ -44,11 +44,13 @@ a:hover{
 
 header{
     position: fixed;
-    display: block;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: row;
     top: 0;
     background-color: var(--background-color);
     width: 100%;
-    box-sizing: border-box;
     box-shadow: 0 0 40px 5px #000000;
     z-index: 10;
 }
@@ -81,12 +83,13 @@ header figure h1{
     color: var(--primary-color);
     font-weight: bold;
     font-family: var(--accent-font);
+    font-size: calc(20px + 0.6vw);
     text-shadow: 3px 3px 3px var(--shadow-color);
     text-decoration: none;
     letter-spacing: 0.25rem;
     transform: scale(1, 1.5);
     flex: none;
-    padding: 0 0 0 5%;
+    padding-left: 1rem;
 }
 
 header figure h1 a{
@@ -168,20 +171,16 @@ article{
 
 @media (max-width: 900px){
     header{
-        padding: 0 20px;
-        z-index: 0;
         box-shadow: none;
     }
 
     header h1{
         font-size: calc(20px + 0.6vw);
-        margin: auto;
     }
 
     header nav{
         display: none;
         position: absolute;
-        width: 40%;
         background-color: var(--background-color);
         top: 4rem;
     }

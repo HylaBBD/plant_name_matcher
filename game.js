@@ -1,38 +1,17 @@
-// TILE SELECTED - - - - - - - - - - - - - - - -
-let gameTiles = document.getElementsByClassName("tile");
+// PICTURE AND LATIN NAMES - - - - - - - - - - - - 
+const key = "sk-CtSG645bb2c924947866"; // I KNOW THIS IS BAD WE WILL TAKE IT OUT LOL
+const level = 1;
+let numberPlants;
 
-if (gameTiles != null) {
-    for(let tile of gameTiles){
-        (function(tile){
-            tile.addEventListener("click", function () {
-                tile.classList.add("selected");  
-
-                let selectedTiles = document.getElementsByClassName("selected");
-                if(selectedTiles.length > 2){
-                    console.log(selectedTiles);
-                    console.log(selectedTiles[0]);
-                    selectedTiles[0].classList.remove("selected");
-
-                    console.log(selectedTiles[1]);
-                    selectedTiles[1].classList.remove("selected");
-                    
-                    console.log(selectedTiles[2]);
-                    selectedTiles[2].classList.remove("selected");
-//                    selectedTiles[0].classList.remove("selected");
-  //                  selectedTiles[1].classList.remove("selected");
-                    // if MATCH - deselect both - make grey - add to score
-                    // if not match - deselect both - lose a life
-                }
-
-                // for(let t of gameTiles){
-                //     if(t.hasclass)
-                //     if(t != tile){
-                //         t.classList.remove("selected");
-                //     }
-                // }
-            });
-        })(tile);
-    }
+switch(level){
+    case 1: 
+        numberPlants = 2;
+        break;
+    case 2:
+        numberPlants = 4;
+        break;
+    default: 
+        numberPlants = 2;
 }
 
 
@@ -87,27 +66,12 @@ function hideLoadingScreen() {
     loadingSection.classList.remove("display");
 }
 
-// PICTURE AND LATIN NAMES - - - - - - - - - - - - 
-const key = "sk-B9J764637ff1f1114952"; // I KNOW THIS IS BAD WE WILL TAKE IT OUT LOL
-const level = 1;
-let numberPlants;
 
-switch(level){
-    case 1: 
-        numberPlants = 2;
-        break;
-    case 2:
-        numberPlants = 4;
-        break;
-    default: 
-        numberPlants = 2;
-}
 
 const min = 1;
 const max = 3000; // There are 3000 plants in the API available to the free version
 let tileImages = document.getElementsByClassName("plantPic");
 let tile = document.getElementsByClassName("plantTile");
-// let tileCommonNames = document.getElementsByClassName("plantCommonName");
 
 displayLoadingScreen()
 
@@ -139,7 +103,9 @@ for(let i = 0; i < numberPlants; i++){
 
     plantScientificNameArray[i] = plantData.scientific_name
     plantCommonNameArray[i] = plantData.common_name
-    console.log(plantCommonNameArray[i]);
+
+    console.log(i + " SCIENTIFIC NAME: " + plantScientificNameArray[i]);
+    console.log(i + " COMMON NAME: " + plantCommonNameArray[i]);
 }
 
 let counter = 0;
@@ -154,7 +120,49 @@ hideLoadingScreen()
 
 
 
+// TILE SELECTED - - - - - - - - - - - - - - - -
+let gameTiles = document.getElementsByClassName("tile");
+let gameScore = document.getElementById("score");
+if (gameTiles != null) {
+    for(let tile of gameTiles){
+        tile.addEventListener("click", () => checkSelected(tile));
+    }
+}
 
+
+
+function checkSelected(tile){
+    tile.classList.toggle("selected");  
+
+    let selectedTiles = document.getElementsByClassName("selected");
+    let trueCheck = false;
+    if(selectedTiles.length == 2){
+        for(let i = 0; i < numberPlants; i++){
+            if((selectedTiles[0].textContent.trim() == plantScientificNameArray[i]
+                && selectedTiles[1].textContent.trim() == plantCommonNameArray[i])
+                ||(selectedTiles[1].textContent.trim() == plantScientificNameArray[i]
+                    && selectedTiles[0].textContent.trim() == plantCommonNameArray[i])){
+                        scoreState = scoreState+2;
+                        gameScore.textContent = scoreState;
+                        selectedTiles[1].textContent = "";
+                        selectedTiles[0].textContent = "";
+                        selectedTiles[1].classList.add("selectedCorrect");
+                        selectedTiles[0].classList.add("selectedCorrect");
+                        selectedTiles[1].classList.remove("selected");
+                        selectedTiles[0].classList.remove("selected");
+                        trueCheck = true;
+                        break;
+                } 
+        }
+
+        if(!trueCheck){
+            console.log("YOU DO NOT WIN");
+            selectedTiles[1].classList.remove("selected");
+            selectedTiles[0].classList.remove("selected");  
+        }       
+
+    }
+}
 
 
 

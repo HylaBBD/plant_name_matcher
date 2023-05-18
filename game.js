@@ -130,6 +130,12 @@ if (gameTiles != null) {
 }
 
 
+function renderLives(lives) {
+    let currentLivesList = document.getElementById("lives-list");
+    for(let i=0; i<lives;i++){
+    currentLivesList.innerHTML += "<li><img src='../static/leaf-heart.png'></li>";
+    }
+}
 
 function checkSelected(tile){
     tile.classList.toggle("selected");  
@@ -158,7 +164,10 @@ function checkSelected(tile){
         if(!trueCheck){
             console.log("YOU DO NOT WIN");
             selectedTiles[1].classList.remove("selected");
-            selectedTiles[0].classList.remove("selected");  
+            selectedTiles[0].classList.remove("selected");
+            liveState-=1;
+            console.log(liveState);
+            renderLives(liveState);
         }       
 
     }

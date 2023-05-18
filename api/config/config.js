@@ -1,12 +1,10 @@
-const {
-  leaderBoardsController,
-} = require("../modules/leaderboards/leaderboards.controller");
+const { leaderBoardsController } = require("../modules/leaderboards/leaderboards.controller");
 const { userController } = require("../modules/users/user.controller");
 const { router} = require("../modules/router/router");
 const { gameResultsController } = require("../modules/game-results/game-results.controller");
 const { gameSettingsController } = require("../modules/game-settings/game-settings.controller");
 
-routes = router();
+const routes = router();
 
 routes.register("/user/.*[A-Za-z].*", "GET", (data) => {
   const {connection, url} = data
@@ -23,12 +21,6 @@ routes.register("/user", "POST", (data) => {
   return userController.createUser(connection, username)
 })
 
-routes.register("/leaderboard", "GET", (data) => {
-  const {connection} = data;
-  const limit = data.limit ? data.limit : 10;
-  return leaderBoardsController.getLeaderBoards(connection, limit);
-})
-
 routes.register("/user/\\d+/results", "GET", (data) => {
   const { connection, url } = data;
   const id = url.substr(1).split("/")[1];
@@ -36,9 +28,9 @@ routes.register("/user/\\d+/results", "GET", (data) => {
 })
 
 routes.register("/user/\\d+/results", "POST", (data) => {
-  const { connection, url, win, layout, optionId } = data;
+  const { connection, url, layout, optionId } = data;
   const id = url.substr(1).split("/")[1];
-  return gameResultsController.createGameResult(connection, id, optionId, layout, win);
+  return gameResultsController.createGameResult(connection, id, optionId, layout);
 })
 
 routes.register("/user/\\d+/rank", "GET", (data) => {
@@ -63,6 +55,18 @@ routes.register("/user/\\d+/plant", "PATCH", (data) => {
   const { connection, url, plantId } = data;
   const id = url.substr(1).split("/")[1];
   return userController.updateUserPlants(connection, id, plantId)
+})
+
+routes.register("/user/\\d+/plant", "DELETE", (data) => {
+  const { connection, url, plantId } = data;
+  const id = url.substr(1).split("/")[1];
+  return userController.deleteUserPlant(connection, id, plantId)
+})
+
+routes.register("/leaderboard", "GET", (data) => {
+  const {connection} = data;
+  const limit = data.limit ? data.limit : 10;
+  return leaderBoardsController.getLeaderBoards(connection, limit);
 })
 
 module.exports.config = {

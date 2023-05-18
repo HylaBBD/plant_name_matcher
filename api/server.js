@@ -3,8 +3,13 @@ const { config } = require("./config/config");
 const path = "./db/plants.db";
 const { dbHelper } = require("./db/helper/database.helper");
 const url = require("url");
+const cors = require("cors");
 
 const requestListener = async (req, res) => {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+
   requestDataBuilder(req)
     .then((data) => {
       const selectedRoute =

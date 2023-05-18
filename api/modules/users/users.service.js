@@ -6,10 +6,10 @@ const {
 const { leaderBoardsService } = require("../leaderboards/leaderboards.service");
 
 module.exports.usersService = {
-  createUser: (db, username) => {
-    let sql = "INSERT INTO users(user_name) values(?)";
+  createUser: (db, username, password) => {
+    let sql = "INSERT INTO users(user_name, password) values(?,?)";
     return new Promise((resolve, reject) => {
-      db.run(sql, [username], (err, res) => {
+      db.run(sql, [username, password], (err, res) => {
         if (err) {
           reject(err);
         } else {

@@ -36,7 +36,7 @@ module.exports.config = {
             function: (data) => {
               return new Promise((resolve, reject) => {
                 userController
-                  .createUser(data.connection, data.username)
+                  .createUser(data.connection, data.username, data.password)
                   .then((res) => {
                     resolve(res);
                   })

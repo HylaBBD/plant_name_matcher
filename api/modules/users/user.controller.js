@@ -12,14 +12,19 @@ module.exports.userController = {
         .catch((err) => {
           reject(err);
         });
-    }).then((res) => {
-      return res;
-    });
+    })
+      .then((res) => {
+        console.log(res);
+        return res;
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   },
-  createUser: (connection, username) => {
+  createUser: (connection, username, password) => {
     return new Promise((resolve, reject) => {
       usersService
-        .createUser(connection, username)
+        .createUser(connection, username, password)
         .then((res) => {
           resolve(res);
         })

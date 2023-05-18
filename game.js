@@ -1,32 +1,18 @@
-// PICTURE AND LATIN NAMES - - - - - - - - - - - - 
+// PICTURE AND LATIN NAMES - - - - - - - - - - - -
 const key = "sk-CtSG645bb2c924947866"; // I KNOW THIS IS BAD WE WILL TAKE IT OUT LOL
 const level = 1;
 let numberPlants;
 
-switch(level){
-    case 1: 
-        numberPlants = 2;
-        break;
-    case 2:
-        numberPlants = 4;
-        break;
-    default: 
-        numberPlants = 2;
+switch (level) {
+  case 1:
+    numberPlants = 2;
+    break;
+  case 2:
+    numberPlants = 4;
+    break;
+  default:
+    numberPlants = 2;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 /*
     const loadImage = src => 
@@ -46,118 +32,110 @@ if(counter == 2){
 }
 */
 
-
-
-
-
-
-
-
-
-
-// LOADING ICON - - - - - - - - - - - - 
+// LOADING ICON - - - - - - - - - - - -
 const loadingSection = document.getElementById("loading-screen");
-const loadingSectionImage = document.getElementById("loading-screen-image")
+const loadingSectionImage = document.getElementById("loading-screen-image");
 
 function displayLoadingScreen() {
-    loadingSection.classList.add("display");
+  loadingSection.classList.add("display");
 }
 function hideLoadingScreen() {
-    loadingSection.classList.remove("display");
+  loadingSection.classList.remove("display");
 }
-
-
 
 const min = 1;
 const max = 3000; // There are 3000 plants in the API available to the free version
 let tileImages = document.getElementsByClassName("plantPic");
 let tile = document.getElementsByClassName("plantTile");
 
-displayLoadingScreen()
+displayLoadingScreen();
 
-const plantPicURLArray = new Array(numberPlants); 
-const plantScientificNameArray = new Array(numberPlants); 
-const plantCommonNameArray = new Array(numberPlants); 
+const plantPicURLArray = new Array(numberPlants);
+const plantScientificNameArray = new Array(numberPlants);
+const plantCommonNameArray = new Array(numberPlants);
 const plantIDArray = new Array(numberPlants);
-const positionArray = new Array(numberPlants*2);
+const positionArray = new Array(numberPlants * 2);
 
 let scoreState = 0;
 let liveState = 3;
 
-for(let i = 0; i < numberPlants*2; i++){
-    positionArray[i] = i;
+const response = await fetch(`http://localhost:8000/user`);
+console.log(response);
+
+for (let i = 0; i < numberPlants * 2; i++) {
+  positionArray[i] = i;
 }
 
-positionArray.sort(() => (Math.random() > .5) ? 1 : -1);
+positionArray.sort(() => (Math.random() > 0.5 ? 1 : -1));
 
-for(let i = 0; i < numberPlants; i++){  
-    plantIDArray[i] = Math.floor(Math.random() * (max - min + 1)) + min;
+for (let i = 0; i < numberPlants; i++) {
+  plantIDArray[i] = Math.floor(Math.random() * (max - min + 1)) + min;
 
-    let link = "https://perenual.com/api/species/details/" + plantIDArray[i] + "?key=" + key
-    const plantData = JSON.parse(JSON.stringify(await (await fetch(link)).json()))
+  let link =
+    "https://perenual.com/api/species/details/" +
+    plantIDArray[i] +
+    "?key=" +
+    key;
+  const plantData = JSON.parse(
+    JSON.stringify(await (await fetch(link)).json())
+  );
 
-    plantScientificNameArray[i] = plantData.scientific_name
-    plantCommonNameArray[i] = plantData.common_name
+  plantScientificNameArray[i] = plantData.scientific_name;
+  plantCommonNameArray[i] = plantData.common_name;
 
-    console.log(i + " SCIENTIFIC NAME: " + plantScientificNameArray[i]);
-    console.log(i + " COMMON NAME: " + plantCommonNameArray[i]);
+  console.log(i + " SCIENTIFIC NAME: " + plantScientificNameArray[i]);
+  console.log(i + " COMMON NAME: " + plantCommonNameArray[i]);
 }
 
 let counter = 0;
-for(let i = 0; i < numberPlants; i++){  
-    tile[positionArray[counter]].textContent = plantScientificNameArray[i];
-    counter++;
-    tile[positionArray[counter]].textContent = plantCommonNameArray[i];
-    counter++;
+for (let i = 0; i < numberPlants; i++) {
+  tile[positionArray[counter]].textContent = plantScientificNameArray[i];
+  counter++;
+  tile[positionArray[counter]].textContent = plantCommonNameArray[i];
+  counter++;
 }
-hideLoadingScreen()
-
-
-
+hideLoadingScreen();
 
 // TILE SELECTED - - - - - - - - - - - - - - - -
 let gameTiles = document.getElementsByClassName("tile");
 let gameScore = document.getElementById("score");
 if (gameTiles != null) {
-    for(let tile of gameTiles){
-        tile.addEventListener("click", () => checkSelected(tile));
-    }
+  for (let tile of gameTiles) {
+    tile.addEventListener("click", () => checkSelected(tile));
+  }
 }
 
-
-
-function checkSelected(tile){
-    tile.classList.toggle("selected");  
-    let selectedTiles = document.getElementsByClassName("selected selectable");
-    let trueCheck = false;
-    if(selectedTiles.length == 2){
-        for(let i = 0; i < numberPlants; i++){
-            if((selectedTiles[0].textContent.trim() == plantScientificNameArray[i]
-                && selectedTiles[1].textContent.trim() == plantCommonNameArray[i])
-                ||(selectedTiles[1].textContent.trim() == plantScientificNameArray[i]
-                    && selectedTiles[0].textContent.trim() == plantCommonNameArray[i])){
-                        scoreState = scoreState+2;
-                        gameScore.textContent = scoreState;
-                        selectedTiles[1].textContent = "";
-                        selectedTiles[0].textContent = "";
-                        selectedTiles[1].classList.add("selectedCorrect");
-                        selectedTiles[0].classList.add("selectedCorrect");                    
-                        selectedTiles[1].classList.remove("selectable");
-                        selectedTiles[0].classList.remove("selectable");
-                        trueCheck = true;
-                        break;
-                } 
-        }
-
-        if(!trueCheck){
-            selectedTiles[1].classList.remove("selected");
-            selectedTiles[0].classList.remove("selected");  
-        }       
+function checkSelected(tile) {
+  tile.classList.toggle("selected");
+  let selectedTiles = document.getElementsByClassName("selected selectable");
+  let trueCheck = false;
+  if (selectedTiles.length == 2) {
+    for (let i = 0; i < numberPlants; i++) {
+      if (
+        (selectedTiles[0].textContent.trim() == plantScientificNameArray[i] &&
+          selectedTiles[1].textContent.trim() == plantCommonNameArray[i]) ||
+        (selectedTiles[1].textContent.trim() == plantScientificNameArray[i] &&
+          selectedTiles[0].textContent.trim() == plantCommonNameArray[i])
+      ) {
+        scoreState = scoreState + 2;
+        gameScore.textContent = scoreState;
+        selectedTiles[1].textContent = "";
+        selectedTiles[0].textContent = "";
+        selectedTiles[1].classList.add("selectedCorrect");
+        selectedTiles[0].classList.add("selectedCorrect");
+        selectedTiles[1].classList.remove("selectable");
+        selectedTiles[0].classList.remove("selectable");
+        trueCheck = true;
+        break;
+      }
     }
+
+    if (!trueCheck) {
+      selectedTiles[1].classList.remove("selected");
+      selectedTiles[0].classList.remove("selected");
+    }
+  }
 }
-
-
-
 
 /*
 <!-- Example JSON Output -->  

@@ -4,7 +4,7 @@ const filePath = "./plants.db";
 const db = dbHelper.connect(filePath);
 
 // sql =
-//   "CREATE TABLE users(user_id INTEGER PRIMARY KEY AUTOINCREMENT, user_name UNIQUE)";
+//   "CREATE TABLE users(user_id INTEGER PRIMARY KEY AUTOINCREMENT, user_name UNIQUE, password)";
 // db.run(sql);
 
 // sql =
@@ -40,7 +40,7 @@ const db = dbHelper.connect(filePath);
 //   "insert into game_options(type) values('image-english'),('latin-english'),('latin-image')";
 // db.run(sql);
 
-// sql = "insert into game_layout(size) values(2),(3)";
+// sql = "insert into game_layout(root_size) values(2),(3)";
 // db.run(sql);
 
 // sql =
@@ -48,13 +48,13 @@ const db = dbHelper.connect(filePath);
 // db.run(sql);
 
 // const tables = [
-//   "user_plants",
-//   "user_difficulty_setting",
-//   "user_game_result",
+//   "difficulty_setting",
 //   "game_layout",
 //   "game_options",
-//   "difficulty_setting",
+//   "user_difficulty_setting",
+//   "user_game_result",
 //   "user_highscore",
+//   "user_plants",
 //   "users",
 // ];
 

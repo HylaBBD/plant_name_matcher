@@ -221,6 +221,7 @@ button {
     }
 
     article{
+        display: flex;
         height: 90vh;
         box-shadow: 0 0 10px 1px #000000;
     }

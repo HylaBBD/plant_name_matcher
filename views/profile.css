@@ -7,52 +7,86 @@ article{
     justify-content: space-around;
 }
 
-
-.profile-info{
+.profile-info {
     display: flex;
-}
-
-.profile-info img{
-    width: 15vw;
-    height: 15vw;
-    margin-right: 5vw;
-}
-
-.profile-info table tr{
+    align-items: center;
+  }
+  
+  .profile-info img {
+    width: 11vw;
+    height: 11vw;
+    margin-right: 1vw;
+  }
+  
+  .profile-info table tr {
     text-align: left;
-}
-
-.favourite-plants{
+  }
+  
+  @media (max-width: 900px) {
+    .profile-info {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  
+    .profile-info img {
+      width: 100%;
+      height: auto;
+      margin-right: 0;
+      margin-bottom: 1vw;
+    }
+  }
+  
+  .favourite-plants {
     display: flex;
     flex-direction: column;
     align-items: center;
     border-radius: 1rem;
     box-shadow: inset 0 0 20px 5px var(--shadow-color);
-}
-
-.favourite-plants section{
+    max-width: 800px; /* Adjust the value according to your desired maximum width */
+    margin: 0 auto; /* Centers the container horizontally */
+  }
+  
+  .favourite-plants section {
     display: flex;
     flex-direction: row;
-}
-
-.favourite-plants img{
-    width: 15vw;
-}
-
-.favourite-plants figure{
+  }
+  
+  .favourite-plants img {
+    width: 13vw;
+    max-width: 900px; /* Adjust the value according to your desired maximum image width */
+  }
+  
+  .favourite-plants figure {
     display: flex;
     flex-direction: column;
     align-items: center;
-}
-.favourite-plants figcaption{
+  }
+  
+  .favourite-plants figcaption {
     text-align: center;
-}
-
-
-.favourite-plants h2{
+  }
+  
+  .favourite-plants h2 {
     margin-bottom: 0;
-}
+  }
+  
 
+button {
+  border-radius: 8px;
+  border-width: 0;
+  background-color: var(--primary-color);
+  cursor: pointer;
+  display: inline-block;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+  list-style: none;
+  margin: 10px;
+  padding: 10px 12px;
+  text-align: center;
+  vertical-align: baseline;
+  white-space: nowrap;
+}
 
 
 
@@ -113,4 +147,11 @@ input:checked + .slider:before {
 
 .slider.round:before {
     border-radius: 50%;
+}
+
+@media (max-width: 900px){
+    .favourite-plants section{
+        flex-direction: column;
+        align-items: center;
+    }
 }

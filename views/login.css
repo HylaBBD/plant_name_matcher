@@ -5,37 +5,37 @@ form.login-signup{
     flex-direction: column;
     position: relative;
     align-items: center;
-    color: var(--main-dark-green);
-    background-color: var(--background-white);
+    color: var(--primary-color);
+    background-color: var(--background-color);
     padding: 2rem;
     border-radius: 1rem;
 }
 input.login-signup-input{
     margin-bottom: 1rem;
-    background-color: var(--main-light-green);
+    background-color: var(--secondary-color);
     border: none;
     border-radius: 0.2rem;
     width: 20rem;
     font-size: 1.3rem;
-    color: var(--main-light-green);
+    color: var(--secondary-color);
 }
 input::placeholder{
-    color: var(--main-dark-green);
+    color: var(--primary-color);
     opacity: 50%;
 }
 
 input.login-signup-input:focus {
-    background-color: var(--background-white);
-    outline-color: var(--main-dark-green);
-    color: var(--main-dark-green);
+    background-color: var(--background-color);
+    outline-color: var(--primary-color);
+    color: var(--primary-color);
 }
 
 button.login-signup-button {
     border: none;
     font-size: 1.3rem;
     font-family:var(--main-font);
-    background-color: var(--main-dark-green);
-    color: var(--background-white);
+    background-color: var(--primary-color);
+    color: var(--background-color);
     margin-bottom: 0.8rem;
     width: 100%;
     padding: 0.1rem;

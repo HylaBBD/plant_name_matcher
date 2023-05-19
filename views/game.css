@@ -114,7 +114,7 @@
     border: none;
     font-size: 2.8rem;
     background-color: var(--primary-color);
-    color: var(--background-white);
+    color: var(--background-color);
     width: 10rem;
     min-width: 10rem;
     border-radius: 0.2rem;
@@ -122,7 +122,7 @@
 .play-button:hover{
     background-color: var(--secondary-color);
     cursor:pointer;
-    color: var(--main-dark-green)
+    color: var(--primary-color)
 }
 .play-button:active{
     background-color: var(--primary-color);

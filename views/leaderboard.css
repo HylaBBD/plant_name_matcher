@@ -6,7 +6,7 @@ body;
 caption {
     font-size: 3rem;
     font-weight: bold;
-    background-color: var(--background-white);
+    background-color: var(--background-color);
     width: 94%;
     padding: 2rem;
     border-top-left-radius: 0.5rem;
@@ -27,7 +27,7 @@ ul:last-child {
 
 table.leaderboard {
     z-index: 2;
-    background-color: var(--background-white);
+    background-color: var(--background-color);
     padding: 1rem;
     padding-top: 0;
     border-radius: 0.5rem;

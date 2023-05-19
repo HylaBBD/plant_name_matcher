@@ -60,7 +60,7 @@
 }
 
 @media (max-width: 900px){
-    article{
+    main{
         flex-direction: column;
         justify-content: space-between;
     }

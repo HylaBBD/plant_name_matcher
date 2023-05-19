@@ -99,7 +99,7 @@ generateLevel().then(() => hideLoadingScreen());
 
 
 // TILE SELECTED - - - - - - - - - - - - - - - -
-let gameTiles = document.getElementsByClassName("tile");
+let gameTiles = document.getElementsByClassName("plantTile");
 let gameScore = document.getElementById("score");
 if (gameTiles != null) {
     for(let tile of gameTiles){
@@ -149,7 +149,7 @@ function nextLevel(){
 }
 
 function resetSelectable(){
-    gameTiles = document.getElementsByClassName("tile");
+    gameTiles = document.getElementsByClassName("plantTile");
     for(let tile of gameTiles){
         tile.classList.add("selectable");
         tile.classList.remove("selected");

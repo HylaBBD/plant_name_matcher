@@ -91,6 +91,7 @@ header figure h1{
     transform: scale(1, 1.5);
     flex: none;
     padding-left: 1rem;
+    margin: auto;
 }
 
 header figure h1 a{
@@ -221,11 +222,11 @@ button {
     }
     header .menu-toggle{
         display: flex;
+        padding-right: 1rem;
     }
 
     main{
         display: flex;
-        height: 90vh;
         box-shadow: 0 0 10px 1px #000000;
     }
 }

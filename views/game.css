@@ -3,9 +3,11 @@
 /* LIVES */
 .game_lives{
     display: flex;
+    flex-direction: column;
     flex-wrap: wrap;
     justify-content: flex-start;
     width: 15%;
+    padding-left: 3vw;
 }
 
 .game_lives img{
@@ -14,6 +16,9 @@
 
 .game_lives ul li{
     list-style: none;
+}
+.game_lives h1{
+    padding-left: 3vw;
 }
 
 
@@ -29,6 +34,7 @@
     border-radius: 1rem;
     align-items: center;
     justify-content: center;
+    font-size: calc(1rem + 0.2em);
 }
 .tile:hover{
     box-shadow: 0 0 20px 5px var(--shadow-color);
@@ -45,32 +51,23 @@
 .game_tiles .selectedCorrect{
     box-shadow: none;
 }
-.tile img{
+/* .tile img{
     border-radius: 1rem;
     width: 100%;
     height: 100%;
     object-fit: cover;
     object-position: middle top;
-}
-
-.tile p{
-    text-align: center;
-    font-weight: bold;
-    color: var(--font-color);
-    padding: 0 0 0 0 ;
-}
+} */
 
 
 /*-----------------MODE 1-----------------*/
 .mode1 .tile{
     background-color: var(--secondary-color);
-    width: calc(5rem + 20vw);
-    max-width: 17rem;
-    height: calc(5rem + 20vw);
-    max-height: 17rem;
-    font-size: calc(1rem + 0.2em);
-    padding: 0;
-    margin: 0;
+    width: calc(7rem + 20vw);
+    max-width: 18rem;
+    height: calc(7rem + 20vw);
+    max-height: 18rem;
+    margin: 0.8rem;
     align-self: center;
 }
 
@@ -92,7 +89,7 @@
     white-space: nowrap;
     justify-content: flex-end;
     width: 15%;
-    padding-right: 1vw;
+    padding-right: 5vw;
 }
 
 .game_score img{

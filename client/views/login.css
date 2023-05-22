@@ -1,0 +1,52 @@
+@import "./main.css";
+
+form.login-signup{
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    align-items: center;
+    color: var(--primary-color);
+    background-color: var(--background-color);
+    padding: 2rem;
+    border-radius: 1rem;
+}
+input.login-signup-input{
+    margin-bottom: 1rem;
+    background-color: var(--secondary-color);
+    border: none;
+    border-radius: 0.2rem;
+    width: 20rem;
+    font-size: 1.3rem;
+    color: var(--secondary-color);
+}
+input::placeholder{
+    color: var(--primary-color);
+    opacity: 50%;
+}
+
+input.login-signup-input:focus {
+    background-color: var(--background-color);
+    outline-color: var(--primary-color);
+    color: var(--primary-color);
+}
+
+button.login-signup-button {
+    border: none;
+    font-size: 1.3rem;
+    font-family:var(--main-font);
+    background-color: var(--primary-color);
+    color: var(--background-color);
+    margin-bottom: 0.8rem;
+    width: 100%;
+    padding: 0.1rem;
+    border-radius: 0.2rem;
+}
+
+img.login-signup-logo{
+    max-height: 5rem;
+}
+
+footer {
+    font-size: large;
+    z-index: 3;
+}

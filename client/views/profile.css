@@ -1,0 +1,157 @@
+@import "./main.css";
+
+main{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.profile-info {
+    display: flex;
+    align-items: center;
+  }
+  
+  .profile-info img {
+    width: 11vw;
+    height: 11vw;
+    margin-right: 1vw;
+  }
+  
+  .profile-info table tr {
+    text-align: left;
+  }
+  
+  @media (max-width: 900px) {
+    .profile-info {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  
+    .profile-info img {
+      width: 100%;
+      height: auto;
+      margin-right: 0;
+      margin-bottom: 1vw;
+    }
+  }
+  
+  .favourite-plants {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 1rem;
+    box-shadow: inset 0 0 20px 5px var(--shadow-color);
+    max-width: 800px; /* Adjust the value according to your desired maximum width */
+    margin: 0 auto; /* Centers the container horizontally */
+  }
+  
+  .favourite-plants section {
+    display: flex;
+    flex-direction: row;
+  }
+  
+  .favourite-plants img {
+    width: 13vw;
+    max-width: 900px; /* Adjust the value according to your desired maximum image width */
+  }
+  
+  .favourite-plants figure {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .favourite-plants figcaption {
+    text-align: center;
+  }
+  
+  .favourite-plants h2 {
+    margin-bottom: 0;
+  }
+  
+
+button {
+  border-radius: 8px;
+  border-width: 0;
+  background-color: var(--primary-color);
+  cursor: pointer;
+  display: inline-block;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+  list-style: none;
+  margin: 10px;
+  padding: 10px 12px;
+  text-align: center;
+  vertical-align: baseline;
+  white-space: nowrap;
+}
+
+
+
+/* DARK MODE */
+.dark-mode-switch {
+    display: flex;
+    align-items: center;
+}
+
+.dark-mode-switch em{
+    margin-left: 10px;
+    font-size: 1rem;
+}
+.dark-mode-switch label {
+    display: inline-block;
+    height: 34px;
+    position: relative;
+    width: 60px;
+}
+
+.dark-mode-switch input {
+    display:none;
+}
+
+.slider {
+    background-color: #ccc;
+    bottom: 0;
+    cursor: pointer;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    transition: .4s;
+}
+
+.slider:before {
+    background-color: #fff;
+    bottom: 4px;
+    content: "";
+    height: 26px;
+    left: 4px;
+    position: absolute;
+    transition: .4s;
+    width: 26px;
+}
+
+input:checked + .slider {
+    background-color: var(--secondary-color);
+}
+
+input:checked + .slider:before {
+    transform: translateX(26px);
+}
+
+.slider.round {
+    border-radius: 34px;
+}
+
+.slider.round:before {
+    border-radius: 50%;
+}
+
+@media (max-width: 900px){
+    .favourite-plants section{
+        flex-direction: column;
+        align-items: center;
+    }
+}

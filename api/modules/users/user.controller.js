@@ -1,61 +1,72 @@
 const { usersService } = require("./users.service");
-const { buildResponse } = require("../response/responseUtils")
-const validUsername = new RegExp(".*[A-Za-z].*")
-
+const { buildResponse } = require("../response/responseUtils");
+const validUsername = new RegExp(".*[A-Za-z].*");
 
 module.exports.userController = {
-  createUser: (db, username) => {
+  createUser: (username, password) => {
     return new Promise((resolve, reject) => {
-      if (!username) {
-        resolve(buildResponse(400, {
-          message: "Failed to create user",
-          reason: "Empty username"
-        }))
-      } else if (validUsername.test(username)) {
-        usersService.createUser(db, username)
-        .then((res) => {
-          resolve(buildResponse(200, res))
-        }).catch(err => {
-          resolve(buildResponse(409, {
+      if (!username || !password) {
+        resolve(
+          buildResponse(400, {
             message: "Failed to create user",
-            error: err,
-            reason: err.code === "SQLITE_CONSTRAINT" ? "user exists" : undefined,
-          }))
-        })
+            reason: "Empty data",
+          })
+        );
+      } else if (validUsername.test(username)) {
+        usersService
+          .createUser(username, password)
+          .then((res) => {
+            resolve(buildResponse(200, res));
+          })
+          .catch((err) => {
+            reject(
+              buildResponse(409, {
+                message: "Failed to create user",
+                error: err,
+                reason:
+                  err.code === "SQLITE_CONSTRAINT" ? "user exists" : undefined,
+              })
+            );
+          });
       } else {
-        resolve(buildResponse(400,{
-          message: "Failed to create user",
-          reason: "Invalid username"
-        }))
+        reject(
+          buildResponse(400, {
+            message: "Failed to create user",
+            reason: "Invalid username",
+          })
+        );
       }
-    })
+    });
   },
 
-  getAllUsers: (db) => {
+  getAllUsers: () => {
     // example of controller which is called by the config function
-    return usersService.getAllUsers(db)
-          .then((response) => {
-            return buildResponse(200, response);
-          });
+    return usersService.getAllUsers().then((response) => {
+      return buildResponse(200, response);
+    });
   },
-  getUserDetails: (connection, username) => {
-    return usersService.getUserDetails(connection, username)
-          .then((response) => {
-            return buildResponse(200, response)
-          })
+  getUserDetails: (username) => {
+    return usersService
+      .getUserDetails(username)
+      .then((response) => {
+        return buildResponse(200, response);
+      })
+      .catch((error) => {
+        return buildResponse(500, error);
+      });
   },
-  updateUserPlants: (connection, id, plantId) => {
+  updateUserPlants: (id, plantId) => {
     // TODO check this when the service layer is written
-    return usersService.updateUserPlants(connection, id, plantId)
-        .then((response) => {
-          return buildResponse(200, response)
-        })
+    return usersService.updateUserPlants(id, plantId).then((response) => {
+      return buildResponse(200, response);
+    });
   },
-  updateUserDifficulty: (connection, id, difficultyId) => {
+  updateUserDifficulty: (id, difficultyId) => {
     // TODO check this when the service layer is written
-    return usersService.updateUserDifficulty(connection, id, difficultyId)
-        .then((response) => {
-          return buildResponse(200, response);
-        })
-  }
+    return usersService
+      .updateUserDifficulty(id, difficultyId)
+      .then((response) => {
+        return buildResponse(200, response);
+      });
+  },
 };

@@ -1,0 +1,194 @@
+@import "./main.css";
+
+/* LIVES */
+.game_lives{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    width: 15%;
+    padding-left: 3vw;
+}
+
+.game_lives img{
+    width: 10vw;
+}
+
+.game_lives ul li{
+    list-style: none;
+}
+.game_lives h1{
+    padding-left: 3vw;
+}
+
+
+/* TILES */
+.game_tiles{
+    display: grid;
+    grid-template-columns: calc(10rem + 5vw) calc(10rem + 5vw);
+    grid-template-rows: calc(10rem + 5vw) calc(10rem + 5vw);
+    column-gap: 2vw;
+    row-gap: 2vw;
+    justify-items: stretch;
+    align-items: stretch;
+    justify-content: center;
+
+    /* flex-wrap: wrap;
+    width: 70vw;
+    justify-content: center; */
+}
+.plantTile{
+    /* display: grid;
+    grid-template-columns: 25%;
+    grid-template-rows: 50%; */
+    /* align-items: center;
+    justify-content: center;
+    align-self: center; */
+    text-align: center;
+
+    background-color: var(--secondary-color);
+    border-radius: 1rem;
+    font-size: 2rem;
+    /* width: 30vw;
+    height: 30vw;
+    max-width: 15rem;
+    max-height: 15rem; */
+    /* width: calc(7rem + 20vw); */
+    /* max-width: 18rem; */
+    /* height: calc(7rem + 20vw); */
+    /* max-height: 18rem; */
+}
+.plantTile:hover{
+    box-shadow: 0 0 20px 5px var(--shadow-color);
+}
+
+.game_tiles .selected{
+    box-shadow: 0 0 20px 5px var(--primary-color);
+}
+
+.game_tiles .selectable:hover{
+    cursor: pointer;
+}
+
+.game_tiles .selectedCorrect{
+    box-shadow: none;
+}
+/* .plantTile img{
+    border-radius: 1rem;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: middle top;
+} */
+
+
+/*-----------------MODE 1-----------------*/
+.mode1 .plantTile{
+
+}
+
+/*-----------------MODE 2-----------------*/
+.mode2{
+    display: none;
+}
+
+.mode2 .plantTile{
+}
+
+/* SCORE */
+.game_score{
+    display: flex;
+    flex-wrap: wrap;
+    white-space: nowrap;
+    justify-content: flex-end;
+    width: 15%;
+    padding-right: 5vw;
+}
+
+.game_score img{
+    width: 5rem;
+}
+
+.game_score ul li{
+    list-style: none;
+}
+
+#score{
+    font-size: 10vh;
+    color: var(--primary-color)
+}
+
+
+
+
+
+
+.play-button {
+    border: none;
+    font-size: 2.8rem;
+    background-color: var(--primary-color);
+    color: var(--background-color);
+    width: 10rem;
+    min-width: 10rem;
+    border-radius: 0.2rem;
+}
+.play-button:hover{
+    background-color: var(--secondary-color);
+    cursor:pointer;
+    color: var(--primary-color)
+}
+.play-button:active{
+    background-color: var(--primary-color);
+    cursor:pointer;
+    color: var(--background-color)
+}
+
+
+
+
+/* LOADING SCREEN */
+#game-end-screen{
+    display: none;
+    max-width: calc(1000px + 10vw);
+    height: 80vh;
+    width: 90vw;
+    background: var(--background-color);
+    position: absolute;
+    z-index: 1;
+    border-radius: 1rem;
+    box-shadow: 0 0 40px 10px #000000;
+}
+#game-end-screen.display{
+    display:block;
+}
+
+
+
+@media (max-width: 900px){
+
+    main{
+        flex-direction: column;
+    }
+    /* LIVES */
+    .game_lives{
+        flex-direction: row;
+        flex-wrap: nowrap;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        padding-left: 0;    
+    }
+
+
+    #lives-list{
+        display: flex;
+        padding-left: 5vw;
+    }
+
+
+    /* TILES */
+    .game_tiles{
+        width: 100%;
+    }
+
+}

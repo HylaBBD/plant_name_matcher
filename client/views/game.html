@@ -41,40 +41,44 @@
                 <p>U DED BRO</p>
                 <button id="game-end-play-again">Play again?</button>
             </section>
-            
-            <section class="game_lives">
-                <h1>Lives:</h1>
-                <ul id="lives-list">
-                    <li><img src="../static/leaf-heart.png"></li>
-                    <li><img src="../static/leaf-heart.png"></li>
-                    <li><img src="../static/leaf-heart.png"></li>
-                </ul>
-            </section>
 
-            <!-- GAME TILES -->
-            <grid class="game_tiles mode1">
-                <cell class="plantTile selectable"></cell>
-                <cell class="plantTile selectable"></cell>
-                <cell class="plantTile selectable"></cell>
-                <cell class="plantTile selectable"></cell>
+
+            <grid class="game_wrapper">
+                <cell class="game_lives">
+                    <ul id="lives-list">
+                        <li><h1>Lives:</h1></li>
+                        <li><img src="../static/leaf-heart.png"></li>
+                        <li><img src="../static/leaf-heart.png"></li>
+                        <li><img src="../static/leaf-heart.png"></li>
+                    </ul>
+                </cell>
+
+                <!-- GAME TILES -->
+                <cell class="plantTile selectable plantTile1"></cell>
+                <cell class="plantTile selectable plantTile2"></cell>
+                <cell class="plantTile selectable plantTile3"></cell>
+                <cell class="plantTile selectable plantTile4"></cell>
+                <cell class="game_score">
+                    <ul id="score-list">
+                        <li><h1>Score:</h1></li>
+                        <li id="score">0</li>
+                    </ul>
+                </cell>
             </grid>
-            <section class="game_tiles mode2">
-                <p class="plantTile selectable">Temp</p>
-                <p class="plantTile selectable">Temp</p>
-                <p class="plantTile selectable">Temp</p>
-                <p class="plantTile selectable">Temp</p>
-                <p class="plantTile selectable">Temp</p>
-                <p class="plantTile selectable">Temp</p>
-                <p class="plantTile selectable">Temp</p>
-                <p class="plantTile selectable">Temp</p>
-            </section>
             
-            <section class="game_score">
-                <ul>
-                    <li><h1>Score:</h1></li>
-                    <li id="score">0</li>
-                </ul>
-            </section>
+            
+            <!-- <section class="game_tiles mode2">
+                <p class="plantTile selectable">Temp</p>
+                <p class="plantTile selectable">Temp</p>
+                <p class="plantTile selectable">Temp</p>
+                <p class="plantTile selectable">Temp</p>
+                <p class="plantTile selectable">Temp</p>
+                <p class="plantTile selectable">Temp</p>
+                <p class="plantTile selectable">Temp</p>
+                <p class="plantTile selectable">Temp</p>
+            </section> -->
+            
+
         </main>
     </body>
 </html>

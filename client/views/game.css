@@ -1,86 +1,90 @@
 @import "./main.css";
 
-/* LIVES */
-.game_lives{
-    display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
-    justify-content: flex-start;
-    width: 15%;
-    padding-left: 3vw;
-}
-
-.game_lives img{
-    width: 10vw;
+.game_wrapper{
+    border-radius: 1rem;
+    display: grid;
+    gap: 2%;
+    grid-template-columns: 17% 30% 30% 17%;
+    grid-template-rows: 49% 49%;
+    background-color: var(--background-color);
+    justify-content: center;
 }
 
 .game_lives ul li{
     list-style: none;
 }
-.game_lives h1{
-    padding-left: 3vw;
+
+.game_lives img{
+    width: 100%;   
 }
 
-
-/* TILES */
-.game_tiles{
-    display: grid;
-    grid-template-columns: calc(10rem + 5vw) calc(10rem + 5vw);
-    grid-template-rows: calc(10rem + 5vw) calc(10rem + 5vw);
-    column-gap: 2vw;
-    row-gap: 2vw;
-    justify-items: stretch;
-    align-items: stretch;
-    justify-content: center;
-
-    /* flex-wrap: wrap;
-    width: 70vw;
-    justify-content: center; */
-}
 .plantTile{
-    /* display: grid;
-    grid-template-columns: 25%;
-    grid-template-rows: 50%; */
-    /* align-items: center;
-    justify-content: center;
-    align-self: center; */
-    text-align: center;
-
+    display: flex;
     background-color: var(--secondary-color);
     border-radius: 1rem;
-    font-size: 2rem;
-    /* width: 30vw;
-    height: 30vw;
-    max-width: 15rem;
-    max-height: 15rem; */
-    /* width: calc(7rem + 20vw); */
-    /* max-width: 18rem; */
-    /* height: calc(7rem + 20vw); */
-    /* max-height: 18rem; */
+    width: 100%;
+    height: 95%;
+    font-size: calc(25pt + 0.5rem);
+    box-shadow: none;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
 }
+
+#score{
+    font-size: calc(40pt + 0.5rem);
+    text-align: center;
+}
+
+.game_lives {
+    display: flex;
+    flex-direction: column;
+    grid-column: 1;
+    grid-row: 1 / span 2;
+}
+.plantTile1 {
+    grid-column: 2;
+    grid-row: 1;
+    margin-top: 5%;
+}
+.plantTile2 {
+    grid-column: 3;
+    grid-row: 1;
+    margin-top: 5%;
+}
+.plantTile3 {
+    grid-column: 2;
+    grid-row: 2;
+}
+.plantTile4 {
+    grid-column: 3;
+    grid-row: 2;
+}
+.game_score {
+    grid-column: 4;
+    grid-row: 1 / span 2;
+}
+
+.game_score ul li{
+    list-style: none;
+}
+
 .plantTile:hover{
     box-shadow: 0 0 20px 5px var(--shadow-color);
 }
 
-.game_tiles .selected{
+.plantTile.selected{
     box-shadow: 0 0 20px 5px var(--primary-color);
 }
 
-.game_tiles .selectable:hover{
+
+.plantTile.selectable:hover{
     cursor: pointer;
 }
 
-.game_tiles .selectedCorrect{
+.plantTile.selectedCorrect{
     box-shadow: none;
 }
-/* .plantTile img{
-    border-radius: 1rem;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: middle top;
-} */
-
 
 /*-----------------MODE 1-----------------*/
 .mode1 .plantTile{
@@ -94,33 +98,6 @@
 
 .mode2 .plantTile{
 }
-
-/* SCORE */
-.game_score{
-    display: flex;
-    flex-wrap: wrap;
-    white-space: nowrap;
-    justify-content: flex-end;
-    width: 15%;
-    padding-right: 5vw;
-}
-
-.game_score img{
-    width: 5rem;
-}
-
-.game_score ul li{
-    list-style: none;
-}
-
-#score{
-    font-size: 10vh;
-    color: var(--primary-color)
-}
-
-
-
-
 
 
 .play-button {
@@ -166,29 +143,87 @@
 
 @media (max-width: 900px){
 
-    main{
-        flex-direction: column;
-    }
-    /* LIVES */
-    .game_lives{
-        flex-direction: row;
-        flex-wrap: nowrap;
-        justify-content: center;
-        align-items: center;
+    .game_wrapper{
+        display: grid;
+        gap: 2%;
+        grid-template-columns: 49% 49%;
+        grid-template-rows: 17% 30% 30% 17%;
+        background-color: var(--background-color);
         width: 100%;
-        padding-left: 0;    
     }
 
+    .plantTile{
+        text-align: center;
+        width: 95%;
+        height: 95%;
+        font-size: calc(10pt + 0.5rem);
+    }
 
     #lives-list{
         display: flex;
+        height: 100%;
+        width: 100%;
+        align-items: center;
+        justify-content: center;
+        padding: 0;
+    }
+
+    #lives-list img{
+        width: 13vw;
+    }
+    
+    #score-list{
+        display: flex;
+        height: 100%;
+        width: 100%;
+        align-items: center;
+        justify-content: center;
+        padding: 0;
+    }
+
+    #score{
         padding-left: 5vw;
     }
+    
+    .game_lives {
+        grid-column: 1 / span 2;
+        grid-row: 1;
 
-
-    /* TILES */
-    .game_tiles{
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
         width: 100%;
     }
+
+
+    .plantTile1 {
+        grid-column: 1;
+        grid-row: 2;
+        margin-left: 5%;
+    }
+    .plantTile2 {
+        grid-column: 2;
+        grid-row: 2;
+    }
+    .plantTile3 {
+        grid-column: 1;
+        grid-row: 3;
+        margin-left: 5%;
+    }
+    .plantTile4 {
+        grid-column: 2;
+        grid-row: 3;
+    }
+    .game_score {
+        grid-column: 1 / span 2;
+        grid-row: 4;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+    }
+
 
 }

@@ -110,7 +110,7 @@ if (gameTiles != null) {
 
 function renderLives(lives) {
     let currentLivesList = document.getElementById("lives-list");
-    currentLivesList.innerHTML = "";
+    currentLivesList.innerHTML = "<li><h1>Lives:</h1></li>";
     for(let i=0; i<lives; i++){
         currentLivesList.innerHTML += "<li><img src='../static/leaf-heart.png'></li>";
     }

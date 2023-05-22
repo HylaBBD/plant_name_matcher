@@ -30,6 +30,7 @@ body {
     justify-content: space-around;
     font-family: var(--main-font);
     color: var(--font-color);
+    overflow-wrap: break-word;
 }
 img.background {
     position: absolute;

@@ -2,30 +2,45 @@ const { buildResponse } = require("../response/responseUtils");
 const { leaderBoardsService } = require("./leaderboards.service");
 
 module.exports.leaderBoardsController = {
-  getLeaderBoards: (db, limit) => {
-      return leaderBoardsService
-      .getLeaderBoards(db, limit)
+  getLeaderBoards: (limit) => {
+    return leaderBoardsService
+      .getLeaderBoards(limit)
       .then((leaderboardsResponse) => {
         return buildResponse(200, leaderboardsResponse);
       })
+      .catch((error) => {
+        return buildResponse(500, error);
+      });
   },
-  getUserRank: (db, userId) => {
-    return leaderBoardsService.getUserRank(db, userId)
+  getUserRank: (userId) => {
+    return leaderBoardsService
+      .getUserRank(userId)
       .then((response) => {
-          return buildResponse(200, response)
+        return buildResponse(200, response);
       })
+      .catch((error) => {
+        return buildResponse(500, error);
+      });
   },
-  getUserScore: (db, userId) => {
-    return leaderBoardsService.getUserScore(db, userId)
+  getUserScore: (userId) => {
+    return leaderBoardsService
+      .getUserScore(userId)
       .then((response) => {
-          return buildResponse(200, response)
+        return buildResponse(200, response);
       })
+      .catch((error) => {
+        return buildResponse(500, error);
+      });
   },
-  updateUserScore: (db, userId, score) => {
+  updateUserScore: (userId, score) => {
     // TODO add to router when service layer is done
-    return leaderBoardsService.updateUserScore(db, userId, score)
-          .then((response) => {
-            return buildResponse(200, response)
-          })
+    return leaderBoardsService
+      .updateUserScore(userId, score)
+      .then((response) => {
+        return buildResponse(200, response);
+      })
+      .catch((error) => {
+        return buildResponse(500, error);
+      });
   },
 };

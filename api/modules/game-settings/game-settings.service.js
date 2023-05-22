@@ -1,42 +1,16 @@
+const { dbHelper } = require("../../db/helper/database.helper");
 const { responseHelper } = require("../../helper/responses.helper");
 
 module.exports.gameSettingsService = {
-  getUserDifficultySetting: (db, userId) => {
-    return new Promise((resolve, reject) => {
-      let sql = "select * from user_difficulty_setting where user_id = ?";
-      db.all(sql, [userId], (error, response) => {
-        if (error) {
-          reject(error);
-        } else {
-          resolve(response);
-        }
-      });
-    })
-      .then((userDifficultyData) => {
-        console.log(userDifficultyData);
-        return responseHelper.responseMapper(userDifficultyData[0]);
-      })
-      .catch((error) => {
-        return error;
-      });
+  getUserDifficultySetting: async (userId) => {
+    let sql = `select ds.difficulty_setting_id, ds.difficulty_display_value from user_difficulty_settings uds inner join difficulty_settings ds on ds.difficulty_setting_id = uds.difficulty_setting_id where user_id = ${userId}`;
+    const result = await dbHelper.executeQuery(sql);
+    return responseHelper.responseMapper(result[0]);
   },
-  setUserDifficultySettign: (db, userId, difficultyId) => {},
-  createUserDifficultDefault: (db, userId) => {
-    return new Promise((resolve, reject) => {
-      let sql = "insert into user_difficulty_setting(user_id) values(?)";
-      db.run(sql, [userId], (error, response) => {
-        if (error) {
-          reject(error);
-        } else {
-          resolve(response);
-        }
-      });
-    })
-      .then(() => {
-        return { message: "success" };
-      })
-      .catch((error) => {
-        return { message: "error", error: error };
-      });
+  setUserDifficultySettign: (userId, difficultyId) => {},
+  createUserDifficultDefault: async (request, userId) => {
+    let sql = `insert into user_difficulty_settings(user_id) values(${userId})`;
+    const result = await request.query(sql);
+    return result;
   },
 };

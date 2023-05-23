@@ -5,6 +5,22 @@ const validUsername = new RegExp(".*[A-Za-z].*");
 
 module.exports.userController = {
   createUser: (username, password) => {
+    if (!username || !password || !validUsername.test(username)) {
+      return buildResponse(400, {
+        message: "Failed to create user",
+        reason: "Empty data",
+      });
+    } else {
+      return usersService
+        .createUser()
+        .then(() => {
+          return buildResponse(200, result);
+        })
+        .catch((error) => {
+          return buildResponse(500, error);
+        });
+    }
+
     return new Promise((resolve, reject) => {
       if (!username || !password) {
         resolve(
@@ -17,6 +33,7 @@ module.exports.userController = {
         usersService
           .createUser(username, password)
           .then((res) => {
+            console.log(res);
             resolve(buildResponse(200, res));
           })
           .catch((err) => {
@@ -48,15 +65,13 @@ module.exports.userController = {
   },
   getUserDetails: (username, password) => {
     return usersService
-      .getUserDetails(username)
+      .getUserDetails(username, password)
       .then((response) => {
         return buildResponse(200, response);
       })
       .catch((error) => {
-        if (
-          error.error === "Wrong password" ||
-          error.error === "Invalid User"
-        ) {
+        console.log(error);
+        if (error.error === "Invalid credentials") {
           return buildResponse(403, error);
         } else {
           return buildResponse(500, error);

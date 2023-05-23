@@ -2,7 +2,7 @@
 // const key = "sk-CtSG645bb2c924947866"; // JESSE BBD EMAIL
 // const key = "sk-q8UK6466165b60d98975"; // JESSE jess44go EMAIL
 const key = "sk-Ir4T64662d40d85b0978";
-const level = 1;
+const level = 2;
 let numberPlants;
 
 
@@ -120,7 +120,7 @@ function renderLives(lives) {
     let currentLivesList = document.getElementById("lives-list");
     currentLivesList.innerHTML = "<li><h1>Lives:</h1></li>";
     for(let i=0; i<lives; i++){
-        currentLivesList.innerHTML += "<li><img src='../static/leaf-heart.png'></li>";
+        currentLivesList.innerHTML += "<li><img src='static/leaf-heart.png'></li>";
     }
 }
 

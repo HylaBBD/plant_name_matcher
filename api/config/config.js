@@ -95,13 +95,19 @@ routes.register("/user/\\d+/game", "GET", (data) => {
   return gameController.getGame(id);
 });
 
-routes.register("/user/\\d+/plant", "POST", (data) => {
+routes.register("/user/\\d+/plants", "POST", (data) => {
   const { url, plantId } = data;
   const id = url.substr(1).split("/")[1];
   return userController.saveUserPlants(id, plantId);
 });
 
-routes.register("/user/\\d+/plant", "DELETE", (data) => {
+routes.register("/user/\\d+/plants", "GET", (data) => {
+  const { url } = data;
+  const id = url.substr(1).split("/")[1];
+  return userController.getUserPlants(id);
+});
+
+routes.register("/user/\\d+/plants", "DELETE", (data) => {
   const { url, plantId } = data;
   const id = url.substr(1).split("/")[1];
   return userController.deleteUserPlants(id, plantId);

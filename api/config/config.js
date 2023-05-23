@@ -62,6 +62,15 @@ routes.register("/user/\\d+/difficulty", "GET", (data) => {
   return gameSettingsController.getUserDifficultySetting(id);
 });
 
+routes.register("/user/\\d+/difficulty", "PATCH", (data) => {
+  const { url, difficultySettingId } = data;
+  const id = url.substr(1).split("/")[1];
+  return gameSettingsController.setUserDifficultySetting(
+    id,
+    difficultySettingId
+  );
+});
+
 routes.register("/user/\\d+/plant", "PATCH", (data) => {
   const { url, plantId } = data;
   const id = url.substr(1).split("/")[1];
@@ -72,8 +81,15 @@ routes.register("/plants", "GET", (data) => {
   return plantsController.getPlants();
 });
 
-routes.register("/game", "POST", (data) => {
-  return gameController.createGameResult();
+routes.register("/user/\\d+/game", "POST", (data) => {
+  const { gameOptionId, gameLayoutId, score, url } = data;
+  const userId = url.substr(1).split("/")[1];
+  return gameController.createGameResult(
+    userId,
+    gameOptionId,
+    gameLayoutId,
+    score
+  ); //userId, gameOptionId, gameLayoutId, score
 });
 
 routes.register("/user/\\d+/game", "GET", (data) => {

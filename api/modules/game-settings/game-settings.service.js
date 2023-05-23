@@ -7,10 +7,26 @@ module.exports.gameSettingsService = {
     const result = await dbHelper.executeQuery(sql);
     return responseHelper.responseMapper(result[0]);
   },
-  setUserDifficultySettign: (userId, difficultyId) => {},
+  setUserDifficultySettign: (userId, difficultyId) => {
+    let sql = `update user_difficulty_settings set difficulty_setting_id = ${difficultyId} where user_id = ${userId}`;
+    return dbHelper
+      .executeQuery(sql)
+      .then(() => {
+        return { message: "updated settings" };
+      })
+      .catch((error) => {
+        throw error;
+      });
+  },
   createUserDifficultDefault: async (request, userId) => {
     let sql = `insert into user_difficulty_settings(user_id) values(${userId})`;
-    const result = await request.query(sql);
-    return result;
+    return request
+      .query(sql)
+      .then(() => {
+        return { message: "created user difficulty" };
+      })
+      .catch((error) => {
+        throw error;
+      });
   },
 };

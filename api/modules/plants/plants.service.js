@@ -1,7 +1,7 @@
 const { constants } = require("../../config/constants");
 const { responseHelper } = require("../../helper/responses.helper");
 const { plantsLibrary } = require("./lib/plants.lib");
-const { plantsHelper } = require("./plants.helper");
+const { mapPlantResponse } = require("./plants.helper");
 
 module.exports.plantsService = {
   getPlants: async () => {
@@ -9,11 +9,61 @@ module.exports.plantsService = {
     if (plants && plants.length > 0) {
       return plants;
     }
-    const url = `https://perenual.com/api/species-list?page=1&key=${constants.plantsAPIKeys[0]}`;
 
-    const res = JSON.parse(JSON.stringify(await (await fetch(url)).json()));
-    const mappedResponse = responseHelper.responseMapper(res.data);
+    let responses = [];
 
+    let res = JSON.parse(
+      JSON.stringify(
+        await (
+          await fetch(
+            `https://perenual.com/api/species-list?page=1&key=${constants.plantsAPIKeys[0]}`
+          )
+        ).json()
+      )
+    );
+    responses = responses.concat(res.data);
+    res = JSON.parse(
+      JSON.stringify(
+        await (
+          await fetch(
+            `https://perenual.com/api/species-list?page=2&key=${constants.plantsAPIKeys[0]}`
+          )
+        ).json()
+      )
+    );
+    responses = responses.concat(res.data);
+    res = JSON.parse(
+      JSON.stringify(
+        await (
+          await fetch(
+            `https://perenual.com/api/species-list?page=3&key=${constants.plantsAPIKeys[0]}`
+          )
+        ).json()
+      )
+    );
+    responses = responses.concat(res.data);
+    res = JSON.parse(
+      JSON.stringify(
+        await (
+          await fetch(
+            `https://perenual.com/api/species-list?page=4&key=${constants.plantsAPIKeys[0]}`
+          )
+        ).json()
+      )
+    );
+    responses = responses.concat(res.data);
+    res = JSON.parse(
+      JSON.stringify(
+        await (
+          await fetch(
+            `https://perenual.com/api/species-list?page=5&key=${constants.plantsAPIKeys[0]}`
+          )
+        ).json()
+      )
+    );
+    responses = responses.concat(res.data);
+
+    const mappedResponse = mapPlantResponse(responses);
     plantsLibrary.saveAllPlants(mappedResponse);
 
     return mappedResponse;

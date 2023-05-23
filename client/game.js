@@ -1,7 +1,7 @@
 // PICTURE AND LATIN NAMES - - - - - - - - - - - - 
 // const key = "sk-CtSG645bb2c924947866"; // JESSE BBD EMAIL
-// const key = "sk-q8UK6466165b60d98975"; // JESSE jess44go EMAIL
-const key = "sk-Ir4T64662d40d85b0978";
+const key = "sk-q8UK6466165b60d98975"; // JESSE jess44go EMAIL
+// const key = "sk-Ir4T64662d40d85b0978";
 const level = 2;
 let numberPlants;
 
@@ -66,6 +66,7 @@ async function generateLevel(){
     numberCompleted = 0;
 
     setGridCoordinates();
+    resetSelectable();
 
     plantScientificNameArray = new Array(numberPlants); 
     plantCommonNameArray = new Array(numberPlants); 
@@ -86,9 +87,6 @@ async function generateLevel(){
 
         plantScientificNameArray[i] = plantData.scientific_name
         plantCommonNameArray[i] = plantData.common_name
-
-        console.log(i + " SCIENTIFIC NAME: " + plantScientificNameArray[i]);
-        console.log(i + " COMMON NAME: " + plantCommonNameArray[i]);
     }
     tile = document.getElementsByClassName("plantTile");
     let counter = 0;
@@ -97,9 +95,16 @@ async function generateLevel(){
         tile[positionArray[counter]].textContent = plantScientificNameArray[i];
         counter++;
         tile[positionArray[counter]].textContent = plantCommonNameArray[i];
-        counter++;
+        counter++;            
     }
-    resetSelectable();
+    if(tile[4].textContent != ""){
+        for(let t of tile){
+            if(t.textContent == ""){
+                t.textContent = tile[4].textContent;
+                tile[4].textContent = "";
+            }
+        }
+    }
 }
 
 generateLevel().then(() => hideLoadingScreen());
@@ -157,11 +162,20 @@ function nextLevel(){
 }
 
 function resetSelectable(){
-    gameTiles = document.getElementsByClassName("plantTile");
+    let gameTiles = document.getElementsByClassName("plantTile");
+    let counter = 0;
     for(let tile of gameTiles){
-        tile.classList.add("selectable");
-        tile.classList.remove("selected");
-        tile.classList.remove("selectedCorrect");
+        if(counter == 4){
+            tile.classList.remove("selectable");
+            tile.classList.remove("selected");
+            tile.classList.remove("selectedCorrect");
+        }else{
+            tile.classList.add("selectable");
+            tile.classList.remove("selected");
+            tile.classList.remove("selectedCorrect");    
+        }
+        tile.textContent = "";
+        counter++;
     } 
 }
 
@@ -201,16 +215,17 @@ function checkSelected(tile){
 
 
 function setGridCoordinates(){
-    let gameLives, tile1, tile2, tile3, tile4, tile5, tile6, tile7, tile8, tile9, gameScore, gameWrapper;
+    let gameLives, tiles, tile1, tile2, tile3, tile4, tile5, tile6, tile7, tile8, tile9, gameScore, gameWrapper;
     switch(level){
         case 1: 
             numberPlants = 2;
             if(winWidthLess){
+                // TABLET/PHONE VIEW 2x2   
                 gameWrapper = document.getElementsByClassName("game_wrapper")[0];
                 gameWrapper.style.gridTemplateColumns = "49% 49%";
                 gameWrapper.style.gridTemplateRows = "17% 30% 30% 17%";
+                gameWrapper.style.padding = "0";
 
-                console.log("WIN LESS CASE 1");
                 gameLives = document.getElementsByClassName("game_lives")[0];
                 gameLives.style.gridColumn = "1 / span 2";
                 gameLives.style.gridRow = "1";
@@ -218,7 +233,6 @@ function setGridCoordinates(){
                 tile1 = document.getElementsByClassName("plantTile1")[0];
                 tile1.style.gridColumn = "1";
                 tile1.style.gridRow = "2";
-                tile1.style.marginLeft = "5%";
                 
                 tile2 = document.getElementsByClassName("plantTile2")[0];
                 tile2.style.gridColumn = "2";
@@ -227,7 +241,6 @@ function setGridCoordinates(){
                 tile3 = document.getElementsByClassName("plantTile3")[0];
                 tile3.style.gridColumn = "1";
                 tile3.style.gridRow = "3";
-                tile3.style.marginLeft = "5%";
                 
                 tile4 = document.getElementsByClassName("plantTile4")[0];
                 tile4.style.gridColumn = "2";
@@ -237,11 +250,11 @@ function setGridCoordinates(){
                 gameScore.style.gridColumn = "1 / span 2";
                 gameScore.style.gridRow = "4";
             }else{
-                console.log("WIN MORE CASE 1");
-                
+                // DESKTOP VIEW 2x2               
                 gameWrapper = document.getElementsByClassName("game_wrapper")[0];
                 gameWrapper.style.gridTemplateColumns = "17% 30% 30% 17%";
                 gameWrapper.style.gridTemplateRows = "49% 49%";
+                gameWrapper.style.paddingTop = "1%";
                 
                 gameLives = document.getElementsByClassName("game_lives")[0];
                 gameLives.style.gridColumn = "1";
@@ -286,7 +299,12 @@ function setGridCoordinates(){
         case 2:
             numberPlants = 4;
             if(winWidthLess){
-                console.log("WIN LESS CASE 2");
+                // TABLET/PHONE VIEW 3x3   
+                gameWrapper = document.getElementsByClassName("game_wrapper")[0];
+                gameWrapper.style.gridTemplateColumns = "32% 32% 32%";
+                gameWrapper.style.gridTemplateRows = "17% 20% 20% 20% 17%";
+                gameWrapper.style.paddingTop = "0";
+
                 gameLives = document.getElementsByClassName("game_lives")[0];
                 gameLives.style.gridColumn = "1 / span 3";
                 gameLives.style.gridRow = "1";
@@ -332,7 +350,12 @@ function setGridCoordinates(){
                 gameScore.style.gridRow = "5";
                 
             }else{
-                console.log("WIN MORE CASE 2");
+                // DESKTOP VIEW 3x3
+                gameWrapper = document.getElementsByClassName("game_wrapper")[0];
+                gameWrapper.style.gridTemplateColumns = "17% 20% 20% 20% 17%";
+                gameWrapper.style.gridTemplateRows = "32% 32% 32%";
+                gameWrapper.style.paddingTop = "2.5%";
+
                 gameLives = document.getElementsByClassName("game_lives")[0];
                 gameLives.style.gridColumn = "1";
                 gameLives.style.gridRow = "1 / span 3";
@@ -356,6 +379,7 @@ function setGridCoordinates(){
                 tile5 = document.getElementsByClassName("plantTile5")[0];
                 tile5.style.gridColumn = "3";
                 tile5.style.gridRow = "2";
+                tile5.style.backgroundColor = "var(--background-color)";
                 
                 tile6 = document.getElementsByClassName("plantTile6")[0];
                 tile6.style.gridColumn = "4";

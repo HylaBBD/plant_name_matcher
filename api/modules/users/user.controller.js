@@ -12,49 +12,15 @@ module.exports.userController = {
       });
     } else {
       return usersService
-        .createUser()
-        .then(() => {
-          return buildResponse(200, result);
+        .createUser(username, password)
+        .then((res) => {
+          return buildResponse(200, res);
         })
         .catch((error) => {
+          console.log("this");
           return buildResponse(500, error);
         });
     }
-
-    return new Promise((resolve, reject) => {
-      if (!username || !password) {
-        resolve(
-          buildResponse(400, {
-            message: "Failed to create user",
-            reason: "Empty data",
-          })
-        );
-      } else if (validUsername.test(username)) {
-        usersService
-          .createUser(username, password)
-          .then((res) => {
-            console.log(res);
-            resolve(buildResponse(200, res));
-          })
-          .catch((err) => {
-            reject(
-              buildResponse(409, {
-                message: "Failed to create user",
-                error: err,
-                reason:
-                  err.code === "SQLITE_CONSTRAINT" ? "user exists" : undefined,
-              })
-            );
-          });
-      } else {
-        reject(
-          buildResponse(400, {
-            message: "Failed to create user",
-            reason: "Invalid username",
-          })
-        );
-      }
-    });
   },
 
   getAllUsers: () => {

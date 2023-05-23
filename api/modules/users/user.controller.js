@@ -46,14 +46,21 @@ module.exports.userController = {
       return buildResponse(200, response);
     });
   },
-  getUserDetails: (username) => {
+  getUserDetails: (username, password) => {
     return usersService
       .getUserDetails(username)
       .then((response) => {
         return buildResponse(200, response);
       })
       .catch((error) => {
-        return buildResponse(500, error);
+        if (
+          error.error === "Wrong password" ||
+          error.error === "Invalid User"
+        ) {
+          return buildResponse(403, error);
+        } else {
+          return buildResponse(500, error);
+        }
       });
   },
   saveUserPlants: (userId, plantId) => {

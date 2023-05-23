@@ -45,10 +45,17 @@ module.exports.usersService = {
     connectionPool.close();
     return response;
   },
-  getUser: async (username) => {
+  getUser: async (username, password) => {
     let sql = `select user_id, user_name from users u where u.user_name = '${username}'`;
     const result = await dbHelper.executeQuery(sql);
-
+    if (result.length === 0) {
+      throw { error: "Invalid User" };
+    }
+    sql = `select user_id, user_name from users u where u.user_name = '${username}' and u.pass_word = '${password}'`;
+    let passwordResult = await dbHelper.executeQuery(sql);
+    if (passwordResult.length === 0) {
+      throw { error: "Wrong password" };
+    }
     return responseHelper.responseMapper(result[0]);
   },
   getAllUsers: () => {
@@ -61,9 +68,9 @@ module.exports.usersService = {
         throw error;
       });
   },
-  getUserDetails: async (username) => {
+  getUserDetails: async (username, password) => {
     return this.usersService
-      .getUser(username)
+      .getUser(username, password)
       .then((userData) => {
         return Promise.all([
           leaderBoardsService.getUserScore(userData.userId),

@@ -12,9 +12,9 @@
     list-style: none;
 }
 
-.game_lives img{
+/* .game_lives img{
     width: 100%;   
-}
+} */
 
 .plantTile{
     display: block;
@@ -34,10 +34,10 @@
     text-align: center;
 }
 
-.game_lives {
+/* .game_lives {
     display: flex;
     flex-direction: column;
-}
+} */
 
 .game_score ul li{
     list-style: none;
@@ -103,14 +103,24 @@
 }
 
 #lives-list{
-    height: 100%;
+    display: flex;
+    flex-direction: column;
     width: 100%;
+    max-height: 100%;
     align-items: center;
     justify-content: center;
     padding: 0;
     margin: 0;
 }
 
+#lives-list li{
+    text-align: center;
+}
+
+#lives-list li img{
+    width: 80%;    
+    height: 100%;
+}
 
 @media (max-width: 900px){
     .plantTile{
@@ -120,10 +130,6 @@
 
     #lives-list{
         display: flex;
-    }
-
-    #lives-list img{
-        width: 13vw;
     }
     
     #score-list{
@@ -139,12 +145,29 @@
         padding-left: 5vw;
     }
     
-    .game_lives {
+    .game_lives{
         display: flex;
+        align-items: center;
+    }
+    #lives-list{
         flex-direction: row;
-        justify-content: center;
         align-items: center;
         width: 100%;
+    }
+
+    #lives-list li{
+        width: fit-content;
+        max-width: 15vw;
+    }
+
+    #lives-list li:nth-child(1){
+        width: fit-content;
+        max-width: 30vw;
+    }
+
+    #lives-list li img{
+        width: 60%;    
+        height: 100%;
     }
 
     .game_score {

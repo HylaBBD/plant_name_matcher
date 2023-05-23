@@ -1,11 +1,8 @@
-const { constants } = require("../../config/constants");
 const { buildResponse } = require("../response/responseUtils");
-const { plantsHelper } = require("./plants.helper");
-const { plantsLibrary } = require("./lib/plants.lib");
 const { plantsService } = require("./plants.service");
 
 module.exports.plantsController = {
-  getPlants: async () => {
+  getPlants: () => {
     return plantsService
       .getPlants()
       .then((plants) => {

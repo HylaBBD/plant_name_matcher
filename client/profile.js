@@ -22,8 +22,15 @@ function switchTheme(e) {
 }
 
 function login() {
-  userService.login(); //
+  userService.login();
 }
 
+let logoutButton = document.getElementById("logout-button");
+logoutButton.addEventListener("click", () => logout());
+
+function logout(){
+  localStorage.removeItem("userId");
+  window.location.href = "login.html";
+}
 darkModeSwitch.addEventListener("change", switchTheme, false);
 // END OF DARK MODE - - - - - - - - - - - - - - -

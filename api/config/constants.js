@@ -1,5 +1,5 @@
 module.exports.constants = {
-  plantsAPIKeys: ["sk-2rX3646d0076019bc952"],
+  plantsAPIKeys: ["sk-CtSG645bb2c924947866"],
   plantAPICalls: 5,
   blackListProperties: [],
 };

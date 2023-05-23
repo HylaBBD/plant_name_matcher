@@ -18,8 +18,6 @@ async function login(event) {
       localStorage.setItem('userId', data.user.userId);
       errorText.innerText = "";
       window.location.href = "game.html";
-
-
     } catch (error) {
         console.log(error);
         errorText.innerText = "Invalid login details.";

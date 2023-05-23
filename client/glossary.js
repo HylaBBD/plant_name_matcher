@@ -33,9 +33,13 @@ addToFavourites.addEventListener('click', () => addPlantToUserFavourites());
 
 async function addPlantToUserFavourites(){
     if(!addToFavourites.classList.contains("disabled")){
-        console.log(localStorage.getItem('userId'));
-        console.log(plantID);
-        await userService.saveUserFavouritePlant(localStorage.getItem('userId'), plantID).then(() => disableButton(addToFavourites));
+        await userService.saveUserFavouritePlant(localStorage.getItem('userId'), plantID).then((response) => {
+            if(response.status == 200){
+                disableButton(addToFavourites);
+                enableButton(removeFromFavourites);
+                userFavouritePlantIDs.push(plantID);
+            }   
+        });
     }
 }
 
@@ -45,7 +49,16 @@ removeFromFavourites.addEventListener('click', () => removePlantFromUserFavourit
 
 async function removePlantFromUserFavourites(){
     if(!removeFromFavourites.classList.contains("disabled")){
-        await userService.deleteUserFavouritePlant(localStorage.getItem('userId'), plantID).then(() => disableButton(removeFromFavourites));
+        await userService.deleteUserFavouritePlant(localStorage.getItem('userId'), plantID).then((response) => {
+            if(response.status == 200){
+                disableButton(removeFromFavourites);
+                enableButton(addToFavourites);
+                let index = userFavouritePlantIDs.findIndex((obj) => obj === plantID);
+                if(index >= 0){
+                    userFavouritePlantIDs.splice(index,1);
+                }
+            }
+        });
     }
 }
 

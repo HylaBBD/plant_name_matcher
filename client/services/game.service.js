@@ -1,11 +1,11 @@
-module.exports.gameService = {
+export const gameService = {
   getGame: async (userId) => {
-    const gameConfiguration = await fetch(
+    const gameConfiguration =   JSON.parse(JSON.stringify(await (await fetch(
       `http://localhost:8000/user/${userId}/game`,
-      { method: "GET" }
-    );
+      { method: "GET" })).json()));
     return gameConfiguration;
   },
+
   saveGameResults: async (userId, gameOptionId, gameLayoutId, score) => {
     const saveGameResult = await fetch(
       `http://localhost:8000/user/${userId}/game`,
@@ -22,11 +22,8 @@ module.exports.gameService = {
   },
 
   getGameResults: async (userId) => {
-    const gameResults = await fetch(
-      `http://localhost:8000/user/${userId}/game`,
-      { method: "GET" }
-    );
-
+    const gameResults = JSON.parse(JSON.stringify(await (await fetch(`http://localhost:8000/user/${userId}/game`,
+      { method: "GET" })).json()));
     return gameResults;
   },
 };

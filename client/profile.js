@@ -1,3 +1,5 @@
+import { userService } from "./services/user.service.js";
+
 // DARK MODE - - - - - - - - - - - - - - - - - - -
 const darkModeSwitch = document.querySelector(
   '.dark-mode-switch input[type="checkbox"]'
@@ -9,6 +11,28 @@ if (currentMode) {
   if (darkModeSwitch != null && currentMode === "dark") {
     darkModeSwitch.checked = true;
   }
+}
+
+// FAVOURITE PLANTS
+let favouritePlantImages = document.getElementsByClassName("favourite-plants-image");
+let favouritePlantCaptions = document.getElementsByClassName("favourite-plants-caption");
+
+let userFavouritePlants = await userService.getUserFavouritePlant(localStorage.getItem("userId"));
+let userFavouritePlantIDs = userFavouritePlants.map((favouritePlant) => {return favouritePlant.id});
+
+for(let i = 0; i < 3; i++){
+  if(i < userFavouritePlants.length){
+    favouritePlantImages[i].src = userFavouritePlants[i].defaultImage.original_url;
+    favouritePlantCaptions[i].innerText = userFavouritePlants[i].scientificName;
+  }
+}
+
+let userHighScoreText = document.getElementById("user-high-score");
+let userHighScore = await userService.getUserScoreAndRank(localStorage.getItem("userId")).score;
+if(userHighScore == undefined){
+  userHighScoreText.innerText = 0;
+}else{
+  userHighScoreText.innerText = userHighScore;
 }
 
 function switchTheme(e) {

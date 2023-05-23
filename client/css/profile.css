@@ -7,6 +7,14 @@ main{
     justify-content: space-around;
 }
 
+h1{
+  font-size: 3rem;
+  font-family: var(--accent-font);
+}
+
+button{
+  margin-bottom: 10%;
+}
 .profile-info {
     display: flex;
     align-items: center;

@@ -15,10 +15,9 @@ export const userService = {
     return registerResponse;
   },
   getUserScoreAndRank: async (userId) => {
-    const userScoreDetails = await fetch(
+    const userScoreDetails = JSON.parse(JSON.stringify(await (await fetch(
       `http://localhost:8000/user/${userId}/score`,
-      { method: "GET" }
-    );
+      { method: "GET" })).json()));
     return userScoreDetails;
   },
   updateUserDifficulty: async (userId, difficultyId) => {

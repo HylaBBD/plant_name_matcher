@@ -17,7 +17,7 @@ async function login(event) {
       const data = await response.json();
       localStorage.setItem('userId', data.user.userId);
       errorText.innerText = "";
-      // window.location.href = "game.html";
+      window.location.href = "game.html";
 
 
     } catch (error) {

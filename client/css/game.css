@@ -97,9 +97,41 @@
     z-index: 1;
     border-radius: 1rem;
     box-shadow: 0 0 40px 10px #000000;
+    text-align: center;
 }
 #game-end-screen.display{
     display:block;
+}
+
+/* GAME START SCREEN */
+#game-start-screen{
+    display: none;
+    max-width: calc(1000px + 10vw);
+    height: 80vh;
+    width: 90vw;
+    background: var(--background-color);
+    position: absolute;
+    z-index: 1;
+    border-radius: 1rem;
+    box-shadow: 0 0 40px 10px #000000;
+    text-align: center;
+}
+#game-start-screen.display{
+    display:block;
+}
+
+#game-start-screen h1{
+    font-family: var(--accent-font);
+    font-size: 4rem;
+}
+
+#game-start-screen p{
+    font-size: 2rem;
+    padding: 0 10% 0 10%;
+}
+
+#game-start-screen button{
+    margin-top: 5%;
 }
 
 #lives-list{
@@ -121,6 +153,7 @@
     width: 80%;    
     height: 100%;
 }
+
 
 @media (max-width: 900px){
     .plantTile{

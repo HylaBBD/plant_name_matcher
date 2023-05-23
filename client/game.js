@@ -2,7 +2,7 @@
 // const key = "sk-CtSG645bb2c924947866"; // JESSE BBD EMAIL
 const key = "sk-q8UK6466165b60d98975"; // JESSE jess44go EMAIL
 // const key = "sk-Ir4T64662d40d85b0978";
-const level = 1;
+const level = 2;
 let numberPlants;
 
 
@@ -39,10 +39,19 @@ const gameEndScore = document.getElementById("game-end-score");
 function displayGameEndScreen() {
     gameEndSection.classList.add("display");
     gameEndScore.innerText = "Score: " + scoreState;
-
 }
 function hideGameEndScreen() {
     gameEndSection.classList.remove("display");
+}
+
+// START GAME SCREEN - - - - - - - - - - - - 
+const gameStartSection = document.getElementById("game-start-screen");
+
+function displayGameStartScreen() {
+    gameStartSection.classList.add("display");
+}
+function hideGameStartScreen() {
+    gameStartSection.classList.remove("display");
 }
 
 const min = 1;
@@ -51,7 +60,7 @@ let tileImages = document.getElementsByClassName("plantPic");
 let tile = document.getElementsByClassName("plantTile");
 
 hideGameEndScreen(); 
-displayLoadingScreen();
+displayGameStartScreen();
 
 let plantScientificNameArray; 
 let plantCommonNameArray; 
@@ -107,7 +116,7 @@ async function generateLevel(){
     }
 }
 
-generateLevel().then(() => hideLoadingScreen());
+// generateLevel().then(() => hideLoadingScreen());
 
 
 
@@ -132,6 +141,9 @@ function renderLives(lives) {
 let gameEndPlayAgain = document.getElementById("game-end-play-again");
 gameEndPlayAgain.addEventListener("click", () => newGame());
 
+let gameStartButton = document.getElementById("game-start-button");
+gameStartButton.addEventListener("click", () => newGame());
+
 function checkGameEnd(){
     if(liveState <= 0){
         displayGameEndScreen();
@@ -153,6 +165,7 @@ function newGame(){
     renderLives(liveState);
 
     hideGameEndScreen();
+    hideGameStartScreen();
     displayLoadingScreen()
     generateLevel().then(() => hideLoadingScreen());
 }

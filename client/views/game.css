@@ -4,8 +4,8 @@
     border-radius: 1rem;
     display: grid;
     gap: 2%;
-    grid-template-columns: 17% 30% 30% 17%;
-    grid-template-rows: 49% 49%;
+    /* grid-template-columns: 17% 30% 30% 17%;
+    grid-template-rows: 49% 49%; */
     background-color: var(--background-color);
     justify-content: center;
 }
@@ -42,6 +42,7 @@
     grid-column: 1;
     grid-row: 1 / span 2;
 }
+
 .plantTile1 {
     grid-column: 2;
     grid-row: 1;
@@ -86,18 +87,10 @@
     box-shadow: none;
 }
 
-/*-----------------MODE 1-----------------*/
-.mode1 .plantTile{
-
-}
-
-/*-----------------MODE 2-----------------*/
-.mode2{
+.plantTile5 .plantTile6 .plantTile7 .plantTile8 .plantTile9{
     display: none;
 }
 
-.mode2 .plantTile{
-}
 
 
 .play-button {
@@ -142,16 +135,6 @@
 
 
 @media (max-width: 900px){
-
-    .game_wrapper{
-        display: grid;
-        gap: 2%;
-        grid-template-columns: 49% 49%;
-        grid-template-rows: 17% 30% 30% 17%;
-        background-color: var(--background-color);
-        width: 100%;
-    }
-
     .plantTile{
         text-align: center;
         width: 95%;
@@ -186,9 +169,6 @@
     }
     
     .game_lives {
-        grid-column: 1 / span 2;
-        grid-row: 1;
-
         display: flex;
         flex-direction: row;
         justify-content: center;
@@ -196,34 +176,11 @@
         width: 100%;
     }
 
-
-    .plantTile1 {
-        grid-column: 1;
-        grid-row: 2;
-        margin-left: 5%;
-    }
-    .plantTile2 {
-        grid-column: 2;
-        grid-row: 2;
-    }
-    .plantTile3 {
-        grid-column: 1;
-        grid-row: 3;
-        margin-left: 5%;
-    }
-    .plantTile4 {
-        grid-column: 2;
-        grid-row: 3;
-    }
     .game_score {
-        grid-column: 1 / span 2;
-        grid-row: 4;
         display: flex;
         flex-direction: row;
         justify-content: center;
         align-items: center;
         width: 100%;
     }
-
-
 }

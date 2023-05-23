@@ -5,15 +5,20 @@ const key = "sk-Ir4T64662d40d85b0978";
 const level = 1;
 let numberPlants;
 
-switch(level){
-    case 1: 
-        numberPlants = 2;
-        break;
-    case 2:
-        numberPlants = 4;
-        break;
-    default: 
-        numberPlants = 2;
+
+// CHANGE GAME GRID SIZE
+let winWidth = window.matchMedia("(max-width: 900px)");
+let winWidthLess = false;
+smallWidth(winWidth);
+winWidth.addEventListener('change', smallWidth);
+
+function smallWidth(winWidth) {
+    if (winWidth.matches) {
+        winWidthLess = true;
+    }else{        
+        winWidthLess = false;
+    }
+    setGridCoordinates();
 }
 
 // LOADING SCREEN - - - - - - - - - - - - 
@@ -48,10 +53,10 @@ let tile = document.getElementsByClassName("plantTile");
 hideGameEndScreen(); 
 displayLoadingScreen();
 
-let plantScientificNameArray = new Array(numberPlants); 
-let plantCommonNameArray = new Array(numberPlants); 
-let plantIDArray = new Array(numberPlants);
-let positionArray = new Array(numberPlants*2);
+let plantScientificNameArray; 
+let plantCommonNameArray; 
+let plantIDArray;
+let positionArray;
 
 let scoreState = 0;
 let liveState = 3;
@@ -59,6 +64,9 @@ let numberCompleted = 0;
 
 async function generateLevel(){
     numberCompleted = 0;
+
+    setGridCoordinates();
+
     plantScientificNameArray = new Array(numberPlants); 
     plantCommonNameArray = new Array(numberPlants); 
     plantIDArray = new Array(numberPlants);
@@ -192,7 +200,186 @@ function checkSelected(tile){
 }
 
 
+function setGridCoordinates(){
+    let gameLives, tile1, tile2, tile3, tile4, tile5, tile6, tile7, tile8, tile9, gameScore, gameWrapper;
+    switch(level){
+        case 1: 
+            numberPlants = 2;
+            if(winWidthLess){
+                gameWrapper = document.getElementsByClassName("game_wrapper")[0];
+                gameWrapper.style.gridTemplateColumns = "49% 49%";
+                gameWrapper.style.gridTemplateRows = "17% 30% 30% 17%";
 
+                console.log("WIN LESS CASE 1");
+                gameLives = document.getElementsByClassName("game_lives")[0];
+                gameLives.style.gridColumn = "1 / span 2";
+                gameLives.style.gridRow = "1";
+                
+                tile1 = document.getElementsByClassName("plantTile1")[0];
+                tile1.style.gridColumn = "1";
+                tile1.style.gridRow = "2";
+                tile1.style.marginLeft = "5%";
+                
+                tile2 = document.getElementsByClassName("plantTile2")[0];
+                tile2.style.gridColumn = "2";
+                tile2.style.gridRow = "2";
+                
+                tile3 = document.getElementsByClassName("plantTile3")[0];
+                tile3.style.gridColumn = "1";
+                tile3.style.gridRow = "3";
+                tile3.style.marginLeft = "5%";
+                
+                tile4 = document.getElementsByClassName("plantTile4")[0];
+                tile4.style.gridColumn = "2";
+                tile4.style.gridRow = "3";
+                
+                gameScore = document.getElementsByClassName("game_score")[0];
+                gameScore.style.gridColumn = "1 / span 2";
+                gameScore.style.gridRow = "4";
+            }else{
+                console.log("WIN MORE CASE 1");
+                
+                gameWrapper = document.getElementsByClassName("game_wrapper")[0];
+                gameWrapper.style.gridTemplateColumns = "17% 30% 30% 17%";
+                gameWrapper.style.gridTemplateRows = "49% 49%";
+                
+                gameLives = document.getElementsByClassName("game_lives")[0];
+                gameLives.style.gridColumn = "1";
+                gameLives.style.gridRow = "1 / span 2";
+                
+                tile1 = document.getElementsByClassName("plantTile1")[0];
+                tile1.style.gridColumn = "2";
+                tile1.style.gridRow = "1";
+                
+                tile2 = document.getElementsByClassName("plantTile2")[0];
+                tile2.style.gridColumn = "3";
+                tile2.style.gridRow = "1";
+                
+                tile3 = document.getElementsByClassName("plantTile3")[0];
+                tile3.style.gridColumn = "2";
+                tile3.style.gridRow = "2";
+                
+                tile4 = document.getElementsByClassName("plantTile4")[0];
+                tile4.style.gridColumn = "3";
+                tile4.style.gridRow = "2";
+                
+                gameScore = document.getElementsByClassName("game_score")[0];
+                gameScore.style.gridColumn = "4";
+                gameScore.style.gridRow = "1 / span 2";
+            }
+            
+            tile5 = document.getElementsByClassName("plantTile5")[0];
+            tile5.style.display = "none";
+            
+            tile6 = document.getElementsByClassName("plantTile6")[0];
+            tile6.style.display = "none";
+            
+            tile7 = document.getElementsByClassName("plantTile7")[0];
+            tile7.style.display = "none";
+            
+            tile8 = document.getElementsByClassName("plantTile8")[0];
+            tile8.style.display = "none";
+            
+            tile9 = document.getElementsByClassName("plantTile9")[0];
+            tile9.style.display = "none";
+            break;
+        case 2:
+            numberPlants = 4;
+            if(winWidthLess){
+                console.log("WIN LESS CASE 2");
+                gameLives = document.getElementsByClassName("game_lives")[0];
+                gameLives.style.gridColumn = "1 / span 3";
+                gameLives.style.gridRow = "1";
+                
+                tile1 = document.getElementsByClassName("plantTile1")[0];
+                tile1.style.gridColumn = "1";
+                tile1.style.gridRow = "2";
+                
+                tile2 = document.getElementsByClassName("plantTile2")[0];
+                tile2.style.gridColumn = "2";
+                tile2.style.gridRow = "2";
+                
+                tile3 = document.getElementsByClassName("plantTile3")[0];
+                tile3.style.gridColumn = "3";
+                tile3.style.gridRow = "2";
+                
+                tile4 = document.getElementsByClassName("plantTile4")[0];
+                tile4.style.gridColumn = "1";
+                tile4.style.gridRow = "3";
+                
+                tile5 = document.getElementsByClassName("plantTile5")[0];
+                tile5.style.gridColumn = "2";
+                tile5.style.gridRow = "3";
+                
+                tile6 = document.getElementsByClassName("plantTile6")[0];
+                tile6.style.gridColumn = "3";
+                tile6.style.gridRow = "3";
+                
+                tile7 = document.getElementsByClassName("plantTile7")[0];
+                tile7.style.gridColumn = "1";
+                tile7.style.gridRow = "4";
+                
+                tile8 = document.getElementsByClassName("plantTile8")[0];
+                tile8.style.gridColumn = "2";
+                tile8.style.gridRow = "4";
+                
+                tile9 = document.getElementsByClassName("plantTile9")[0];
+                tile9.style.gridColumn = "3";
+                tile9.style.gridRow = "4";
+                
+                gameScore = document.getElementsByClassName("game_score")[0];
+                gameScore.style.gridColumn = "1 / span 3";
+                gameScore.style.gridRow = "5";
+                
+            }else{
+                console.log("WIN MORE CASE 2");
+                gameLives = document.getElementsByClassName("game_lives")[0];
+                gameLives.style.gridColumn = "1";
+                gameLives.style.gridRow = "1 / span 3";
+                
+                tile1 = document.getElementsByClassName("plantTile1")[0];
+                tile1.style.gridColumn = "2";
+                tile1.style.gridRow = "1";
+                
+                tile2 = document.getElementsByClassName("plantTile2")[0];
+                tile2.style.gridColumn = "3";
+                tile2.style.gridRow = "1";
+                
+                tile3 = document.getElementsByClassName("plantTile3")[0];
+                tile3.style.gridColumn = "4";
+                tile3.style.gridRow = "1";
+                
+                tile4 = document.getElementsByClassName("plantTile4")[0];
+                tile4.style.gridColumn = "2";
+                tile4.style.gridRow = "2";
+                
+                tile5 = document.getElementsByClassName("plantTile5")[0];
+                tile5.style.gridColumn = "3";
+                tile5.style.gridRow = "2";
+                
+                tile6 = document.getElementsByClassName("plantTile6")[0];
+                tile6.style.gridColumn = "4";
+                tile6.style.gridRow = "2";
+                
+                tile7 = document.getElementsByClassName("plantTile7")[0];
+                tile7.style.gridColumn = "2";
+                tile7.style.gridRow = "3";
+                
+                tile8 = document.getElementsByClassName("plantTile8")[0];
+                tile8.style.gridColumn = "3";
+                tile8.style.gridRow = "3";
+                
+                tile9 = document.getElementsByClassName("plantTile9")[0];
+                tile9.style.gridColumn = "4";
+                tile9.style.gridRow = "3";
+                
+                gameScore = document.getElementsByClassName("game_score")[0];
+                gameScore.style.gridColumn = "5";
+                gameScore.style.gridRow = "1 / span 3";
+            }
+            break;
+    }
+}
 
 /*
 <!-- Example JSON Output -->  

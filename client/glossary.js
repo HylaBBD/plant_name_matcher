@@ -23,8 +23,11 @@ navControlMax.innerText = max;
 let plantID = 1;
 navControlIndex.innerText = plantID;
 onSelectorClick(0)
+
 // let userFavouritePlants = userService.getUserFavouritePlant(localStorage.getItem('userID'));
-let userFavouritePlants = userService.getUserFavouritePlant(35);
+let userFavouritePlants = await userService.getUserFavouritePlant(35);
+console.log(userFavouritePlants);
+
 
 function displayLoadingScreen() {
     loadingSection.classList.add("display");

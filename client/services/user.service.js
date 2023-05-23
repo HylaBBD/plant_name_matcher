@@ -50,7 +50,7 @@ export const userService = {
     return userPlantDeleteResponse;
   },
   getUserFavouritePlant: async (userID) => {
-    const userPlants = await fetch(`http://localhost:8000/user/${userID}/plants`, { method: "GET" });
+    const userPlants = JSON.parse(JSON.stringify(await (await fetch(`http://localhost:8000/user`, { method: "GET" })).json()));
     return userPlants;
   },
 };

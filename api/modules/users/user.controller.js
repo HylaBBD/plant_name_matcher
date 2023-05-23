@@ -1,5 +1,6 @@
 const { usersService } = require("./users.service");
 const { buildResponse } = require("../response/responseUtils");
+const { plantsService } = require("../plants/plants.service");
 const validUsername = new RegExp(".*[A-Za-z].*");
 
 module.exports.userController = {
@@ -57,7 +58,7 @@ module.exports.userController = {
   },
   saveUserPlants: (userId, plantId) => {
     return usersService
-      .updateUserPlants(userId, plantId)
+      .saveUserPlant(userId, plantId)
       .then((response) => {
         return buildResponse(200, response);
       })
@@ -81,6 +82,25 @@ module.exports.userController = {
       .updateUserDifficulty(id, difficultyId)
       .then((response) => {
         return buildResponse(200, response);
+      });
+  },
+  getUserPlants: (userId) => {
+    return Promise.all([
+      plantsService.getPlants(),
+      usersService.getUserPlants(userId),
+    ])
+      .then(([plants, userPlantIds]) => {
+        const plantIds = userPlantIds.map((userPlants) => {
+          return userPlants.plantId;
+        });
+        const userPlants = plants.filter((plant) =>
+          plantIds.includes(plant.id)
+        );
+
+        return buildResponse(200, userPlants);
+      })
+      .catch((error) => {
+        return buildResponse(500, error);
       });
   },
 };

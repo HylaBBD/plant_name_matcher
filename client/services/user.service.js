@@ -49,4 +49,8 @@ module.exports.userService = {
     );
     return userPlantDeleteResponse;
   },
+  getUserFavouritPlant: async (userID) => {
+    const userPlants = await fetch(`/user/${userID}/plants`, { method: "GET" });
+    return userPlants;
+  },
 };

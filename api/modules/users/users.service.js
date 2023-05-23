@@ -88,7 +88,7 @@ module.exports.usersService = {
       });
   },
   saveUserPlant: (userId, plantId) => {
-    let sql = `insert into user_plants(user_id, plants_id) values(${userId},${plantId})`;
+    let sql = `insert into user_plants(user_id, plant_id) values(${userId},${plantId})`;
     return dbHelper
       .executeQuery(sql)
       .then(() => {
@@ -99,11 +99,22 @@ module.exports.usersService = {
       });
   },
   deleteUserPlants: (userId, plantId) => {
-    let sql = `delete from user_plants where user_id = ${}`;
+    let sql = `delete from user_plants where user_id = ${userId} and plant_id = ${plantId}`;
     return dbHelper
       .executeQuery(sql)
       .then(() => {
         return { message: "Plant removed" };
+      })
+      .catch((error) => {
+        throw error;
+      });
+  },
+  getUserPlants: (userId) => {
+    let sql = `select plant_id from user_plants where user_id = ${userId}`;
+    return dbHelper
+      .executeQuery(sql)
+      .then((userPlants) => {
+        return responseHelper.responseMapper(userPlants);
       })
       .catch((error) => {
         throw error;

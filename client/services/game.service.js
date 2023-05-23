@@ -11,11 +11,11 @@ module.exports.gameService = {
       `http://localhost:8000/user/${userId}/game`,
       {
         method: "POST",
-        body: {
+        body: JSON.stringify({
           gameOptionId: gameOptionId,
           gameLayoutId: gameLayoutId,
           score: score,
-        },
+        }),
       }
     );
     return saveGameResult;

@@ -9,49 +9,48 @@ const sql = require("mssql");
 
 module.exports.usersService = {
   createUser: async (username, password) => {
-    let response = {};
-    const connectionPool = await sql
+    const connection = await dbHelper
       .connect()
       .then((conn) => {
         return conn;
       })
       .catch((error) => {
-        return error;
+        console.log("this error");
+        throw error;
       });
-    if (connectionPool.error) {
-      throw connectionPool.error;
-    }
-    const tx = new sql.Transaction(connectionPool);
+
+    const tx = new sql.Transaction(connection);
     const userQuery = `insert into users(user_name,pass_word) values('${username}','${password}'); select SCOPE_IDENTITY() as userId`;
     await tx.begin();
-    console.log("come here");
     const request = new sql.Request(tx);
-
-    try {
-      const result = await request.query(userQuery); //.then(() => );
-      const userId = result.recordset[0].userId;
-
-      const highScore = await leaderBoardsService
-        .createUserHighScoreEntry(request, userId)
-        .catch((errir) => {
-          console.log(errir);
-        });
-      console.log(highScore);
-      const difficulty = await gameSettingsService
-        .createUserDifficultDefault(request, userId)
-        .catch((error) => {
-          console.log(error);
-        });
-      console.log(difficulty);
-      tx.commit();
-      response = { message: "success" };
-    } catch (e) {
-      tx.rollback();
-      response = e;
-      throw e;
-    }
-    connectionPool.close();
-    return response;
+    return await request.query(userQuery).then((result) => {
+      if (result.recordset[0].userId >= 0) {
+        const userId = result.recordset[0].userId;
+        return leaderBoardsService
+          .createUserHighScoreEntry(request, userId)
+          .then(() => {
+            return gameSettingsService
+              .createUserDifficultDefault(request, userId)
+              .then(() => {
+                tx.commit();
+                return { message: "success" };
+              })
+              .catch((error) => {
+                tx.rollback();
+                console.log(error);
+                throw error;
+              });
+          })
+          .catch((error) => {
+            tx.rollback();
+            throw error;
+          });
+      } else {
+        console.log(!!result.recordset[0].userId >= 0);
+        tx.rollback();
+        throw { message: "failed" };
+      }
+    });
   },
   getUser: async (username, password) => {
     let sql = `select user_id, user_name from users u where u.user_name = '${username}' and u.pass_word = '${password}'`;

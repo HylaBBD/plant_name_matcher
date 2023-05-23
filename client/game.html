@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- https://github.com/public-apis/public-apis -->
+<head>
+    <title>Play</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/game.css">
+    <script type="module" src="main.js"></script>
+    <script type="module" src="game.js"></script>
+    
+</head>
+
+    <body>
+        <header>
+            <figure>
+                <a href="game.html"><img src="static/plant-logo.png" alt="simple green fern logo with two fern leaves"></a>
+                <h1><a href="game.html" id="bb-title">Botanical Buzzwords</a></h1>
+            </figure>            
+            <nav class="header-nav">
+                <ul>
+                    <li><a class="active" href="game.html">Play</a></li>
+                    <li><a href="glossary.html">Glossary</a></li>
+                    <li><a href="leaderboard.html">Leaderboard</a></li>
+                    <li><a href="profile.html">Profile</a></li>
+                </ul>
+            </nav>
+            <figure class="menu-toggle" >
+                <img src="static/hamburger-menu-dark.png" alt="hamburger menu icon for mobile nav view">
+            </figure>
+        </header>
+        <img class="background" src="static/fern-background.jpg" alt="furled ferns bright green with sun">
+
+        <main class="game">
+            <section id="loading-screen">
+                <img src="static/loading-icon-dark.png" alt="loading icon of a green fern">
+            </section>
+
+            <section id="game-end-screen">
+                <h1 id="game-end-score">Score: 120</h1>
+                <p>U DED BRO</p>
+                <button id="game-end-play-again">Play again?</button>
+            </section>
+
+
+            <grid class="game_wrapper">
+                <cell class="game_lives">
+                    <ul id="lives-list">
+                        <li><h1>Lives:</h1></li>
+                        <li><img src="static/leaf-heart.png"></li>
+                        <li><img src="static/leaf-heart.png"></li>
+                        <li><img src="static/leaf-heart.png"></li>
+                    </ul>
+                </cell>
+
+                <!-- GAME TILES -->
+                <cell class="plantTile selectable plantTile1"></cell>
+                <cell class="plantTile selectable plantTile2"></cell>
+                <cell class="plantTile selectable plantTile3"></cell>
+                <cell class="plantTile selectable plantTile4"></cell>
+                <cell class="plantTile selectable plantTile5"></cell>
+                <cell class="plantTile selectable plantTile6"></cell>
+                <cell class="plantTile selectable plantTile7"></cell>
+                <cell class="plantTile selectable plantTile8"></cell>
+                <cell class="plantTile selectable plantTile9"></cell>
+                <cell class="game_score">
+                    <ul id="score-list">
+                        <li><h1>Score:</h1></li>
+                        <li id="score">0</li>
+                    </ul>
+                </cell>
+            </grid>        
+        </main>
+    </body>
+</html>

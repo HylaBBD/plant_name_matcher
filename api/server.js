@@ -1,43 +1,43 @@
 const http = require("http");
 const { config } = require("./config/config");
-const path = "./db/plants.db";
-const { dbHelper } = require("./db/helper/database.helper");
 const url = require("url");
 
 const requestListener = async (req, res) => {
   requestDataBuilder(req)
-  .then((data) => {
-    console.log(data.urlData.filePath)
-    const selectedRoute = config.server.getRouteFunction(data.urlData.filePath, data.urlData.method);
-    if (selectedRoute) {
-      const db = dbHelper.connect(path);
-    
-      selectedRoute.function({
-        ...data.body,
-        ...data.queryParams,
-        url: data.urlData.filePath,
-        connection: db
-      }).then(({responseCode, response}) => {
-        console.log("RESPONSE")
-        console.log(JSON.stringify(response))
-        console.log(responseCode)
-        res.writeHead(responseCode, { "Content-Type": "application/json" });
-        res.write(JSON.stringify(response))
+    .then((data) => {
+      console.log(data.urlData.filePath);
+      const selectedRoute = config.server.getRouteFunction(
+        data.urlData.filePath,
+        data.urlData.method
+      );
+      if (selectedRoute) {
+        selectedRoute
+          .function({
+            ...data.body,
+            ...data.queryParams,
+            url: data.urlData.filePath,
+          })
+          .then(({ responseCode, response }) => {
+            console.log("RESPONSE");
+            console.log(JSON.stringify(response));
+            console.log(responseCode);
+            res.writeHead(responseCode, { "Content-Type": "application/json" });
+            res.write(JSON.stringify(response));
+            res.end();
+          });
+      } else {
+        res.writeHead(404, { "Content-Type": "application/json" });
+        res.write("this will hapen if no params found");
         res.end();
-      })
-    } else {
-      res.writeHead(404, { "Content-Type": "application/json" });
-      res.write("this will hapen if no params found");
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+      res.writeHead(500, { "Content-Type": "application/json" });
+      res.write(JSON.stringify(err));
       res.end();
-    }
-  }).catch((err) => {
-    console.log(err)
-    res.writeHead(500, { "Content-Type": "application/json" });
-    res.write(JSON.stringify(err))
-    res.end();
-  })
+    });
 };
-
 
 const requestDataBuilder = async (req) => {
   //should return a body with any data that we need

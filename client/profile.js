@@ -18,11 +18,10 @@ let favouritePlantImages = document.getElementsByClassName("favourite-plants-ima
 let favouritePlantCaptions = document.getElementsByClassName("favourite-plants-caption");
 
 let userFavouritePlants = await userService.getUserFavouritePlant(localStorage.getItem("userId"));
-let userFavouritePlantIDs = userFavouritePlants.map((favouritePlant) => {return favouritePlant.id});
 
 for(let i = 0; i < 3; i++){
   if(i < userFavouritePlants.length){
-    favouritePlantImages[i].src = userFavouritePlants[i].defaultImage.original_url;
+    favouritePlantImages[i].src = userFavouritePlants[i].defaultImage.original_url;    
     favouritePlantCaptions[i].innerText = userFavouritePlants[i].scientificName;
   }
 }

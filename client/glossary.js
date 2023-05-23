@@ -20,7 +20,7 @@ if (rightSelector != null) {
 // PICTURE AND LATIN NAMES - - - - - - - - - - - - 
 let plants = await plantService.getPlants();
 navControlMax.innerText = plants.length;
-let plantID = 1;
+let plantID = 0;
 navControlIndex.innerText = plantID;
 
 let userFavouritePlants = await userService.getUserFavouritePlant(localStorage.getItem("userId"));
@@ -33,11 +33,11 @@ addToFavourites.addEventListener('click', () => addPlantToUserFavourites());
 
 async function addPlantToUserFavourites(){
     if(!addToFavourites.classList.contains("disabled")){
-        await userService.saveUserFavouritePlant(localStorage.getItem('userId'), plantID).then((response) => {
+        await userService.saveUserFavouritePlant(localStorage.getItem('userId'), plantID+1).then((response) => {
             if(response.status == 200){
                 disableButton(addToFavourites);
                 enableButton(removeFromFavourites);
-                userFavouritePlantIDs.push(plantID);
+                userFavouritePlantIDs.push(plantID+1);
             }   
         });
     }
@@ -53,7 +53,7 @@ async function removePlantFromUserFavourites(){
             if(response.status == 200){
                 disableButton(removeFromFavourites);
                 enableButton(addToFavourites);
-                let index = userFavouritePlantIDs.findIndex((obj) => obj === plantID);
+                let index = userFavouritePlantIDs.findIndex((obj) => obj === plantID+1);
                 if(index >= 0){
                     userFavouritePlantIDs.splice(index,1);
                 }
@@ -84,12 +84,12 @@ async function onSelectorClick(change){
     }else if(plantID > plants.length){
         plantID = plants.length;
     }
-    navControlIndex.innerText = plantID;
+    navControlIndex.innerText = plantID+1;
     commonName.textContent = "Common Name: " + plants[plantID].commonName;
     scientificName.textContent = "Scientific Name: " + plants[plantID].scientificName;
     glossaryImage.src = plants[plantID].defaultImage.original_url;
 
-    if(userFavouritePlantIDs.includes(plantID)){
+    if(userFavouritePlantIDs.includes(plantID+1)){
         disableButton(addToFavourites);
         enableButton(removeFromFavourites);
     }else{

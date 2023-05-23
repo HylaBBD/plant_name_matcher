@@ -16,25 +16,33 @@ module.exports.usersService = {
         return conn;
       })
       .catch((error) => {
-        throw error;
+        return error;
       });
     if (connectionPool.error) {
-      throw error;
+      throw connectionPool.error;
     }
     const tx = new sql.Transaction(connectionPool);
     const userQuery = `insert into users(user_name,pass_word) values('${username}','${password}'); select SCOPE_IDENTITY() as userId`;
     await tx.begin();
-
+    console.log("come here");
     const request = new sql.Request(tx);
 
     try {
-      const result = await request.query(userQuery);
+      const result = await request.query(userQuery); //.then(() => );
       const userId = result.recordset[0].userId;
 
-      await leaderBoardsService.createUserHighScoreEntry(request, userId);
-
-      await gameSettingsService.createUserDifficultDefault(request, userId);
-
+      const highScore = await leaderBoardsService
+        .createUserHighScoreEntry(request, userId)
+        .catch((errir) => {
+          console.log(errir);
+        });
+      console.log(highScore);
+      const difficulty = await gameSettingsService
+        .createUserDifficultDefault(request, userId)
+        .catch((error) => {
+          console.log(error);
+        });
+      console.log(difficulty);
       tx.commit();
       response = { message: "success" };
     } catch (e) {
@@ -46,15 +54,10 @@ module.exports.usersService = {
     return response;
   },
   getUser: async (username, password) => {
-    let sql = `select user_id, user_name from users u where u.user_name = '${username}'`;
-    const result = await dbHelper.executeQuery(sql);
+    let sql = `select user_id, user_name from users u where u.user_name = '${username}' and u.pass_word = '${password}'`;
+    let result = await dbHelper.executeQuery(sql);
     if (result.length === 0) {
-      throw { error: "Invalid User" };
-    }
-    sql = `select user_id, user_name from users u where u.user_name = '${username}' and u.pass_word = '${password}'`;
-    let passwordResult = await dbHelper.executeQuery(sql);
-    if (passwordResult.length === 0) {
-      throw { error: "Wrong password" };
+      throw { error: "Invalid credentials" };
     }
     return responseHelper.responseMapper(result[0]);
   },

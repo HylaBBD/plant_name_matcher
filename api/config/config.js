@@ -17,7 +17,7 @@ routes.register("/user/.*[A-Za-z].*/.*[A-Za-z].*", "GET", (data) => {
   const username = splitUrl[1];
   const password = splitUrl[2];
   console.log(password);
-  return userController.getUserDetails(username);
+  return userController.getUserDetails(username, password);
 });
 
 routes.register("/user", "GET", (data) => {

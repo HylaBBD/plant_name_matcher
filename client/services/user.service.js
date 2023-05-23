@@ -24,7 +24,7 @@ export const userService = {
   updateUserDifficulty: async (userId, difficultyId) => {
     const userDifficultyUpdateResponse = await fetch(
       `http://localhost:8000/user/${userId}/difficulty`,
-      { method: "PATCH", body: { difficultyId: difficultyId } }
+      { method: "PATCH", body: JSON.parse({ difficultyId: difficultyId }) }
     );
     return userDifficultyUpdateResponse;
   },
@@ -39,22 +39,31 @@ export const userService = {
     console.log(Number(userId));
     console.log(plantId);
     const userPlantSavingResponse = await fetch(
-      `http://localhost:8000/user/${Number(userId)}/plants`,
-      { method: "POST", body: { plantId: Number(plantId) } }
+      `http://localhost:8000/user-plant/${Number(userId)}/plants`,
+      { method: "POST", body: JSON.stringify({ plantId: Number(plantId) }) }
     );
     return userPlantSavingResponse;
   },
   deleteUserFavouritePlant: async (userId, plantId) => {
     console.log(Number(userId));
+    const newId = +userId;
     console.log(plantId);
     const userPlantDeleteResponse = await fetch(
-      `http://localhost:8000/user/${Number(userId)}/plants`,
-      { method: "DELETE", body: { plantId: Number(plantId) } }
+      `http://localhost:8000/user/${newId}/plants`,
+      { method: "DELETE", body: JSON.stringify({ plantId: Number(plantId) }) }
     );
     return userPlantDeleteResponse;
   },
   getUserFavouritePlant: async (userID) => {
-    const userPlants = JSON.parse(JSON.stringify(await (await fetch(`http://localhost:8000/user/${userID}/plants`, { method: "GET" })).json()));
+    const userPlants = JSON.parse(
+      JSON.stringify(
+        await (
+          await fetch(`http://localhost:8000/user/${userID}/plants`, {
+            method: "GET",
+          })
+        ).json()
+      )
+    );
     return userPlants;
   },
 };

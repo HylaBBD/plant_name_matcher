@@ -21,24 +21,19 @@
     flex-direction: column;
     width: 50%;
     justify-content: space-between;
+    padding-right: 5%;
 }
 .glossary-info h1{
     text-align: center;
     font-size: 3rem;
-    padding-right: 10%;
 }
 .glossary-info h2{
     text-align: center;
-    padding-right: 10%;
 }
 .glossary-info p{
-    padding-right: 10%;
     text-align: justify;
 }
 
-.navigation-control{
-    padding-right: 10%;
-}
 .navigation-control td:nth-child(1){
     text-align: right;
 }

@@ -1,9 +1,3 @@
-
-
-
-
-
-
 // LOADING ICON - - - - - - - - - - - - 
 const loadingSection = document.getElementById("loading-screen");
 const loadingSectionImage = document.getElementById("loading-screen-image");
@@ -58,4 +52,22 @@ async function onSelectorClick(change){
     glossaryImage.src = plantData.default_image.original_url;
     description.textContent = plantData.description;
     hideLoadingScreen()
+}
+
+
+// ADD TO FAVOURITES BUTTON
+let addToFavourites = document.getElementById("add-to-favourites");
+addToFavourites.addEventListener('click', () => addPlantToUserFavourites());
+
+async function addPlantToUserFavourites(){
+    if(!addToFavourites.classList.contains("disabled")){
+        // MATT LOOK HERE
+        // saveUserPlant(localStorage.getItem('userID', plantID)).then(() => disableButton(addToFavourites));
+        disableButton(addToFavourites);
+    }
+}
+
+function disableButton(button){
+    button.classList.add("disabled");
+    console.log("DISABLING BRO");
 }

@@ -1,5 +1,3 @@
-import { userService } from "./services/user.service";
-import {} from "module";
 // DARK MODE - - - - - - - - - - - - - - - - - - -
 const darkModeSwitch = document.querySelector(
   '.dark-mode-switch input[type="checkbox"]'

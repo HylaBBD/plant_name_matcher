@@ -99,7 +99,7 @@ module.exports.usersService = {
       });
   },
   deleteUserPlants: (userId, plantId) => {
-    let sql = `delete from user_plants where user_id = ${}`;
+    let sql = `delete from user_plants where user_id = ${userId} and plant_id = ${plantId}`;
     return dbHelper
       .executeQuery(sql)
       .then(() => {

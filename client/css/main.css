@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css?family=Tangerine');
 :root{
     --primary-color: #4C8538;
+    --dark-primary-color: #3c6a2c;
     --secondary-color: #D0F6B8;
     --shadow-color: #aaa;
     --font-color: #000000;
@@ -11,7 +12,8 @@
 }
 
 [dark-mode="dark"]{
-    --primary-color: #D0F6B8;
+    --primary-color: #badfa5;
+    --dark-primary-color: #9bbe84;
     --secondary-color: #4C8538;
     --shadow-color: #575757;
     --font-color: #FFFFFF;
@@ -164,22 +166,32 @@ main{
 }
 
 button {
-    border-radius: 8px;
+    border-radius: 0.5rem;
     border-width: 0;
     background-color: var(--primary-color);
     cursor: pointer;
-    display: inline-block;
-    font-size: 14px;
-    font-weight: 500;
-    line-height: 20px;
-    list-style: none;
-    margin: 10px;
-    padding: 10px 12px;
+    height: 2rem;
+    width: 30rem;
     text-align: center;
-    vertical-align: baseline;
-    white-space: nowrap;
-  }
+    font-weight: bolder;
+    font-size: large;
+    width: fit-content;
+    height:fit-content;
+    padding: 2% 5% 2% 5%;
+    vertical-align: middle;
+    align-self: center;
+}
+
+button:hover{
+    background-color: var(--dark-primary-color);
+}
   
+button.disabled{
+    background-color: var(--shadow-color);
+    cursor: default;
+}
+
+
 @keyframes spin {
     from {
         transform: rotate(0deg);

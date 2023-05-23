@@ -9,10 +9,10 @@ const { gameHelper } = require("./game.helper");
 const { gameService } = require("./game.service");
 
 module.exports.gameController = {
-  createGameResult: (userId, gameOptionId, gameLayout) => {
+  createGameResult: (userId, gameOptionId, gameLayout, score) => {
     // TODO validation
     return gameService
-      .createGameResult(userId, gameOptionId, gameLayout)
+      .createGameResult(userId, gameOptionId, gameLayout, score)
       .then((res) => {
         return buildResponse(200, res);
       })
@@ -24,9 +24,14 @@ module.exports.gameController = {
       });
   },
   getUserGameResults: (userId) => {
-    return gameService.getUserGameResults(userId).then((res) => {
-      return buildResponse(200, res);
-    });
+    return gameService
+      .getUserGameResults(userId)
+      .then((res) => {
+        return buildResponse(200, res);
+      })
+      .catch((error) => {
+        return buildResponse(500, error);
+      });
   },
   getGame: async (userId) => {
     try {

@@ -6,11 +6,8 @@ module.exports.gameHelper = {
       scientificNames: [],
       commonNames: [],
     };
-    console.log("-----------------");
-    console.log(data);
-    console.log("-----------------");
-    let completedGames = data.results
-      ? data.results
+    let completedGames = data.userGames
+      ? data.userGames
           .filter((gameResult) => gameResult.score > 0)
           .map((filteredGames) => filteredGames.size)
       : 0;
@@ -24,15 +21,11 @@ module.exports.gameHelper = {
           layoutOption.size > maxSizePlayed ||
           index === data.gameLayouts.length - 1
       );
-      // layout: id, blocks
-      // options: id, displayValue
-      // scientificNames: []
-      // commonNames: []
     } else {
       layout = data.gameLayouts[0];
     }
     gameObject.layout = layout;
-    for (let index = 0; index <= layout.size; index++) {
+    for (let index = 0; index < layout.size; index++) {
       const plantIndex = this.gameHelper.generateRandomNumber(
         0,
         data.plants.length - 1

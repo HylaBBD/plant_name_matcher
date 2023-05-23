@@ -6,15 +6,21 @@ const {
 const { plantsService } = require("../plants/plants.service");
 
 module.exports.gameService = {
-  createGameResult: async (userId, gameOptionId, gameLayoutId, userWin) => {
-    let sql = `insert into user_game_results(user_id, game_option_id, game_layout_id, win), values(${userId},${gameOptionId},${gameLayoutId},${userWin})`;
-    const result = await dbHelper.executeQuery(sql);
-    return result;
+  createGameResult: async (userId, gameOptionId, gameLayoutId, score) => {
+    let sql = `insert into user_game_results(user_id, game_option_id, game_layout_id, score) values(${userId},${gameOptionId},${gameLayoutId},${score})`;
+    return dbHelper
+      .executeQuery(sql)
+      .then(() => {
+        return { message: "game saved" };
+      })
+      .catch((error) => {
+        throw error;
+      });
   },
   getUserGameResults: async (userId) => {
     let sql = `select * from user_game_results ugr inner join game_options op on op.game_option_id = ugr.game_option_id inner join game_layouts gl on gl.game_layout_id = ugr.game_layout_id where ugr.user_id = ${userId}`;
     const result = await dbHelper.executeQuery(sql);
-    return responseHelper.responseMapper(result[0]);
+    return responseHelper.responseMapper(result);
   },
   getGameLayouts: async () => {
     let sql = "select game_layout_id, size from game_layouts";

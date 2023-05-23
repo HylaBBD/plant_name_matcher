@@ -1,4 +1,6 @@
 import { userService } from "./services/user.service.js";
+import { plantService } from "./services/plant.service.js";
+
 // LOADING ICON - - - - - - - - - - - - 
 const loadingSection = document.getElementById("loading-screen");
 const loadingSectionImage = document.getElementById("loading-screen-image");
@@ -16,15 +18,14 @@ if (rightSelector != null) {
 }
 
 // PICTURE AND LATIN NAMES - - - - - - - - - - - - 
-const key = "sk-2rX3646d0076019bc952"; // I KNOW THIS IS BAD WE WILL TAKE IT OUT LOL
-const min = 1;
-const max = 3000; // There are 3000 plants in the API available to the free version
-navControlMax.innerText = max;
+let plants = await plantService.getPlants();
+
+navControlMax.innerText = plants.length;
 let plantID = 1;
 navControlIndex.innerText = plantID;
 onSelectorClick(0)
 
-// let userFavouritePlants = userService.getUserFavouritePlant(localStorage.getItem('userID'));
+
 let userFavouritePlants = await userService.getUserFavouritePlant(35);
 console.log(userFavouritePlants);
 

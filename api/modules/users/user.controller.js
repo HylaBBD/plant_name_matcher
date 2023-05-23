@@ -55,11 +55,25 @@ module.exports.userController = {
         return buildResponse(500, error);
       });
   },
-  updateUserPlants: (id, plantId) => {
-    // TODO check this when the service layer is written
-    return usersService.updateUserPlants(id, plantId).then((response) => {
-      return buildResponse(200, response);
-    });
+  saveUserPlants: (userId, plantId) => {
+    return usersService
+      .updateUserPlants(userId, plantId)
+      .then((response) => {
+        return buildResponse(200, response);
+      })
+      .catch((error) => {
+        return buildResponse(500, error);
+      });
+  },
+  deleteUserPlants: (userId, plantId) => {
+    return usersService
+      .deleteUserPlants(userId, plantId)
+      .then((response) => {
+        return buildResponse(200, response);
+      })
+      .catch((error) => {
+        return buildResponse(500, error);
+      });
   },
   updateUserDifficulty: (id, difficultyId) => {
     // TODO check this when the service layer is written

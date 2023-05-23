@@ -87,4 +87,26 @@ module.exports.usersService = {
         throw error;
       });
   },
+  saveUserPlant: (userId, plantId) => {
+    let sql = `insert into user_plants(user_id, plants_id) values(${userId},${plantId})`;
+    return dbHelper
+      .executeQuery(sql)
+      .then(() => {
+        return { message: "Plant saved" };
+      })
+      .catch((error) => {
+        throw error;
+      });
+  },
+  deleteUserPlants: (userId, plantId) => {
+    let sql = `delete from user_plants where user_id = ${}`;
+    return dbHelper
+      .executeQuery(sql)
+      .then(() => {
+        return { message: "Plant removed" };
+      })
+      .catch((error) => {
+        throw error;
+      });
+  },
 };

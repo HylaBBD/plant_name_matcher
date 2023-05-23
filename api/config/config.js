@@ -11,10 +11,13 @@ const { plantsController } = require("../modules/plants/plants.controller");
 
 routes = router();
 
-routes.register("/user/.*[A-Za-z].*", "GET", (data) => {
+routes.register("/user/.*[A-Za-z].*/.*[A-Za-z].*", "GET", (data) => {
   const { url } = data;
-  const username = url.substr(1).split("/")[1];
-  return userController.getUserDetails(username); //
+  const splitUrl = url.substr(1).split("/");
+  const username = splitUrl[1];
+  const password = splitUrl[2];
+  console.log(password);
+  return userController.getUserDetails(username);
 });
 
 routes.register("/user", "GET", (data) => {
@@ -71,12 +74,6 @@ routes.register("/user/\\d+/difficulty", "PATCH", (data) => {
   );
 });
 
-routes.register("/user/\\d+/plant", "PATCH", (data) => {
-  const { url, plantId } = data;
-  const id = url.substr(1).split("/")[1];
-  return userController.updateUserPlants(id, plantId);
-});
-
 routes.register("/plants", "GET", (data) => {
   return plantsController.getPlants();
 });
@@ -96,6 +93,18 @@ routes.register("/user/\\d+/game", "GET", (data) => {
   const { url } = data;
   const id = url.substr(1).split("/")[1];
   return gameController.getGame(id);
+});
+
+routes.register("/user/\\d+/plant", "POST", (data) => {
+  const { url, plantId } = data;
+  const id = url.substr(1).split("/")[1];
+  return userController.saveUserPlants(id, plantId);
+});
+
+routes.register("/user/\\d+/plant", "DELETE", (data) => {
+  const { url, plantId } = data;
+  const id = url.substr(1).split("/")[1];
+  return userController.deleteUserPlants(id, plantId);
 });
 
 module.exports.config = {

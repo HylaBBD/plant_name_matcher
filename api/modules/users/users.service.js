@@ -104,6 +104,7 @@ module.exports.usersService = {
         return { message: "Plant saved" };
       })
       .catch((error) => {
+        console.log(error + "WELP");
         throw error;
       });
   },

@@ -36,21 +36,25 @@ export const userService = {
     return userDifficultyResponse;
   },
   saveUserFavouritePlant: async (userId, plantId) => {
+    console.log(Number(userId));
+    console.log(plantId);
     const userPlantSavingResponse = await fetch(
-      `http://localhost:8000/user/${userId}/plants`,
-      { method: "POST", body: { plantId: plantId } }
+      `http://localhost:8000/user/${Number(userId)}/plants`,
+      { method: "POST", body: { plantId: Number(plantId) } }
     );
     return userPlantSavingResponse;
   },
   deleteUserFavouritePlant: async (userId, plantId) => {
+    console.log(Number(userId));
+    console.log(plantId);
     const userPlantDeleteResponse = await fetch(
-      `http://localhost:8000/user/${userId}/plants`,
-      { method: "DELETE", body: { plantId: plantId } }
+      `http://localhost:8000/user/${Number(userId)}/plants`,
+      { method: "DELETE", body: { plantId: Number(plantId) } }
     );
     return userPlantDeleteResponse;
   },
   getUserFavouritePlant: async (userID) => {
-    const userPlants = JSON.parse(JSON.stringify(await (await fetch(`http://localhost:8000/user`, { method: "GET" })).json()));
+    const userPlants = JSON.parse(JSON.stringify(await (await fetch(`http://localhost:8000/user/${userID}/plants`, { method: "GET" })).json()));
     return userPlants;
   },
 };

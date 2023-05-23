@@ -1,4 +1,4 @@
-module.exports.userService = {
+export const userService = {
   login: async (username, password) => {
     const loginDetails = await fetch(
       `http://localhost:8000/user/${username}/${password}`,
@@ -37,20 +37,20 @@ module.exports.userService = {
   },
   saveUserFavouritePlant: async (userId, plantId) => {
     const userPlantSavingResponse = await fetch(
-      `http://localhost:8000/user/${userId}/plant`,
+      `http://localhost:8000/user/${userId}/plants`,
       { method: "POST", body: { plantId: plantId } }
     );
     return userPlantSavingResponse;
   },
   deleteUserFavouritePlant: async (userId, plantId) => {
     const userPlantDeleteResponse = await fetch(
-      `http://localhost:8000/user/${userId}/plant`,
+      `http://localhost:8000/user/${userId}/plants`,
       { method: "DELETE", body: { plantId: plantId } }
     );
     return userPlantDeleteResponse;
   },
-  getUserFavouritPlant: async (userID) => {
-    const userPlants = await fetch(`/user/${userID}/plants`, { method: "GET" });
+  getUserFavouritePlant: async (userID) => {
+    const userPlants = await fetch(`http://localhost:8000/user/${userID}/plants`, { method: "GET" });
     return userPlants;
   },
 };

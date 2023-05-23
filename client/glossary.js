@@ -1,3 +1,4 @@
+import { userService } from "./services/user.service.js";
 // LOADING ICON - - - - - - - - - - - - 
 const loadingSection = document.getElementById("loading-screen");
 const loadingSectionImage = document.getElementById("loading-screen-image");
@@ -22,6 +23,8 @@ navControlMax.innerText = max;
 let plantID = 1;
 navControlIndex.innerText = plantID;
 onSelectorClick(0)
+// let userFavouritePlants = userService.getUserFavouritePlant(localStorage.getItem('userID'));
+let userFavouritePlants = userService.getUserFavouritePlant(35);
 
 function displayLoadingScreen() {
     loadingSection.classList.add("display");
@@ -62,7 +65,7 @@ addToFavourites.addEventListener('click', () => addPlantToUserFavourites());
 async function addPlantToUserFavourites(){
     if(!addToFavourites.classList.contains("disabled")){
         // MATT LOOK HERE
-        // saveUserPlant(localStorage.getItem('userID', plantID)).then(() => disableButton(addToFavourites));
+        userService.saveUserPlant(localStorage.getItem('userID'), plantID).then(() => disableButton(addToFavourites));
         disableButton(addToFavourites);
     }
 }

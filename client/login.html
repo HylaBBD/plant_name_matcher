@@ -1,12 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
-  <!-- https://github.com/public-apis/public-apis -->
   <head>
     <title>Login</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!-- <link rel="stylesheet" href="main.css"> -->
-    <!-- <link rel="shortcut icon" href="dog_collar_icon.ico" type="image/x-icon"> -->
     <link rel="stylesheet" href="css/login.css" />
     <script type="module" src="login.js"></script>
   </head>
@@ -29,15 +26,13 @@
         alt="furled fern white outline on green circle"
       />
       <h1>Login</h1>
-      <input class="login-signup-input" placeholder="Username" />
-      <input class="login-signup-input" placeholder="Password" />
+      <input class="login-signup-input" id="user-name" placeholder="Username" />
+      <input class="login-signup-input" id="user-password" placeholder="Password" />
+      <label id="login-error-text">  </label>
       <button class="login-signup-button" id="login-button" type="submit">
         Login
       </button>
       <a href="signup.html">Dont't have an account? Sign up ^^</a>
     </form>
   </body>
-  <!-- <footer>
-        <a href="#">footer</a>
-    </footer> -->
 </html>

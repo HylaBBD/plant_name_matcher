@@ -10,7 +10,7 @@ export const userService = {
   register: async (username, password) => {
     const registerResponse = await fetch("http://localhost:8000/user", {
       method: "POST",
-      body: { username: username, password: password },
+      body: JSON.stringify({ username: username, password: password }),
     });
     return registerResponse;
   },

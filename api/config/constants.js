@@ -1,7 +1,7 @@
 module.exports.constants = {
   plantsAPIKeys: ["sk-2rX3646d0076019bc952"],
   plantAPICalls: 5,
-  blackListProperties: ["default_image"],
+  blackListProperties: [],
 };
 
 // const key = "sk-CtSG645bb2c924947866"; // MATT

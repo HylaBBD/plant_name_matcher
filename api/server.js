@@ -3,6 +3,11 @@ const { config } = require("./config/config");
 const url = require("url");
 
 const requestListener = async (req, res) => {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Request-Method", "*");
+  res.setHeader("Access-Control-Allow-Methods", "OPTIONS, GET, DELETE, PATCH, POST");
+  res.setHeader("Access-Control-Allow-Headers", "*");
+
   requestDataBuilder(req)
     .then((data) => {
       console.log(data.urlData.filePath);

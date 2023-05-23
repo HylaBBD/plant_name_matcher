@@ -1,17 +1,14 @@
-// PICTURE AND LATIN NAMES - - - - - - - - - - - - 
-// const key = "sk-CtSG645bb2c924947866"; // JESSE BBD EMAIL
-const key = "sk-q8UK6466165b60d98975"; // JESSE jess44go EMAIL
-// const key = "sk-Ir4T64662d40d85b0978";
-const level = 2;
-let numberPlants;
+import { gameService } from "./services/game.service.js";
 
+let gameData;
+let level;
+let numberPlants;
 
 // CHANGE GAME GRID SIZE
 let winWidth = window.matchMedia("(max-width: 900px)");
 let winWidthLess = false;
 smallWidth(winWidth);
 winWidth.addEventListener('change', smallWidth);
-
 function smallWidth(winWidth) {
     if (winWidth.matches) {
         winWidthLess = true;
@@ -39,38 +36,42 @@ const gameEndScore = document.getElementById("game-end-score");
 function displayGameEndScreen() {
     gameEndSection.classList.add("display");
     gameEndScore.innerText = "Score: " + scoreState;
-
 }
 function hideGameEndScreen() {
     gameEndSection.classList.remove("display");
 }
 
-const min = 1;
-const max = 3000; // There are 3000 plants in the API available to the free version
-let tileImages = document.getElementsByClassName("plantPic");
+// START GAME SCREEN - - - - - - - - - - - - 
+const gameStartSection = document.getElementById("game-start-screen");
+
+function displayGameStartScreen() {
+    gameStartSection.classList.add("display");
+}
+function hideGameStartScreen() {
+    gameStartSection.classList.remove("display");
+}
+
 let tile = document.getElementsByClassName("plantTile");
-
 hideGameEndScreen(); 
-displayLoadingScreen();
-
+displayGameStartScreen();
 let plantScientificNameArray; 
 let plantCommonNameArray; 
-let plantIDArray;
 let positionArray;
-
 let scoreState = 0;
 let liveState = 3;
 let numberCompleted = 0;
 
 async function generateLevel(){
     numberCompleted = 0;
+    gameData = await gameService.getGame(localStorage.getItem("userId"));
+    level = gameData.layout.gameLayoutId;
+    numberPlants = gameData.layout.size/2;
 
     setGridCoordinates();
     resetSelectable();
-
+    
     plantScientificNameArray = new Array(numberPlants); 
     plantCommonNameArray = new Array(numberPlants); 
-    plantIDArray = new Array(numberPlants);
     positionArray = new Array(numberPlants*2);
     
     for(let i = 0; i < numberPlants*2; i++){
@@ -78,16 +79,9 @@ async function generateLevel(){
     }
 
     positionArray.sort(() => (Math.random() > .5) ? 1 : -1);
+    plantScientificNameArray = gameData.scientificNames;
+    plantCommonNameArray = gameData.commonNames;
 
-    for(let i = 0; i < numberPlants; i++){  
-        plantIDArray[i] = Math.floor(Math.random() * (max - min + 1)) + min;
-
-        let link = "https://perenual.com/api/species/details/" + plantIDArray[i] + "?key=" + key
-        const plantData = JSON.parse(JSON.stringify(await (await fetch(link)).json()))
-
-        plantScientificNameArray[i] = plantData.scientific_name
-        plantCommonNameArray[i] = plantData.common_name
-    }
     tile = document.getElementsByClassName("plantTile");
     let counter = 0;
 
@@ -107,10 +101,6 @@ async function generateLevel(){
     }
 }
 
-generateLevel().then(() => hideLoadingScreen());
-
-
-
 // TILE SELECTED - - - - - - - - - - - - - - - -
 let gameTiles = document.getElementsByClassName("plantTile");
 let gameScore = document.getElementById("score");
@@ -119,7 +109,6 @@ if (gameTiles != null) {
         tile.addEventListener("click", () => checkSelected(tile));
     }
 }
-
 
 function renderLives(lives) {
     let currentLivesList = document.getElementById("lives-list");
@@ -132,13 +121,16 @@ function renderLives(lives) {
 let gameEndPlayAgain = document.getElementById("game-end-play-again");
 gameEndPlayAgain.addEventListener("click", () => newGame());
 
+let gameStartButton = document.getElementById("game-start-button");
+gameStartButton.addEventListener("click", () => newGame());
+
 function checkGameEnd(){
     if(liveState <= 0){
+        saveGame();
         displayGameEndScreen();
     }else{
         renderLives(liveState);
     }
-
     if(numberCompleted == numberPlants){
         nextLevel();
     }
@@ -153,12 +145,19 @@ function newGame(){
     renderLives(liveState);
 
     hideGameEndScreen();
+    hideGameStartScreen();
     displayLoadingScreen()
     generateLevel().then(() => hideLoadingScreen());
 }
+
 function nextLevel(){
     displayLoadingScreen()
     generateLevel().then(() => hideLoadingScreen());
+}
+
+function saveGame(){
+    console.log("SAVING THE GAME: " + scoreState);
+    gameService.saveGameResults(localStorage.getItem('userId'), gameData.options.difficultySettingId, gameData.layout.gameLayoutId, scoreState);
 }
 
 function resetSelectable(){

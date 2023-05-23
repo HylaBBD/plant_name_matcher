@@ -7,6 +7,14 @@ main{
     justify-content: space-around;
 }
 
+h1{
+  font-size: 3rem;
+  font-family: var(--accent-font);
+}
+
+button{
+  margin-bottom: 10%;
+}
 .profile-info {
     display: flex;
     align-items: center;
@@ -36,58 +44,40 @@ main{
     }
   }
   
-  .favourite-plants {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    border-radius: 1rem;
-    box-shadow: inset 0 0 20px 5px var(--shadow-color);
-    max-width: 800px; /* Adjust the value according to your desired maximum width */
-    margin: 0 auto; /* Centers the container horizontally */
-  }
-  
-  .favourite-plants section {
-    display: flex;
-    flex-direction: row;
-  }
-  
-  .favourite-plants img {
-    width: 13vw;
-    max-width: 900px; /* Adjust the value according to your desired maximum image width */
-  }
-  
-  .favourite-plants figure {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  .favourite-plants figcaption {
-    text-align: center;
-  }
-  
-  .favourite-plants h2 {
-    margin-bottom: 0;
-  }
-  
-
-button {
-  border-radius: 8px;
-  border-width: 0;
-  background-color: var(--primary-color);
-  cursor: pointer;
-  display: inline-block;
-  font-size: 14px;
-  font-weight: 500;
-  line-height: 20px;
-  list-style: none;
-  margin: 10px;
-  padding: 10px 12px;
-  text-align: center;
-  vertical-align: baseline;
-  white-space: nowrap;
+.favourite-plants {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 1rem;
+  box-shadow: inset 0 0 20px 5px var(--shadow-color);
+  max-width: 800px; /* Adjust the value according to your desired maximum width */
+  margin: 0 auto; /* Centers the container horizontally */
 }
 
+.favourite-plants section {
+  display: flex;
+  flex-direction: row;
+}
+
+.favourite-plants img {
+  width: 13vw;
+  max-width: 900px; /* Adjust the value according to your desired maximum image width */
+}
+
+.favourite-plants figure {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.favourite-plants figcaption {
+  text-align: center;
+}
+
+.favourite-plants h2 {
+  margin-bottom: 0;
+}
+  
 
 
 /* DARK MODE */

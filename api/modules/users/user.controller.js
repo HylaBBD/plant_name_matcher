@@ -45,6 +45,7 @@ module.exports.userController = {
       });
   },
   saveUserPlants: (userId, plantId) => {
+    console.log("DOES THIS HAPPEN?");
     return usersService
       .saveUserPlant(userId, plantId)
       .then((response) => {

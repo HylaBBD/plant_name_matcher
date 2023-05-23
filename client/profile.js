@@ -1,5 +1,5 @@
-import { userService } from "./services/user.service";
-import {} from "module";
+import { userService } from "./services/user.service.js";
+
 // DARK MODE - - - - - - - - - - - - - - - - - - -
 const darkModeSwitch = document.querySelector(
   '.dark-mode-switch input[type="checkbox"]'
@@ -13,6 +13,27 @@ if (currentMode) {
   }
 }
 
+// FAVOURITE PLANTS
+let favouritePlantImages = document.getElementsByClassName("favourite-plants-image");
+let favouritePlantCaptions = document.getElementsByClassName("favourite-plants-caption");
+
+let userFavouritePlants = await userService.getUserFavouritePlant(localStorage.getItem("userId"));
+
+for(let i = 0; i < 3; i++){
+  if(i < userFavouritePlants.length){
+    favouritePlantImages[i].src = userFavouritePlants[i].defaultImage.original_url;    
+    favouritePlantCaptions[i].innerText = userFavouritePlants[i].scientificName;
+  }
+}
+
+let userHighScoreText = document.getElementById("user-high-score");
+let userHighScore = await userService.getUserScoreAndRank(localStorage.getItem("userId")).score;
+if(userHighScore == undefined){
+  userHighScoreText.innerText = 0;
+}else{
+  userHighScoreText.innerText = userHighScore;
+}
+
 function switchTheme(e) {
   if (e.target.checked) {
     document.documentElement.setAttribute("dark-mode", "dark");
@@ -24,8 +45,15 @@ function switchTheme(e) {
 }
 
 function login() {
-  userService.login(); //
+  userService.login();
 }
 
+let logoutButton = document.getElementById("logout-button");
+logoutButton.addEventListener("click", () => logout());
+
+function logout(){
+  localStorage.removeItem("userId");
+  window.location.href = "login.html";
+}
 darkModeSwitch.addEventListener("change", switchTheme, false);
 // END OF DARK MODE - - - - - - - - - - - - - - -

@@ -1,5 +1,6 @@
 @import "./main.css";
 
+/* GAME GRID  */
 .game_wrapper{
     border-radius: 1rem;
     display: grid;
@@ -7,84 +8,56 @@
     justify-content: center;
     width: 100%;
 }
-
 .game_lives ul li{
     list-style: none;
 }
-
-.game_lives img{
-    width: 100%;   
-}
-
 .plantTile{
     display: block;
     background-color: var(--secondary-color);
     border-radius: 1rem;
     font-size: 1.75rem;
     box-shadow: none;
-    /* justify-content: center; */
-    /* align-items: center; */
     text-align: center;
     margin: 5%;
-    padding-top: 15%;
+    padding-top: 5%;
 }
-
 #score{
     font-size: calc(40pt + 0.5rem);
     text-align: center;
 }
-
-.game_lives {
-    display: flex;
-    flex-direction: column;
-}
-
 .game_score ul li{
     list-style: none;
 }
-
 .plantTile.selected{
     box-shadow: 0 0 20px 5px var(--primary-color);
 }
-
-
 .plantTile.selectable:hover{
     cursor: pointer;
     box-shadow: 0 0 20px 5px var(--shadow-color);
 }
-
 .plantTile.selectedCorrect{
     box-shadow: none;
 }
-
 .plantTile5 .plantTile6 .plantTile7 .plantTile8 .plantTile9{
     display: none;
 }
-
-
-
-.play-button {
-    border: none;
-    font-size: 2.8rem;
-    background-color: var(--primary-color);
-    color: var(--background-color);
-    width: 10rem;
-    min-width: 10rem;
-    border-radius: 0.2rem;
+#lives-list{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-height: 100%;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    margin: 0;
 }
-.play-button:hover{
-    background-color: var(--secondary-color);
-    cursor:pointer;
-    color: var(--primary-color)
+#lives-list li{
+    text-align: center;
 }
-.play-button:active{
-    background-color: var(--primary-color);
-    cursor:pointer;
-    color: var(--background-color)
+#lives-list li img{
+    width: 80%;    
+    height: 100%;
 }
-
-
-
 
 /* LOADING SCREEN */
 #game-end-screen{
@@ -97,35 +70,46 @@
     z-index: 1;
     border-radius: 1rem;
     box-shadow: 0 0 40px 10px #000000;
+    text-align: center;
 }
 #game-end-screen.display{
     display:block;
 }
 
-#lives-list{
-    height: 100%;
-    width: 100%;
-    align-items: center;
-    justify-content: center;
-    padding: 0;
-    margin: 0;
+/* GAME START SCREEN */
+#game-start-screen{
+    display: none;
+    max-width: calc(1000px + 10vw);
+    height: 80vh;
+    width: 90vw;
+    background: var(--background-color);
+    position: absolute;
+    z-index: 1;
+    border-radius: 1rem;
+    box-shadow: 0 0 40px 10px #000000;
+    text-align: center;
+}
+#game-start-screen.display{
+    display:block;
 }
 
+#game-start-screen h1{
+    font-family: var(--accent-font);
+    font-size: 4rem;
+}
+#game-start-screen p{
+    font-size: 2rem;
+    padding: 0 10% 0 10%;
+}
+#game-start-screen button{
+    margin-top: 5%;
+}
 
 @media (max-width: 900px){
     .plantTile{
         text-align: center;
         font-size: 1rem;
     }
-
-    #lives-list{
-        display: flex;
-    }
-
-    #lives-list img{
-        width: 13vw;
-    }
-    
     #score-list{
         display: flex;
         height: 100%;
@@ -134,19 +118,30 @@
         justify-content: center;
         padding: 0;
     }
-
     #score{
         padding-left: 5vw;
-    }
-    
-    .game_lives {
+    }    
+    .game_lives{
         display: flex;
+        align-items: center;
+    }
+    #lives-list{
         flex-direction: row;
-        justify-content: center;
         align-items: center;
         width: 100%;
     }
-
+    #lives-list li{
+        width: fit-content;
+        max-width: 15vw;
+    }
+    #lives-list li:nth-child(1){
+        width: fit-content;
+        max-width: 30vw;
+    }
+    #lives-list li img{
+        width: 60%;    
+        height: 100%;
+    }
     .game_score {
         display: flex;
         flex-direction: row;

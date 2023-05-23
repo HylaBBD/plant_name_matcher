@@ -1,8 +1,5 @@
-
-
-
-
-
+import { userService } from "./services/user.service.js";
+import { plantService } from "./services/plant.service.js";
 
 // LOADING ICON - - - - - - - - - - - - 
 const loadingSection = document.getElementById("loading-screen");
@@ -21,13 +18,52 @@ if (rightSelector != null) {
 }
 
 // PICTURE AND LATIN NAMES - - - - - - - - - - - - 
-const key = "sk-B9J764637ff1f1114952"; // I KNOW THIS IS BAD WE WILL TAKE IT OUT LOL
-const min = 1;
-const max = 3000; // There are 3000 plants in the API available to the free version
-navControlMax.innerText = max;
-let plantID = 1;
+let plants = await plantService.getPlants();
+navControlMax.innerText = plants.length;
+let plantID = 0;
 navControlIndex.innerText = plantID;
-onSelectorClick(0)
+
+let userFavouritePlants = await userService.getUserFavouritePlant(localStorage.getItem("userId"));
+let userFavouritePlantIDs = userFavouritePlants.map((favouritePlant) => {return favouritePlant.id});
+
+
+// ADD TO FAVOURITES BUTTON
+let addToFavourites = document.getElementById("add-to-favourites");
+addToFavourites.addEventListener('click', () => addPlantToUserFavourites());
+
+async function addPlantToUserFavourites(){
+    if(!addToFavourites.classList.contains("disabled")){
+        await userService.saveUserFavouritePlant(localStorage.getItem('userId'), plantID+1).then((response) => {
+            if(response.status == 200){
+                disableButton(addToFavourites);
+                enableButton(removeFromFavourites);
+                userFavouritePlantIDs.push(plantID+1);
+            }   
+        });
+    }
+}
+
+// REMOVE FROM FAVOURITES BUTTON
+let removeFromFavourites = document.getElementById("remove-from-favourites");
+removeFromFavourites.addEventListener('click', () => removePlantFromUserFavourites());
+
+async function removePlantFromUserFavourites(){
+    if(!removeFromFavourites.classList.contains("disabled")){
+        await userService.deleteUserFavouritePlant(localStorage.getItem('userId'), plantID).then((response) => {
+            if(response.status == 200){
+                disableButton(removeFromFavourites);
+                enableButton(addToFavourites);
+                let index = userFavouritePlantIDs.findIndex((obj) => obj === plantID+1);
+                if(index >= 0){
+                    userFavouritePlantIDs.splice(index,1);
+                }
+            }
+        });
+    }
+}
+
+
+await onSelectorClick(0);
 
 function displayLoadingScreen() {
     loadingSection.classList.add("display");
@@ -40,22 +76,33 @@ async function onSelectorClick(change){
     let glossaryImage = document.getElementById("glossary-image");
     let commonName = document.getElementById("common-name");
     let scientificName = document.getElementById("scientific-name");
-    let description = document.getElementById("description");
     displayLoadingScreen()
 
     plantID = plantID + change;
-    if(plantID < min){
-        plantID = min;
-    }else if(plantID > max){
-        plantID = max;
+    if(plantID < 0){
+        plantID = 0;
+    }else if(plantID > plants.length){
+        plantID = plants.length;
     }
-    navControlIndex.innerText = plantID;
-    let link = "https://perenual.com/api/species/details/" + plantID + "?key=" + key
-    
-    const plantData = JSON.parse(JSON.stringify(await (await fetch(link)).json()))
-    commonName.textContent = plantData.common_name;
-    scientificName.textContent = "Scientific Name: " + plantData.scientific_name;
-    glossaryImage.src = plantData.default_image.original_url;
-    description.textContent = plantData.description;
+    navControlIndex.innerText = plantID+1;
+    commonName.textContent = "Common Name: " + plants[plantID].commonName;
+    scientificName.textContent = "Scientific Name: " + plants[plantID].scientificName;
+    glossaryImage.src = plants[plantID].defaultImage.original_url;
+
+    if(userFavouritePlantIDs.includes(plantID+1)){
+        disableButton(addToFavourites);
+        enableButton(removeFromFavourites);
+    }else{
+        enableButton(addToFavourites);
+        disableButton(removeFromFavourites);
+    }
     hideLoadingScreen()
+}
+
+function disableButton(button){
+    button.classList.add("disabled");
+}
+
+function enableButton(button){
+    button.classList.remove("disabled");
 }

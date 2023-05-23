@@ -17,7 +17,7 @@ input.login-signup-input{
     border-radius: 0.2rem;
     width: 20rem;
     font-size: 1.3rem;
-    color: var(--secondary-color);
+    color: var(--font-color);
 }
 input::placeholder{
     color: var(--primary-color);

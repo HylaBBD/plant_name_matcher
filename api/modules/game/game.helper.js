@@ -25,6 +25,7 @@ module.exports.gameHelper = {
       layout = data.gameLayouts[0];
     }
     gameObject.layout = layout;
+    const existingIndexes = [];
     for (let index = 0; index < layout.size; index++) {
       const plantIndex = this.gameHelper.generateRandomNumber(
         0,
@@ -32,7 +33,10 @@ module.exports.gameHelper = {
       );
 
       const selectedPlant = data.plants[plantIndex];
-      if (!selectedPlant.scientificName.length) {
+      if (
+        !selectedPlant.scientificName.length ||
+        existingIndexes.includes(plantIndex)
+      ) {
         index--;
         continue;
       }
@@ -45,6 +49,7 @@ module.exports.gameHelper = {
         selectedPlant.scientificName[scientificNameIndex]
       );
       gameObject.commonNames.push(selectedPlant.commonName);
+      existingIndexes.push(plantIndex);
     }
 
     return gameObject;

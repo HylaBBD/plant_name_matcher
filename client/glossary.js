@@ -1,9 +1,5 @@
 import { userService } from "./services/user.service.js";
 import { plantService } from "./services/plant.service.js";
-
-// LOADING ICON - - - - - - - - - - - - 
-const loadingSection = document.getElementById("loading-screen");
-const loadingSectionImage = document.getElementById("loading-screen-image");
 const navControlIndex = document.getElementById("navigation-control-index");
 const navControlMax = document.getElementById("navigation-control-max");
 
@@ -17,6 +13,19 @@ if (rightSelector != null) {
     rightSelector.addEventListener("click", function () { onSelectorClick(1) });
 }
 
+// LOADING SCREEN - - - - - - - - - - - - 
+const loadingSection = document.getElementById("loading-screen");
+const loadingSectionImage = document.getElementById("loading-screen-image")
+
+function displayLoadingScreen() {
+    loadingSection.classList.add("display");
+}
+displayLoadingScreen();
+
+function hideLoadingScreen() {
+    loadingSection.classList.remove("display");
+}
+
 // PICTURE AND LATIN NAMES - - - - - - - - - - - - 
 let plants = await plantService.getPlants();
 navControlMax.innerText = plants.length;
@@ -25,7 +34,6 @@ navControlIndex.innerText = plantID;
 
 let userFavouritePlants = await userService.getUserFavouritePlant(localStorage.getItem("userId"));
 let userFavouritePlantIDs = userFavouritePlants.map((favouritePlant) => {return favouritePlant.id});
-
 
 // ADD TO FAVOURITES BUTTON
 let addToFavourites = document.getElementById("add-to-favourites");
@@ -62,21 +70,16 @@ async function removePlantFromUserFavourites(){
     }
 }
 
-displayLoadingScreen();
-await onSelectorClick(0);
 
-function displayLoadingScreen() {
-    loadingSection.classList.add("display");
-}
-function hideLoadingScreen() {
-    loadingSection.classList.remove("display");
-}
+
+displayLoadingScreen();
+onSelectorClick(0).then(() => hideLoadingScreen());
+
 
 async function onSelectorClick(change){
     let glossaryImage = document.getElementById("glossary-image");
     let commonName = document.getElementById("common-name");
     let scientificName = document.getElementById("scientific-name");
-    displayLoadingScreen()
 
     plantID = plantID + change;
     if(plantID < 0){
@@ -85,8 +88,8 @@ async function onSelectorClick(change){
         plantID = plants.length;
     }
     navControlIndex.innerText = plantID+1;
-    commonName.textContent = "Common Name: " + plants[plantID].commonName;
-    scientificName.textContent = "Scientific Name: " + plants[plantID].scientificName;
+    commonName.textContent = plants[plantID].commonName;
+    scientificName.textContent = plants[plantID].scientificName;
     glossaryImage.src = plants[plantID].defaultImage.original_url;
 
     if(userFavouritePlantIDs.includes(plantID+1)){
@@ -96,7 +99,6 @@ async function onSelectorClick(change){
         enableButton(addToFavourites);
         disableButton(removeFromFavourites);
     }
-    hideLoadingScreen()
 }
 
 function disableButton(button){

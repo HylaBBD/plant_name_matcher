@@ -6,19 +6,21 @@ const validUsername = new RegExp(".*[A-Za-z].*");
 module.exports.userController = {
   createUser: (username, password) => {
     if (!username || !password || !validUsername.test(username)) {
-      return buildResponse(400, {
-        message: "Failed to create user",
-        reason: "Empty data",
-      });
+      return Promise.resolve(
+        buildResponse(400, {
+          message: "Failed to create user",
+          reason: "Empty data",
+        })
+      );
     } else {
       return usersService
         .createUser(username, password)
         .then((res) => {
-          return buildResponse(200, res);
+          return Promise.resolve(buildResponse(200, res));
         })
         .catch((error) => {
           console.log("this");
-          return buildResponse(500, error);
+          return Promise.resolve(buildResponse(500, error));
         });
     }
   },

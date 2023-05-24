@@ -5,112 +5,25 @@ provider:
   runtime: nodejs18.x
   stage: ${opt:stage,'dev'}
   region: af-south-1
-  # iamRoleStatements: # IAM Role Permissions
-  #   - Effect: "Allow"
-  #     Action: "*"
-  #     Resource: "*"
+
   httpApi:
     cors: true
-    # authorizers:
-    # authorizerFunc:
-    #   type: request
-    #   functionName: authorizerFunc
-  # environment:
-  #   DB_HOST: ${self:custom.database.${sls:stage}.host}
-  #   DB_USER: ${self:custom.database.${sls:stage}.username}
-  #   DB_PASSWORD: ${self:custom.database.${sls:stage}.password}
-  #   DB_PORT: ${self:custom.database.${sls:stage}.port}
-  #   REGION: ${self:custom.region.${sls:stage}}
-  #   USER_POOL_ID: ${self:custom.userPoolId.${sls:stage}}
-  #   STAGE: ${sls:stage}
-  #   CLIENT_URL: ${self:custom.clientUrl.${sls:stage}}
-  #   ISS: ${self:custom.iss.${sls:stage}}
-  #   MESSAGE_QUEUE_URL: ${self:custom.messageQueue.${sls:stage}.url}
-  #   MESSAGE_QUEUE: ${self:custom.messageQueue.${sls:stage}.arn}
-  #   FUNCTION_ARN: "arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:${self:service}-${self:provider.stage}-getS3DataAndConvertToJSON"
-  #   BATCH_UPLOAD_BUCKET: ${self:custom.batchUploadBucket.${sls:stage}}
-  #   EMAIL_SOURCE: "FMmodelNo-reply@cipfa.org"
-  #   SFN_ARN: ${self:custom.batchUploadMachineArn.${sls:stage}}
 
-# Custom variables
 custom:
-  # serverless-offline-ssm:
-  #   stages:
-  #     - dev
-  #   ssm:
-  #     "/aws/reference/secretsmanager/dev/cipfa/postgres":
-  #       {
-  #         "host": "terraform-20221123102750872400000001.c37dghrn5bkm.eu-west-1.rds.amazonaws.com",
-  #         "username": "postgres",
-  #         "password": "password",
-  #         "port": "5432",
-  #       }
-  stages: # for stage manager
+  stages:
     - dev
     - sit
     - uat
     - prod
   serverless-offline:
     noPrependStageInUrl: true
-  # database:
-  #   dev: ${ssm:/aws/reference/secretsmanager/${sls:stage}/cipfa/postgres}
-  #   sit: ${ssm:/aws/reference/secretsmanager/${sls:stage}/cipfa/postgres}
-  #   uat: ${ssm:/aws/reference/secretsmanager/${sls:stage}/cipfa/postgres}
-  #   prod: ${ssm:/aws/reference/secretsmanager/${sls:stage}/cipfa/postgres}
-  # userPoolId:
-  #   dev: "eu-west-1_gpAkN5cYE"
-  #   sit: "eu-west-1_gpAkN5cYE"
-  #   uat: "eu-west-1_gpAkN5cYE"
-  #   prod: "eu-west-1_gpAkN5cYE"
-  # clientUrl:
-  #   dev: "https://d2a98d1mugq7fp.cloudfront.net"
-  #   sit: "https://d3hf0vatajl8fq.cloudfront.net"
-  #   uat: "https://d3hf0vatajl8fq.cloudfront.net"
-  #   prod: "https://d3hf0vatajl8fq.cloudfront.net"
-  # region:
-  #   dev: "eu-west-1"
-  #   sit: "eu-west-1"
-  #   uat: "eu-west-1"
-  #   prod: "eu-west-1"
-  # iss:
-  #   dev: "https://cognito-idp.eu-west-1.amazonaws.com/eu-west-1_gpAkN5cYE"
-  #   sit: "https://cognito-idp.eu-west-1.amazonaws.com/eu-west-1_gpAkN5cYE"
-  #   uat: "https://cognito-idp.eu-west-1.amazonaws.com/eu-west-1_gpAkN5cYE"
-  #   prod: "https://cognito-idp.eu-west-1.amazonaws.com/eu-west-1_gpAkN5cYE"
-  # batchUploadBucket:
-  #   dev: "batch-contributor-upload-dev"
-  #   sit: "batch-contributor-upload-sit"
-  #   uat: "batch-contributor-upload-dev"
-  #   prod: "batch-contributor-upload-dev"
-  # batchUploadMachineArn:
-  #   dev: "arn:aws:states:eu-west-1:021991532686:stateMachine:MyStateMachine"
-  #   sit: "arn:aws:states:eu-west-1:021991532686:stateMachine:MyStateMachine"
-  #   uat: "arn:aws:states:eu-west-1:021991532686:stateMachine:MyStateMachine"
-  #   prod: "arn:aws:states:eu-west-1:021991532686:stateMachine:MyStateMachine"
-  # messageQueue:
-  #   dev:
-  #     url: "https://sqs.eu-west-1.amazonaws.com/021991532686/message_queue"
-  #     arn: "arn:aws:sqs:eu-west-1:021991532686:message_queue"
-  #   sit:
-  #     url: "https://sqs.eu-west-1.amazonaws.com/021991532686/sit-message-queue"
-  #     arn: "arn:aws:sqs:eu-west-1:021991532686:sit-message-queue"
-  #   uat:
-  #     url: "https://sqs.eu-west-1.amazonaws.com/021991532686/message_queue"
-  #     arn: "arn:aws:sqs:eu-west-1:021991532686:message_queue"
-  #   prod:
-  #     url: "https://sqs.eu-west-1.amazonaws.com/021991532686/message_queue"
-  #     arn: "arn:aws:sqs:eu-west-1:021991532686:message_queue"
 
-# Plugins
 plugins:
   - serverless-stage-manager
   - serverless-plugin-common-excludes
   - serverless-plugin-include-dependencies
   - serverless-offline
-  # - serverless-better-credentials
-  # - serverless-step-functions
 
-# Functions
 functions:
   serverless-api-sample:
     name: ${self:service}-${self:provider.stage}-serverless-api-sample

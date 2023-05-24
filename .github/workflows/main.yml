@@ -31,3 +31,4 @@ jobs:
       - name: Deploy to S3
         run: |
           aws s3 sync client s3://plant-game-s3/client
+          aws cloudfront create-invalidation --distribution-id E3GX06Z61DHSHP --paths "/*"

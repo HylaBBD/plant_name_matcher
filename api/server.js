@@ -15,45 +15,44 @@ const requestListener = (req, res, callback) => {
   // console.log("config-------------------------1");
   // console.log(req, req.requestContext.http.method);
   // console.log("config-------------------------2");
-  try {
-    const selectedRoute = config.server.getRouteFunction(
-      req.requestContext.http.path,
-      req.requestContext.http.method
-    );
-    if (selectedRoute) {
-      console.log("selectec", selectedRoute, "selected");
-      console.log(req);
-      console.log(req.body);
-      console.log(req.queryStringParameters);
+  const selectedRoute = config.server.getRouteFunction(
+    req.requestContext.http.path,
+    req.requestContext.http.method
+  );
+  if (selectedRoute) {
+    console.log("selectec", selectedRoute, "selected");
+    console.log(req);
+    console.log(req.body);
+    console.log(req.queryStringParameters);
 
-      selectedRoute
-        .function({
-          ...(req.body ? JSON.parse(req.body) : {}),
-          url: req.requestContext.http.path,
-        })
-        .then((response) => {
-          console.log("RESPONSE");
-          console.log(JSON.stringify(response));
-          // console.log(responseCode);
+    selectedRoute
+      .function({
+        ...(req.body ? JSON.parse(req.body) : {}),
+        url: req.requestContext.http.path,
+      })
+      .then((response) => {
+        console.log("RESPONSE");
+        console.log(JSON.stringify(response));
+        // console.log(responseCode);
 
-          // res.send()
+        // res.send()
 
-          callback(null, response);
+        callback(null, response);
 
-          // res.writeHead(responseCode, { "Content-Type": "application/json" });
-          // res.write(JSON.stringify(response));
-          // res.end();
-        });
-    } else {
-      callback(null, buildResponse(404, { message: "route not found" }));
-      // res.writeHead(404, { "Content-Type": "application/json" });
-      // res.write("this will hapen if no params found");
-      // res.end();
-    }
-  } catch (error) {
-    console.log(error);
-    callback(null, buildResponse(500, error));
+        // res.writeHead(responseCode, { "Content-Type": "application/json" });
+        // res.write(JSON.stringify(response));
+        // res.end();
+      })
+      .catch((error) => {
+        callback(null, buildResponse(500, error));
+      });
+  } else {
+    callback(null, buildResponse(404, { message: "route not found" }));
+    // res.writeHead(404, { "Content-Type": "application/json" });
+    // res.write("this will hapen if no params found");
+    // res.end();
   }
+
   // requestDataBuilder(req)
   //   .then((data) => {
   //   })

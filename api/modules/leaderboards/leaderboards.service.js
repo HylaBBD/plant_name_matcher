@@ -27,10 +27,16 @@ module.exports.leaderBoardsService = {
     };
   },
   updateUserScore: (userId, score) => {
-    return new Promise((resolve, reject) => {
-      let sql = "update user_highscores set highscore = ? where user_id = ?";
-      db.run();
-    });
+    let sql = `update user_highscores set highscore = ${score} where user_id = ${userId}`;
+
+    return dbHelper
+      .executeQuery(sql)
+      .then(() => {
+        return { message: "success" };
+      })
+      .catch((error) => {
+        throw error;
+      });
   },
   createUserHighScoreEntry: async (request, userId) => {
     let sql = `insert into user_highscores(user_id) values(${userId})`;

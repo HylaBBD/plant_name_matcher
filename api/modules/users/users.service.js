@@ -130,4 +130,15 @@ module.exports.usersService = {
         throw error;
       });
   },
+  getUserById: (userId) => {
+    let sql = `select user_name, user_id from users where user_id = ${userId}`;
+    return dbHelper
+      .executeQuery(sql)
+      .then((response) => {
+        return responseHelper.responseMapper(response[0]);
+      })
+      .catch((error) => {
+        throw error;
+      });
+  },
 };

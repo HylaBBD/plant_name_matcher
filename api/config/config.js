@@ -23,6 +23,11 @@ routes.register("/user/.*[A-Za-z].*/.*[A-Za-z].*", "GET", (data) => {
 routes.register("/user", "GET", (data) => {
   return userController.getAllUsers();
 });
+routes.register("/user/\\d+", "GET", (data) => {
+  const { url } = data;
+  const userId = url.substr(1).split("/")[1];
+  return userController.getUserById(userId);
+});
 
 routes.register("/user", "POST", (data) => {
   const { password, username } = data;

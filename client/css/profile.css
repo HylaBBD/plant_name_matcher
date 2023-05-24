@@ -50,7 +50,8 @@ button{
   align-items: center;
   border-radius: 1rem;
   box-shadow: inset 0 0 20px 5px var(--shadow-color);
-  max-width: 800px; /* Adjust the value according to your desired maximum width */
+  /* max-width: 800px;  */
+  background-color: var(--secondary-color);
   margin: 0 auto; /* Centers the container horizontally */
 }
 
@@ -62,6 +63,10 @@ button{
 .favourite-plants img {
   width: 13vw;
   max-width: 900px; /* Adjust the value according to your desired maximum image width */
+  align-self: center;
+  border-radius: 1rem;
+  object-fit: cover;
+  object-position: middle top;
 }
 
 .favourite-plants figure {

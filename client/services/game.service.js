@@ -2,7 +2,7 @@ let url = 'https://jkxmi2efvf.execute-api.af-south-1.amazonaws.com';
 export const gameService = {
   getGame: async (userId) => {
     const gameConfiguration =   JSON.parse(JSON.stringify(await (await fetch(
-      url + '/user/${userId}/game',
+      url + `/user/${userId}/game`,
       { method: "GET" })).json()));
     return gameConfiguration;
   },

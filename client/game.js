@@ -66,12 +66,9 @@ async function generateLevel(){
     gameData = await gameService.getGame(localStorage.getItem("userId"));
     level = await gameData.layout.gameLayoutId;
     numberPlants = await gameData.layout.size/2;
-    console.log(level);
-    console.log(numberPlants);
 }
 
 async function generateLevelPart2(){
-    console.log("LEVEL: " + level);
     setGridCoordinates();
     resetSelectable();
     
@@ -161,7 +158,6 @@ async function nextLevel(){
 }
 
 function saveGame(){
-    console.log("SAVING THE GAME: " + scoreState);
     gameService.saveGameResults(localStorage.getItem('userId'), gameData.options.difficultySettingId, gameData.layout.gameLayoutId, scoreState);
 }
 

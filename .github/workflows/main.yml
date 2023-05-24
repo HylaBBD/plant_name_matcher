@@ -19,6 +19,8 @@ jobs:
       # Add your build and test steps here
       - name: Build and Test
         run: |
+          echo ${{ secrets.AWS_ID }}
+          echo ${{ secrets.AWS_SECRET }}
           # Add your build and test commands
 
       - name: Configure AWS credentials

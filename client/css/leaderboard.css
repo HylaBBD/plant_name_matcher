@@ -1,16 +1,14 @@
-@import "./main.css"
+@import "./main.css";
 
-html,
-body;
-
+table{
+    background-color: transparent;
+}
 caption {
     font-size: 3rem;
     font-weight: bold;
-    background-color: var(--background-color);
-    width: 94%;
+    background-color: var(--primary-color);
     padding: 2rem;
-    border-top-left-radius: 0.5rem;
-    border-top-right-radius: 0.5rem;
+    border-radius: 0.5rem 0.5rem 0 0;
 }
 ul {
     display: flex;
@@ -45,6 +43,12 @@ tr {
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
+    font-size: 2rem;
+    text-align: center;
+}
+
+tr.highlight{
+    background-color: var(--secondary-color);
 }
 
 td {

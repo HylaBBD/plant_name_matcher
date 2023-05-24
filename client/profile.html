@@ -31,41 +31,30 @@
         <img class="background" src="static/fern-background.jpg" alt="furled ferns bright green with sun">
 
         <main>
-            <section class="profile-info">
-                <img src="static/plant-logo.png" alt="">
-                <section>
-                    <h1>Bobby Benjamin</h1>
+            <grid class="profile-info">
+                <row><h1 id="user-name-display">Bobby Benjamin</h1></row>
+                <row><h2 id="user-high-score"></h2></row>
+                <row><button id="logout-button">LOGOUT</button></row>
+                <row class="dark-mode-switch">
+                    <label for="checkbox">
+                        <input type="checkbox" id="checkbox" />
+                        <div class="slider round"></div>
+                    </label>
+                    <em>Dark Mode</em>
+                </row>
+            </grid>
 
-                    <grid>
-                        <row>
-                          <cell><h2>High Score: </h2></cell>
-                          <cell><h2 id="user-high-score"></h2></cell>
-                          <cell><button id="logout-button">LOGOUT</button></cell>
-                        </row>
-                      </grid>
-
-                    <section class="dark-mode-switch">
-                        <label for="checkbox">
-                            <input type="checkbox" id="checkbox" />
-                            <div class="slider round"></div>
-                        </label>
-                      <em>Dark Mode</em>
-                    </section>        
-                </section>
-            </section>
             <section class="favourite-plants">
-                <h2>Top 3 Favourite Plants</h1>
+                <h2>Top 3 Favourite Plants</h2>
                 <section>
                     <figure>
                         <img class="favourite-plants-image" src="static/plant-logo.png" alt="">
                         <figcaption class="favourite-plants-caption"></figcaption>
-                        <!-- <button>Remove from favourites</button> -->
                     </figure>
         
                     <figure class="favourite-plants-figure">
                         <img class="favourite-plants-image" src="static/plant-logo.png" alt="">
                         <figcaption class="favourite-plants-caption"></figcaption>
-                        <!-- <button>Remove from favourites</button> -->
                     </figure>
 
                     <figure class="favourite-plants-figure">

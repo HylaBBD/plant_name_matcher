@@ -41,6 +41,11 @@
 .plantTile5 .plantTile6 .plantTile7 .plantTile8 .plantTile9{
     display: none;
 }
+
+.plantTile5{
+    background-color: transparent;
+}
+
 #lives-list{
     display: flex;
     flex-direction: column;

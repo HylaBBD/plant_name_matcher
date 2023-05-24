@@ -40,15 +40,21 @@
             </section>
             <section class="glossary-info">
                 <section>
+                    <h1>Common Name:</h1>
                     <h1 id="common-name"></h1>
+                    <h1>Scientific Name:</h1>
                     <h1 id="scientific-name"></h1>
                 </section>
-                <button id="add-to-favourites">ADD TO FAVOURITES</button>
-                <button id="remove-from-favourites">REMOVE FROM FAVOURITES</button>
-
+                <section class="glossary-info-buttons">
+                    <button id="add-to-favourites">ADD TO FAVOURITES</button>
+                    <button id="remove-from-favourites">REMOVE FROM FAVOURITES</button>    
+                </section>
+                
                 <table class="navigation-control">
                     <td><img id="leftSelector" src="static/point-left-dark.png"></td>
-                    <td id="navigation-control-index">1</td>
+                    <td>
+                        <input type="text" id="navigation-control-index" value="1" class="input-field">
+                    </td>
                     <td>of</td>
                     <td id="navigation-control-max">40</td>
                     <td><img id="rightSelector" src="static/point-right-dark.png"></td>

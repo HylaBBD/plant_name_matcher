@@ -47,7 +47,8 @@ button{
 }
 
 .favourite-plants img {
-  width: 13vw;
+  width: 15vw;
+  height: 13vw;
   max-width: 900px; /* Adjust the value according to your desired maximum image width */
   align-self: center;
   border-radius: 1rem;

@@ -52,8 +52,8 @@ export const userService = {
     const newId = +userId;
     console.log(plantId);
     const userPlantDeleteResponse = await fetch(
-      `http://localhost:8000/user/${newId}/plants`,
-      { method: "DELETE", body: JSON.stringify({ plantId: Number(plantId) }) }
+      `http://localhost:8000/user/${newId}/plants/${plantId + 1}`,
+      { method: "GET" }
     );
     return userPlantDeleteResponse;
   },

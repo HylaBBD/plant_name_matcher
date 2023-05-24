@@ -15,9 +15,15 @@ export const userService = {
     return registerResponse;
   },
   getUserScoreAndRank: async (userId) => {
-    const userScoreDetails = JSON.parse(JSON.stringify(await (await fetch(
-      `http://localhost:8000/user/${userId}/score`,
-      { method: "GET" })).json()));
+    const userScoreDetails = JSON.parse(
+      JSON.stringify(
+        await (
+          await fetch(`http://localhost:8000/user/${userId}/score`, {
+            method: "GET",
+          })
+        ).json()
+      )
+    );
     return userScoreDetails;
   },
   updateUserDifficulty: async (userId, difficultyId) => {
@@ -62,5 +68,17 @@ export const userService = {
       )
     );
     return userPlants;
+  },
+  getUserNameById: async (userId) => {
+    const userData = JSON.parse(
+      JSON.stringify(
+        await (
+          await fetch(`http://localhost:8000/user/${userId}`, {
+            method: "GET",
+          })
+        ).json()
+      )
+    );
+    return userData;
   },
 };

@@ -17,7 +17,6 @@ module.exports.userController = {
           return buildResponse(200, res);
         })
         .catch((error) => {
-          console.log("this");
           return buildResponse(500, error);
         });
     }
@@ -36,7 +35,6 @@ module.exports.userController = {
         return buildResponse(200, response);
       })
       .catch((error) => {
-        console.log(error);
         if (error.error === "Invalid credentials") {
           return buildResponse(403, error);
         } else {
@@ -45,7 +43,6 @@ module.exports.userController = {
       });
   },
   saveUserPlants: (userId, plantId) => {
-    console.log("DOES THIS HAPPEN?");
     return usersService
       .saveUserPlant(userId, plantId)
       .then((response) => {

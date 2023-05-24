@@ -6,7 +6,6 @@ export const userService = {
       url + `/user/${username}/${password}`,
       { method: "GET" }
     );
-    console.log(loginDetails);
     return loginDetails;
   },
   register: async (username, password) => {
@@ -50,9 +49,7 @@ export const userService = {
     return userPlantSavingResponse;
   },
   deleteUserFavouritePlant: async (userId, plantId) => {
-    console.log(Number(userId));
     const newId = +userId;
-    console.log(plantId);
     const userPlantDeleteResponse = await fetch(
       url + `/user/${newId}/plants/${plantId + 1}`,
       { method: "GET" }

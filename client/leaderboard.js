@@ -31,7 +31,6 @@ async function populateLeaderboard(){
     
     
     let leaderboard = await leaderboardService.getLeaderboard();
-    console.log(leaderboard);
     let table = document.getElementsByClassName("leaderboard")[0];
     deleteAllRows(table);
     for(let entry of leaderboard){

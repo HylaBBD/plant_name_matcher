@@ -16,7 +16,6 @@ routes.register("/user/.*[A-Za-z].*/.*[A-Za-z].*", "GET", (data) => {
   const splitUrl = url.substr(1).split("/");
   const username = splitUrl[1];
   const password = splitUrl[2];
-  console.log(password);
   return userController.getUserDetails(username, password);
 });
 
@@ -31,7 +30,6 @@ routes.register("/user/\\d+", "GET", (data) => {
 
 routes.register("/user", "POST", (data) => {
   const { password, username } = data;
-  console.log(password);
   return userController.createUser(username, password);
 });
 

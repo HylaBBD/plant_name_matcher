@@ -15,7 +15,6 @@ module.exports.usersService = {
         return conn;
       })
       .catch((error) => {
-        console.log("this error");
         throw error;
       });
 
@@ -37,7 +36,6 @@ module.exports.usersService = {
               })
               .catch((error) => {
                 tx.rollback();
-                console.log(error);
                 throw error;
               });
           })
@@ -104,7 +102,6 @@ module.exports.usersService = {
         return { message: "Plant saved" };
       })
       .catch((error) => {
-        console.log(error + "WELP");
         throw error;
       });
   },

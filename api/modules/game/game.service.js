@@ -14,7 +14,6 @@ module.exports.gameService = {
         return conn;
       })
       .catch((error) => {
-        console.log("this error");
         throw error;
       });
 
@@ -82,7 +81,6 @@ module.exports.gameService = {
         };
       })
       .catch((error) => {
-        console.log(error);
         throw error;
       });
   },

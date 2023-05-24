@@ -51,6 +51,9 @@ module.exports.gameService = {
         tx.rollback();
         connection.close();
         throw error;
+      })
+      .finally(() => {
+        connection.close();
       });
   },
   getUserGameResults: async (userId) => {

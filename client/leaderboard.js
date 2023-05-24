@@ -5,7 +5,6 @@ const loadingSection = document.getElementById("loading-screen");
 const loadingSectionImage = document.getElementById("loading-screen-image")
 
 function displayLoadingScreen() {
-    console.log(loadingSection);
     loadingSection.classList.add("display");
 }
 function hideLoadingScreen() {

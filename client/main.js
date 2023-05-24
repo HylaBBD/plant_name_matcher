@@ -1,3 +1,5 @@
+checkUserID();
+
 // DARK MODE - - - - - - - - - - - - - - - - - - -
 const currentMode = localStorage.getItem('theme');
 
@@ -28,5 +30,11 @@ function smallWidth(winWidth) {
         document.querySelector("#bb-title").innerHTML = "BB";
     }else{        
         document.querySelector("#bb-title").innerHTML = "Botanical Buzzwords";
+    }
+}
+
+function checkUserID(){
+    if(localStorage.getItem("userId") == null){
+        window.location.href = "login.html";
     }
 }

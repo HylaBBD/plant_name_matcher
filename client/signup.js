@@ -1,5 +1,16 @@
 import { userService } from "./services/user.service.js";
 
+// LOADING SCREEN - - - - - - - - - - - - 
+const loadingSection = document.getElementById("loading-screen");
+const loadingSectionImage = document.getElementById("loading-screen-image")
+
+function displayLoadingScreen() {
+    loadingSection.classList.add("display");
+}
+function hideLoadingScreen() {
+    loadingSection.classList.remove("display");
+}
+
 const singupForm = document.getElementById("signup-form");
 const errorText = document.getElementById("signup-error-text");
 const userName = document.getElementById("user-name");
@@ -21,7 +32,10 @@ function containsLetters(password) {
   }
   return false;
 }
+
 async function signup(event) {
+  displayLoadingScreen();
+
   errorText.innerText = "";
   event.preventDefault(); // Prevent form submission from reloading the page
   if(userName.value == "" || userPassword1.value == "" || userPassword2.value == ""){
@@ -46,6 +60,7 @@ async function signup(event) {
       errorText.innerText = "Invalid login details.";
     }
   }
+  hideLoadingScreen();
 }
 
 singupForm.addEventListener("submit", signup);

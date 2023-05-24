@@ -1,0 +1,21 @@
+version: 0.2
+env:
+  variables:
+    APP_NAME: "plant-api"
+phases:
+  install:
+    runtime-versions:
+      nodejs: 18.x
+    commands:
+      - cd api
+      - echo install process started
+      - npm install
+      - npm install -g mocha
+      - npm install -g serverless
+  build:
+    commands:
+      - echo build process started now
+      - serverless deploy
+  post_build:
+    commands:
+      - echo serverless deploy completed

@@ -5,7 +5,6 @@ provider:
   runtime: nodejs18.x
   stage: ${opt:stage,'dev'}
   region: af-south-1
-  profile: grad
   iamRoleStatements: # IAM Role Permissions
     - Effect: "Allow"
       Action: "*"
@@ -104,15 +103,11 @@ custom:
 
 # Plugins
 plugins:
-  # Uncomment only if testing using "serverless invoke local ++++", pipeline wont build with this uncommented
-  # Read documentation for how this plugin works https://www.serverless.com/plugins/serverless-better-credentials#:~:text=The%20Serverless%20Better%20Credentials%20plugin,credentials%20from%20an%20external%20process.
-  # - serverless-better-credentials
-  # - serverless-offline-ssm
   - serverless-stage-manager
   - serverless-plugin-common-excludes
   - serverless-plugin-include-dependencies
   - serverless-offline
-  - serverless-better-credentials
+  # - serverless-better-credentials
   # - serverless-step-functions
 
 # Functions

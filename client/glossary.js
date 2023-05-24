@@ -7,11 +7,18 @@ const navControlMax = document.getElementById("navigation-control-max");
 
 navControlIndex.addEventListener("change", (event) => plantIdValueChange(event));
 
+function containsOnlyNumbers(input) {
+    let specialChars =/[0123456789]/;
+    if(specialChars.test(input)){
+      return false;
+    }
+    return true;
+  }
+
 function plantIdValueChange(event){
     let value = event.target.value;
-    console.log(value);
 
-    if(Number.isInteger(value)){
+    if(!containsOnlyNumbers(value)){
         if(value <= 1){
             value = 1;
         }else if(value >= 150){

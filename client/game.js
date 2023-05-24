@@ -64,8 +64,8 @@ let numberCompleted = 0;
 async function generateLevel(){
     numberCompleted = 0;
     gameData = await gameService.getGame(localStorage.getItem("userId"));
-    level = gameData.layout.gameLayoutId;
-    numberPlants = gameData.layout.size/2;
+    level = await gameData.layout.gameLayoutId;
+    numberPlants = await gameData.layout.size/2;
 
     setGridCoordinates();
     resetSelectable();

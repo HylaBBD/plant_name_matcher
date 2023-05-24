@@ -51,7 +51,7 @@ function hideGameStartScreen() {
     gameStartSection.classList.remove("display");
 }
 
-let tile = document.getElementsByClassName("plantTile");
+let tile = document.getElementsByClassName("plantTile selectable");
 hideGameEndScreen(); 
 displayGameStartScreen();
 let plantScientificNameArray; 
@@ -66,7 +66,12 @@ async function generateLevel(){
     gameData = await gameService.getGame(localStorage.getItem("userId"));
     level = await gameData.layout.gameLayoutId;
     numberPlants = await gameData.layout.size/2;
+    console.log(level);
+    console.log(numberPlants);
+}
 
+async function generateLevelPart2(){
+    console.log("LEVEL: " + level);
     setGridCoordinates();
     resetSelectable();
     
@@ -82,7 +87,7 @@ async function generateLevel(){
     plantScientificNameArray = gameData.scientificNames;
     plantCommonNameArray = gameData.commonNames;
 
-    tile = document.getElementsByClassName("plantTile");
+    tile = document.getElementsByClassName("plantTile selectable");
     let counter = 0;
 
     for(let i = 0; i < numberPlants; i++){  
@@ -102,7 +107,7 @@ async function generateLevel(){
 }
 
 // TILE SELECTED - - - - - - - - - - - - - - - -
-let gameTiles = document.getElementsByClassName("plantTile");
+let gameTiles = document.getElementsByClassName("plantTile selectable");
 let gameScore = document.getElementById("score");
 if (gameTiles != null) {
     for(let tile of gameTiles){
@@ -136,7 +141,7 @@ function checkGameEnd(){
     }
 }
 
-function newGame(){
+async function newGame(){
     scoreState = 0;
     gameScore.textContent = scoreState;
 
@@ -147,12 +152,12 @@ function newGame(){
     hideGameEndScreen();
     hideGameStartScreen();
     displayLoadingScreen()
-    generateLevel().then(() => hideLoadingScreen());
+    await generateLevel().then(() => generateLevelPart2()).then(() => hideLoadingScreen());
 }
 
-function nextLevel(){
+async function nextLevel(){
     displayLoadingScreen()
-    generateLevel().then(() => hideLoadingScreen());
+    await generateLevel().then(() => generateLevelPart2()).then(() => hideLoadingScreen());
 }
 
 function saveGame(){
@@ -379,6 +384,7 @@ function setGridCoordinates(){
                 tile5.style.gridColumn = "3";
                 tile5.style.gridRow = "2";
                 tile5.style.backgroundColor = "var(--background-color)";
+                tile5.classList.remove("selectable");
                 
                 tile6 = document.getElementsByClassName("plantTile6")[0];
                 tile6.style.gridColumn = "4";

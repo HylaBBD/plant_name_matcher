@@ -36,6 +36,7 @@ module.exports.gameService = {
               .query(sqlQuery)
               .then(() => {
                 tx.commit();
+                connection.close();
                 return { message: "success" };
               })
               .catch((error) => {
@@ -48,6 +49,7 @@ module.exports.gameService = {
       })
       .catch((error) => {
         tx.rollback();
+        connection.close();
         throw error;
       });
   },

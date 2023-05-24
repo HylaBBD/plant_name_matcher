@@ -28,8 +28,7 @@ const requestListener = (req, res, callback) => {
 
       selectedRoute
         .function({
-          ...JSON.parse(req.body),
-          ...JSON.parse(req.queryStringParameters),
+          ...(req.body ? JSON.parse(req.body) : {}),
           url: req.requestContext.http.path,
         })
         .then((response) => {

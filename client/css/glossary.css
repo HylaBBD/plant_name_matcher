@@ -20,6 +20,7 @@
     flex-direction: column;
     width: 50%;
     justify-content: space-between;
+    align-items: center;
     padding-right: 5%;
     padding-top: 5%;
 }
@@ -41,6 +42,18 @@
 
 }
 
+.glossary-info-buttons{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+}
+
+button{
+    width: 30vw;
+    margin: 2%;
+}
+
 .navigation-control td:nth-child(1){
     text-align: right;
 }
@@ -60,6 +73,20 @@
     width: 10vw;    
     cursor: pointer;
 }
+
+#navigation-control-index{
+    width: 2rem;
+    text-align: center;
+}
+
+#leftSelector, #rightSelector{
+    opacity: 1;
+}
+#leftSelector.disabled, #rightSelector.disabled{
+    opacity: 0.2;
+    cursor: default;
+}
+
 
 @media (max-width: 500px){
     main{
@@ -96,6 +123,10 @@
 
     .navigation-control{
         padding-right: 0;
+    }
+
+    button{
+        width: 80vw;
     }
 }
 

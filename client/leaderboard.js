@@ -12,6 +12,8 @@ userScoreText.innerText = "Score: " + await userHighScore;
 let userRank = await userScoreRank.rank;
 userRankText.innerText = "Rank: " + await userRank;
 
+let userName = await userService.getUserNameById(localStorage.getItem("userId"));
+userNameText.innerText = "Username: " + await userName.userName;
 
 
 let leaderboard = await leaderboardService.getLeaderboard();

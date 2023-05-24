@@ -1,6 +1,8 @@
+let url = 'https://jkxmi2efvf.execute-api.af-south-1.amazonaws.com';
+
 export const plantService = {
   getPlants: async () => {
-    const plants = JSON.parse(JSON.stringify(await (await fetch("http://localhost:8000/plants", { method: "GET" })).json()));
+    const plants = JSON.parse(JSON.stringify(await (await fetch(url + "/plants", { method: "GET" })).json()));
     console.log(plants);
     return plants;
   },

@@ -1,14 +1,15 @@
+let url = 'https://jkxmi2efvf.execute-api.af-south-1.amazonaws.com';
 export const gameService = {
   getGame: async (userId) => {
     const gameConfiguration =   JSON.parse(JSON.stringify(await (await fetch(
-      `http://localhost:8000/user/${userId}/game`,
+      url + '/user/${userId}/game',
       { method: "GET" })).json()));
     return gameConfiguration;
   },
 
   saveGameResults: async (userId, gameOptionId, gameLayoutId, score) => {
     const saveGameResult = await fetch(
-      `http://localhost:8000/user/${userId}/game`,
+      url + `/user/${userId}/game`,
       {
         method: "POST",
         body: JSON.stringify({
@@ -22,7 +23,7 @@ export const gameService = {
   },
 
   getGameResults: async (userId) => {
-    const gameResults = JSON.parse(JSON.stringify(await (await fetch(`http://localhost:8000/user/${userId}/game`,
+    const gameResults = JSON.parse(JSON.stringify(await (await fetch(url + `/user/${userId}/game`,
       { method: "GET" })).json()));
     return gameResults;
   },

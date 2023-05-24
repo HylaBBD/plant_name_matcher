@@ -26,10 +26,13 @@ for(let i = 0; i < 3; i++){
   }
 }
 
+let userNameDisplay = document.getElementById("user-name-display");
 let userHighScoreText = document.getElementById("user-high-score");
-let userHighScore = await userService.getUserScoreAndRank(localStorage.getItem("userId")).score;
+let userScoreRank = await userService.getUserScoreAndRank(localStorage.getItem("userId"));
+let userHighScore = await userScoreRank.score;
+
 if(userHighScore == undefined){
-  userHighScoreText.innerText = 0;
+  userHighScoreText.innerText = "N/A";
 }else{
   userHighScoreText.innerText = userHighScore;
 }

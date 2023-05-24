@@ -1,7 +1,4 @@
-@import "./main.css"
-
-html,
-body;
+@import "./main.css";
 
 caption {
     font-size: 3rem;
@@ -45,6 +42,10 @@ tr {
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
+}
+
+tr.highlight{
+    background-color: var(--secondary-color);
 }
 
 td {

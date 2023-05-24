@@ -7,7 +7,7 @@ const userPassword1 = document.getElementById("user-password1");
 const userPassword2 = document.getElementById("user-password2");
 
 function isValidPassword(password) {
-  return !!(/^[a-zA-Z0-9]+$/.test(password) && !(/^[0-9]+$/.test(password)));
+  return true;//!!(/^[a-zA-Z0-9]+$/.test(password) && !(/^[0-9]+$/.test(password)));
 }
 
 

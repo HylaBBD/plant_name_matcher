@@ -1,13 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
-<!-- https://github.com/public-apis/public-apis -->
 <head>
     <title>Leaderboard</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/leaderboard.css">
     <script type="module" src="main.js"></script>
+    <script type="module" src="leaderboard.js"></script>
 </head>
     <body>
         <header>
@@ -34,9 +33,9 @@
             <table class="leaderboard">
                 <caption> 
                     <ul class = "leaderboard-information">
-                        <li>Your rank: 2</li>
-                        <li>Username HERE</li>
-                        <li>Score: 33</li>
+                        <li id="user-rank">Your rank: 2</li>
+                        <li id="user-name">Username HERE</li>
+                        <li id="user-score">Score: 33</li>
                     </ul>
                 </caption>
                 <tr>

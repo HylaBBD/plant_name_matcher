@@ -112,10 +112,12 @@ routes.register("/user/\\d+/plants", "GET", (data) => {
   return userController.getUserPlants(id);
 });
 
-routes.register("/user/\\d+/plants", "DELETE", (data) => {
-  const { url, plantId } = data;
-  const id = url.substr(1).split("/")[1];
-  return userController.deleteUserPlants(id, plantId);
+routes.register("/user/\\d+/plants/\\d+", "GET", (data) => {
+  const { url } = data;
+  const splitUrl = url.substr(1).split("/");
+  const userId = splitUrl[1];
+  const plantId = splitUrl[3];
+  return userController.deleteUserPlants(userId, plantId);
 });
 
 module.exports.config = {

@@ -1,47 +1,61 @@
 const http = require("http");
 const { config } = require("./config/config");
 const url = require("url");
+const { buildResponse } = require("./modules/response/responseUtils");
 
-const requestListener = async (req, res) => {
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  res.setHeader("Access-Control-Request-Method", "*");
-  res.setHeader("Access-Control-Allow-Methods", "OPTIONS, GET, DELETE, PATCH, POST");
-  res.setHeader("Access-Control-Allow-Headers", "*");
+const requestListener = (req, res, callback) => {
+  // res.setHeader("Access-Control-Allow-Origin", "*");
+  // res.setHeader("Access-Control-Request-Method", "*");
+  // res.setHeader(
+  //   "Access-Control-Allow-Methods",
+  //   "OPTIONS, GET, DELETE, PATCH, POST"
+  // );
+  // res.setHeader("Access-Control-Allow-Headers", "*");
 
-  requestDataBuilder(req)
-    .then((data) => {
-      console.log(data.urlData.filePath);
-      const selectedRoute = config.server.getRouteFunction(
-        data.urlData.filePath,
-        data.urlData.method
-      );
-      if (selectedRoute) {
-        selectedRoute
-          .function({
-            ...data.body,
-            ...data.queryParams,
-            url: data.urlData.filePath,
-          })
-          .then(({ responseCode, response }) => {
-            console.log("RESPONSE");
-            console.log(JSON.stringify(response));
-            console.log(responseCode);
-            res.writeHead(responseCode, { "Content-Type": "application/json" });
-            res.write(JSON.stringify(response));
-            res.end();
-          });
-      } else {
-        res.writeHead(404, { "Content-Type": "application/json" });
-        res.write("this will hapen if no params found");
-        res.end();
-      }
-    })
-    .catch((err) => {
-      console.log(err);
-      res.writeHead(500, { "Content-Type": "application/json" });
-      res.write(JSON.stringify(err));
-      res.end();
-    });
+  // console.log("config-------------------------1");
+  // console.log(req, req.requestContext.http.method);
+  // console.log("config-------------------------2");
+  const selectedRoute = config.server.getRouteFunction(
+    req.requestContext.http.path,
+    req.requestContext.http.method
+  );
+  if (selectedRoute) {
+    console.log("selectec", selectedRoute, "selected");
+
+    selectedRoute
+      .function({
+        ...JSON.parse(req.body),
+        ...JSON.parse(req.queryStringParameters),
+        url: req.requestContext.http.path,
+      })
+      .then((response) => {
+        console.log("RESPONSE");
+        console.log(JSON.stringify(response));
+        // console.log(responseCode);
+
+        // res.send()
+
+        callback(null, response);
+
+        // res.writeHead(responseCode, { "Content-Type": "application/json" });
+        // res.write(JSON.stringify(response));
+        // res.end();
+      });
+  } else {
+    callback(null, buildResponse(404, { message: "route not found" }));
+    // res.writeHead(404, { "Content-Type": "application/json" });
+    // res.write("this will hapen if no params found");
+    // res.end();
+  }
+  // requestDataBuilder(req)
+  //   .then((data) => {
+  //   })
+  //   .catch((err) => {
+  //     console.log(err);
+  //     // res.writeHead(500, { "Content-Type": "application/json" });
+  //     // res.write(JSON.stringify(err));
+  //     // res.end();
+  //   });
 };
 
 const requestDataBuilder = async (req) => {
@@ -83,10 +97,12 @@ const buildJSONObject = (data) => {
   }, {});
 };
 
-const server = http.createServer(requestListener);
-server.listen(config.server.port, config.server.host, () => {
-  // will open the server for us and keep it running.
-  console.log(
-    `Server is running on http://${config.server.host}:${config.server.port}`
-  );
-});
+// const server = http.createServer(requestListener);
+// server.listen(config.server.port, config.server.host, () => {
+//   // will open the server for us and keep it running.
+//   console.log(
+//     `Server is running on http://${config.server.host}:${config.server.port}`
+//   );
+// });
+
+module.exports.handler = requestListener;

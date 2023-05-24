@@ -1,4 +1,3 @@
-const sqlite = require("sqlite3").verbose();
 const sql = require("mssql");
 const options = {
   user: "root",

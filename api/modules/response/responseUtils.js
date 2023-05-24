@@ -1,6 +1,6 @@
 module.exports.buildResponse = (code, response) => {
-    return {
-        responseCode: code,
-        response: response
-    }
-}
+  return {
+    statusCode: code,
+    body: JSON.stringify(response),
+  };
+};

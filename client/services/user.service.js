@@ -1,14 +1,14 @@
 export const userService = {
   login: async (username, password) => {
     const loginDetails = await fetch(
-      `http://localhost:8000/user/${username}/${password}`,
+      `https://1yko1edgr2.execute-api.af-south-1.amazonaws.com/user/${username}/${password}`,
       { method: "GET" }
     );
     console.log(loginDetails);
     return loginDetails;
   },
   register: async (username, password) => {
-    const registerResponse = await fetch("http://localhost:8000/user", {
+    const registerResponse = await fetch("http://localhost:3000/user", {
       method: "POST",
       body: JSON.stringify({ username: username, password: password }),
     });

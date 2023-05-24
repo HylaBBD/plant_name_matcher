@@ -30,8 +30,13 @@ routes.register("/user/\\d+", "GET", (data) => {
 });
 
 routes.register("/user", "POST", (data) => {
+  console.log("***********************");
+  console.log(data);
+  console.log("***********************");
   const { password, username } = data;
+  console.log(username);
   console.log(password);
+  console.log(data);
   return userController.createUser(username, password);
 });
 
@@ -123,7 +128,7 @@ routes.register("/user/\\d+/plants/\\d+", "GET", (data) => {
 module.exports.config = {
   server: {
     host: "localhost",
-    port: process.env.PORT || 8000,
+    port: process.env.PORT || 3000,
     getRouteFunction: (url, method) => routes.getRoute(url, method),
   },
 };

@@ -1,27 +1,41 @@
 @import "./main.css";
 
+main{
+    flex-direction: column;
+    justify-content: flex-start;
+}
 table{
     background-color: transparent;
 }
 caption {
-    font-size: 3rem;
+    font-size: 4vw;
     font-weight: bold;
-    background-color: var(--primary-color);
-    padding: 2rem;
+    padding: 1rem;
     border-radius: 0.5rem 0.5rem 0 0;
 }
-ul {
+.leaderboard-information{
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: space-around;
+    height: fit-content;
+    align-items: center;
+    margin: 0;
+    padding: 5% 0 5% 0;
+}
+
+.leaderboard-information li h1{
+    padding: 0;
+    margin: 0;
+}
+.leaderboard-information li:nth-child(1) h1{
+    font-family: var(--accent-font);
+    font-size: calc(20px + 4vw);
+}
+
+ul {
     list-style-type: none;
-    margin-block-start: 0;
-    margin-block-end: 0;
-    padding-inline-start: 0;
 }
-ul:last-child {
-    padding-right: 1rem;
-}
+
 
 table.leaderboard {
     z-index: 2;
@@ -36,7 +50,7 @@ table.leaderboard {
 }
 
 th {
-    font-size: 2.5rem;
+    font-size: 3vw;
 }
 tr {
     display: flex;
@@ -57,4 +71,13 @@ td {
     align-items: center;
     justify-content: center;
     text-align: center;
+}
+
+
+
+
+@media (max-width: 900px){
+    .leaderboard-information {
+        flex-direction: column;
+    }
 }

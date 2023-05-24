@@ -1,30 +1,46 @@
 import { leaderboardService } from "./services/leaderboard.service.js";
 import { userService } from "./services/user.service.js";
+// LOADING SCREEN - - - - - - - - - - - - 
+const loadingSection = document.getElementById("loading-screen");
+const loadingSectionImage = document.getElementById("loading-screen-image")
 
-let userRankText = document.getElementById("user-rank");
-let userNameText = document.getElementById("user-name");
-let userScoreText = document.getElementById("user-score");
+function displayLoadingScreen() {
+    console.log(loadingSection);
+    loadingSection.classList.add("display");
+}
+function hideLoadingScreen() {
+    loadingSection.classList.remove("display");
+}
 
-let userScoreRank = await userService.getUserScoreAndRank(localStorage.getItem("userId"));
-let userHighScore = await userScoreRank.score;
-userScoreText.innerText = "Score: " + await userHighScore;
+displayLoadingScreen();
+populateLeaderboard().then(() => hideLoadingScreen());
 
-let userRank = await userScoreRank.rank;
-userRankText.innerText = "Rank: " + await userRank;
-
-let userName = await userService.getUserNameById(localStorage.getItem("userId"));
-userNameText.innerText = "Username: " + await userName.userName;
-
-
-let leaderboard = await leaderboardService.getLeaderboard();
-console.log(leaderboard);
-let table = document.getElementsByClassName("leaderboard")[0];
-deleteAllRows(table);
-for(let entry of leaderboard){
-    if(entry.user_id == localStorage.getItem("userId")){
-        addHighlightRow(table, entry);
-    }else{
-        addRow(table, entry);
+async function populateLeaderboard(){
+    let userRankText = document.getElementById("user-rank");
+    let userNameText = document.getElementById("user-name");
+    let userScoreText = document.getElementById("user-score");
+    
+    let userScoreRank = await userService.getUserScoreAndRank(localStorage.getItem("userId"));
+    let userHighScore = await userScoreRank.score;
+    userScoreText.innerText = "Score: " + await userHighScore;
+    
+    let userRank = await userScoreRank.rank;
+    userRankText.innerText = "Rank: " + await userRank;
+    
+    let userName = await userService.getUserNameById(localStorage.getItem("userId"));
+    userNameText.innerText = "Username: " + await userName.userName;
+    
+    
+    let leaderboard = await leaderboardService.getLeaderboard();
+    console.log(leaderboard);
+    let table = document.getElementsByClassName("leaderboard")[0];
+    deleteAllRows(table);
+    for(let entry of leaderboard){
+        if(entry.user_id == localStorage.getItem("userId")){
+            addHighlightRow(table, entry);
+        }else{
+            addRow(table, entry);
+        }
     }
 }
 

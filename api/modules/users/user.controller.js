@@ -92,4 +92,14 @@ module.exports.userController = {
         return buildResponse(500, error);
       });
   },
+  getUserById: (userId) => {
+    return usersService
+      .getUserById(userId)
+      .then((response) => {
+        return buildResponse(200, response);
+      })
+      .catch((error) => {
+        return buildResponse(500, error);
+      });
+  },
 };

@@ -5,10 +5,10 @@ provider:
   runtime: nodejs18.x
   stage: ${opt:stage,'dev'}
   region: af-south-1
-  iamRoleStatements: # IAM Role Permissions
-    - Effect: "Allow"
-      Action: "*"
-      Resource: "*"
+  # iamRoleStatements: # IAM Role Permissions
+  #   - Effect: "Allow"
+  #     Action: "*"
+  #     Resource: "*"
   httpApi:
     cors: true
     # authorizers:

@@ -62,7 +62,7 @@ async function removePlantFromUserFavourites(){
     }
 }
 
-
+displayLoadingScreen();
 await onSelectorClick(0);
 
 function displayLoadingScreen() {

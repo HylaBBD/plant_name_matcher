@@ -92,6 +92,8 @@
     border-radius: 1rem;
     box-shadow: 0 0 40px 10px #000000;
     text-align: center;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 #game-start-screen.display{
     display:block;

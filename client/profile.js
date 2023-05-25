@@ -44,7 +44,7 @@ async function populateProfile(){
 
   let userNameDisplay = document.getElementById("user-name-display");
   let userName = await userService.getUserNameById(localStorage.getItem("userId"));
-  userNameDisplay.innerText = "Your Username: " + await userName.userName;
+  userNameDisplay.innerText = await userName.userName;
 
 
   let userHighScoreText = document.getElementById("user-high-score");

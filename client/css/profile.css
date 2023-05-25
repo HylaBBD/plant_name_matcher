@@ -3,7 +3,7 @@
 main{
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: stretch;
     justify-content: space-around;
 }
 
@@ -24,12 +24,7 @@ button{
   display: grid;
   justify-items: center;
 }
-  
-.profile-info row{
-  text-align: center;
-}
-
-  
+    
 .favourite-plants {
   display: flex;
   flex-direction: column;

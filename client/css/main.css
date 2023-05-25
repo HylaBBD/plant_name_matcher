@@ -136,9 +136,10 @@ main{
     height: 80vh;
     margin-top: 4rem;
     border-radius: 1rem;
-    box-shadow: 0 0 40px 10px #000000;
+    box-shadow: 0 0 40px 10px var(--shadow-color);
+    overflow-y: auto;
+    overflow-x: hidden;
 }
-
 
 /* LOADING SCREEN */
 #loading-screen{
@@ -148,7 +149,7 @@ main{
     width: 90vw;
     background: var(--background-color-transparent);
     position: absolute;
-    z-index: 100;
+    z-index: 5;
     border-radius: 1rem;
     box-shadow: 0 0 40px 10px #000000;
 }

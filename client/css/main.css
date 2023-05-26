@@ -76,7 +76,7 @@ header figure{
 }
 
 header figure a img{
-    display: block;
+    display: none;
     height: 90%;
     padding: 10%;
     cursor: pointer;
@@ -235,7 +235,9 @@ button.disabled{
     }
     header .menu-toggle{
         display: flex;
-        padding-right: 1rem;
+        padding-right: 0.5rem;
+        margin-right: 0;
+        width: 9vw;
     }
 
     main{
